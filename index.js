@@ -1,59 +1,63 @@
 var F = {};
 
 /* String */
-F.fill = function () {};
+F.fill = function (string, amount, char, reverse) {};
 
-F.center = function () {};
+F.center = function (string, amount, char) {};
 
-F.isJSON = function () {};
+F.isJSON = function (string) {};
 
-F.isURL = function () {};
+F.isURL = function (string) {};
 
-F.capitalize = function () {};
+F.capitalize = function (string, allWords, keepCase) {};
 
 F.chars = {};
 
-F.format = function () {};
+F.format = function (string, ...replace) {};
 
-F.escapeHTML = function () {};
+F.escapeHTML = function (string) {};
 
-F.truncate = function () {};
+F.truncate = function (string, length, char, includeChar) {};
 
-F.replace = function () {};
+F.replace = function (string, old, char, global) {};
 
-F.hash = function () {};
+F.hash = function (string) {};
 
-F.redact = function () {};
+F.redact = function (string, amount, char) {};
 
-F.splitAt = function () {};
+F.splitAt = function (string, number) {};
 
 /* Number */
 
-F.randomFloat = function () {};
+F.randomFloat = function (min, max) {};
 
-F.randomInt = function () {};
+F.randomInt = function (min, max) {};
 
-F.randomChoice = function () {};
+F.randomChoice = function (array) {};
 
-F.generate = function () {};
+F.generate = function (seed, outputLength) {};
 
-F.round = function () {};
+F.round = function (number, decimals) {};
 
-F.range = function () {};
+F.floor = function (number, decimals) {};
 
-F.border = function () {};
+F.ceil = function (number, decimals) {};
 
-F.hcf = function () {};
+F.range = function (min, max) {};
 
-F.lcm = function () {};
+F.border = function (min, max) {};
 
-F.ordinal = function () {};
+F.hcf = function (a, b) {};
 
-F.dec2bin = function () {};
+F.lcm = function (a, b) {};
 
-F.bool2bin = function () {};
+F.ordinal = function (number) {};
 
-F.nullish = function () {};
+F.dec2bin = function (decimal) {};
+
+F.bool2bin = function (...booleans) {};
+
+F.nullish = function (value) {};
 
 F.operate = {
   amod: function () {
@@ -79,89 +83,89 @@ F.operate = {
 
 F.average = {};
 
-F.addCommas = function () {};
+F.addCommas = function (number, amount) {};
 
-F.snap = function () {};
+F.snap = function (number, array, callback) {};
 
 /* Date / Time */
 
-F.sleep = function () {};
+F.sleep = function (time) {};
 
-F.twelveHour = function () {};
+F.twelveHour = function (hour) {};
 
-F.parseRelativeTime = function () {};
+F.parseRelativeTime = function (milliseconds, date) {};
 
-F.parseMilliseconds = function () {};
+F.parseMilliseconds = function (amount, unit, date) {};
 
-F.getWeek = function () {};
+F.getWeek = function (date) {};
 
 /* Array */
 
-F.merge = function () {};
+F.merge = function (a, b) {};
 
-F.removeItem = function () {};
+F.removeItem = function (array, item) {};
 
-F.shuffle = function () {};
+F.shuffle = function (array) {};
 
 /* Object */
 
-F.output = function () {};
+F.output = function (object) {};
 
-F.sort = function () {};
+F.sort = function (object, callback) {};
 
 /* Game */
 
 F.collide = {};
 
-F.coords2angle = function () {};
+F.coords2angle = function (x1, y1, x2, y2) {};
 
-F.angle2coords = function () {};
+F.angle2coords = function (x1, y1, angle) {};
 
-F.trace = function () {};
+F.trace = function (x1, y1, x2, y2, density) {};
 
 /* HTML Canvas */
 
-F.fillCanvas = function () {};
+F.fillCanvas = function (ctx, color) {};
 
-F.fillRoundRect = function () {};
+F.fillRoundRect = function (ctx, x, y, w, h, radius) {};
 
-F.strokeRoundRect = function () {};
+F.strokeRoundRect = function (ctx, x, y, w, h, radius) {};
 
-F.getCanvasPixel = function () {};
+F.getCanvasPixel = function (canvas, x, y) {};
 
-F.scanCanvas = function () {};
+F.scanCanvas = function (canvas) {};
 
 /* Event listeners */
 
-F.keyDown = function () {};
+F.keyDown = function (number) {};
 
-F.getKeyCodes = function () {};
+F.getKeyCodes = function (object) {};
 
-F.buttonDown = function () {};
+F.buttonDown = function (number) {};
 
-F.getMousePos = function () {};
+F.getMousePos = function (event, offsetX, offsetY) {};
 
-F.mouseOnCanvas = function () {};
+F.mouseOnCanvas = function (canvas) {};
 
 F.touch = {};
 
 /* Colour */
 
-F.parseColor = function () {};
+F.parseColor = function (color) {};
 
-F.toHex = function () {};
+F.toHex = function (number) {};
 
-F.hex2rgb = function () {};
+F.hex2rgb = function (hex) {};
 
-F.hex2hsv = function () {};
+F.hex2hsv = function (hex) {};
 
-F.rgb2hex = function () {};
+F.rgb2hex = function (rgb) {};
 
-F.rgb2hsv = function () {};
+F.rgb2hsv = function (rgb) {};
 
-F.hsv2hex = function () {};
+F.hsv2hex = function (hsv) {};
 
-F.hsv2rgb = function () {};
+F.hsv2rgb = function (hsv) {};
 
 F.randomHex = function () {};
 
@@ -173,14 +177,14 @@ F.url = {};
 
 F.getUrl = function () {};
 
-F.setCaret = function () {};
+F.setCaret = function (element, position) {};
 
-F.getCaret = function () {};
+F.getCaret = function (element) {};
 
-F.copy = function () {};
+F.copy = function (text) {};
 
-F.download = function () {};
+F.download = function (image) {};
 
-F.Sound = class { };
+F.Sound = class {};
 
 F.frequency = {};
