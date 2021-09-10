@@ -3,7 +3,7 @@
   "productName": "Fortissimo",
   "version": "2.0.0",
   "description": "Collection of helpful functions for Javascript",
-  "main": "index.js",
+  "main": "index.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

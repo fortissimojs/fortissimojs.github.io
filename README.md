@@ -9,7 +9,7 @@ Collection of helpful functions for JavaScript
 Add this code before your main JavaScript file
 
 ```html
-<script src="https://fortissimojs.github.io/index.js"></script>
+<script src="https://fortissimojs.github.io/index.min.js"></script>
 ```
 
 ## NodeJS
