@@ -26,5 +26,12 @@
   "bugs": {
     "url": "https://github.com/darccyy/fortissimo/issues"
   },
-  "homepage": "https://github.com/darccyy/fortissimo#readme"
+  "homepage": "https://github.com/darccyy/fortissimo#readme",
+  "dependencies": {
+    "node-minify": "^3.6.0",
+    "terser-webpack-plugin": "^5.2.4"
+  },
+  "devDependencies": {
+    "uglifyjs-webpack-plugin": "^2.2.0"
+  }
 }
