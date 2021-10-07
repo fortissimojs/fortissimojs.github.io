@@ -1006,9 +1006,41 @@ F.parseColor = function (color) {};
 
 F.toHex = function (number) {};
 
-F.hex2rgb = function (hex) {};
+F.hex2rgb = function (hex) {
+  var c;
+  if (!/^#/.test(hex)) {
+    hex = "#" + hex;
+  }
+  if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+    c = hex.substring(1).split("");
+    if (c.length == 3) {
+      c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+    }
+    c = "0x" + c.join("");
+    return {
+      r: (c >> 16) & 255,
+      g: (c >> 8) & 255,
+      b: c & 255,
+    };
+  }
+  if (/^#([A-Fa-f0-9]{4}){1,2}$/.test(hex)) {
+    c = hex.substring(1).split("");
+    if (c.length == 3) {
+      c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+    }
+    c = "0x" + c.join("");
+    return {
+      r: (c >> 24) & 255,
+      g: (c >> 16) & 255,
+      b: (c >> 8) & 255,
+      a: c & 255,
+    };
+  }
+};
 
-F.hex2hsv = function (hex) {};
+F.hex2hsv = function (hex) {
+  return F.rgb2hsv(F.hex2rgb(hex));
+};
 
 F.toHex = function (c) {
   if (c || c == 0) {
@@ -1026,10 +1058,10 @@ F.rgb2hex = function (r, g, b, a) {
   if (arguments.length === 1) {
     if (r instanceof Object) {
       (g = r.g), (b = r.b), (a = r.a), (r = r.r);
-    } else if (h instanceof Array) {
+    } else if (r instanceof Array) {
       (g = h[1]), (b = h[2]), (a = h[3]), (r = r[0]);
     } else {
-      throw F.error("Unknown RGB format");
+      throw new F.InputError("Unknown RGB format");
     }
   }
   if (r == undefined || g == undefined || b == undefined) {
@@ -1044,7 +1076,49 @@ F.rgb2hex = function (r, g, b, a) {
   );
 };
 
-F.rgb2hsv = function (rgb) {};
+F.rgb2hsv = function (r, g, b, a) {
+  if (arguments.length === 1) {
+    if (r instanceof Object) {
+      (g = r.g), (b = r.b), (a = r.a), (r = r.r);
+    } else if (r instanceof Array) {
+      (g = h[1]), (b = h[2]), (a = h[3]), (r = r[0]);
+    } else {
+      throw new F.InputError("Unknown RGB format");
+    }
+  }
+  if (r == undefined || g == undefined || b == undefined) {
+    throw new F.InputError("Unknown RGB format");
+  }
+
+  var max = Math.max(r, g, b),
+    min = Math.min(r, g, b),
+    d = max - min,
+    h,
+    s = max === 0 ? 0 : d / max,
+    v = max / 255;
+  switch (max) {
+    case min:
+      h = 0;
+      break;
+    case r:
+      h = g - b + d * (g < b ? 6 : 0);
+      h /= 6 * d;
+      break;
+    case g:
+      h = b - r + d * 2;
+      h /= 6 * d;
+      break;
+    case b:
+      h = r - g + d * 4;
+      h /= 6 * d;
+      break;
+  }
+  return {
+    h: Math.round(h * 100),
+    s: Math.round(s * 100),
+    v: Math.round(v * 100),
+  };
+};
 
 F.hsv2hex = function (hsv) {
   return F.rgb2hex(F.hsv2rgb(hsv));
@@ -1057,7 +1131,7 @@ F.hsv2rgb = function (h, s, v) {
     } else if (h instanceof Array) {
       (s = h[1]), (v = h[2]), (h = h[0]);
     } else {
-      throw F.error("Unknown HSV format");
+      throw new F.InputError("Unknown HSV format");
     }
   }
   if (h == undefined || s == undefined || v == undefined) {
