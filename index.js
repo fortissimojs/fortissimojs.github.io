@@ -937,6 +937,8 @@ if (
       h: 1,
       offsetLeft,
       offsetTop,
+      touchDown: false,
+      isFirstTouch: false,
     };
     for (var i in F.mouseButtons) {
       F.mouse[F.mouseButtons[i]] = false;
@@ -985,16 +987,16 @@ if (
   };
 
   addEventListener("touchstart", function (event) {
-    F.mouse.left = true;
-    F.mouse.x = event.touches[0].clientX;
-    F.mouse.y = event.touches[0].clientY;
+    F.setMouse(event.touches[0]);
+    F.mouse.touchDown = true;
+    F.mouse.isFirstTouch = true;
   });
   addEventListener("touchmove", function (event) {
-    F.mouse.x = event.touches[0].clientX;
-    F.mouse.y = event.touches[0].clientY;
+    F.setMouse(event.touches[0]);
+    F.mouse.touchDown = true;
   });
   addEventListener("touchend", function (event) {
-    F.mouse.left = false;
+    F.mouse.touchDown = false;
   });
 }
 
