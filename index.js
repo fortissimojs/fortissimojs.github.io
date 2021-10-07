@@ -16,12 +16,22 @@ const F = {
       "`~1!2@3#4$5%6^7&8*9(0)-_=+qQwWeErRtTyYuUiIoOpP[{]}\\|aAsSdDfFgGhHjJkKlL;:'\"zZxXcCvVbBnNmM,<.>/?".split(
         "",
       ),
-    keyboardNatural: "`1234567890-=qwertyuiop[]\\asdfghjkl;'zxcvbnm,./".split(
-      "",
-    ),
-    keyboardShift: '~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:"ZXCVBNM<>?'.split(""),
-    cursive: "𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝔀𝔁𝔂𝔃𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩".split(""),
-    regional: "🇦🇧🇨🇩🇪🇫🇬🇭🇮🇯🇰🇱🇲🇳🇴🇵🇶🇷🇸🇹🇺🇻🇼🇽🇾🇿".split(""),
+    keyboardNatural:
+      "`1234567890-=qwertyuiop[]\\asdfghjkl;'zxcvbnm,./".split(
+        "",
+      ),
+    keyboardShift:
+      '~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:"ZXCVBNM<>?'.split(
+        "",
+      ),
+    cursive:
+      "𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝔀𝔁𝔂𝔃𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩".split(
+        "",
+      ),
+    regional:
+      "🇦🇧🇨🇩🇪🇫🇬🇭🇮🇯🇰🇱🇲🇳🇴🇵🇶🇷🇸🇹🇺🇻🇼🇽🇾🇿".split(
+        "",
+      ),
     emoji: "0️⃣1️⃣2️⃣3️⃣4️⃣5️⃣6️⃣7️⃣8️⃣9️⃣".split(""),
     html: {
       34: "quot",
@@ -292,7 +302,9 @@ F.InputError = class extends Error {
 /* String */
 F.fill = function (string, amount, char, reverse) {
   string = string || "";
-  char = (char || " ").repeat(Math.max(0, (amount || 10) - string.length));
+  char = (char || " ").repeat(
+    Math.max(0, (amount || 10) - string.length),
+  );
   return reverse ? char + string : string + char;
 };
 
@@ -301,7 +313,9 @@ F.center = function (string, amount, char, left) {
   amount = Math.max(0, (amount || 10) - string.length) / 2;
   charFloor = (char || " ").repeat(Math.floor(amount));
   charCeil = (char || " ").repeat(Math.ceil(amount));
-  return left ? charCeil + string + charFloor : charFloor + string + charCeil;
+  return left
+    ? charCeil + string + charFloor
+    : charFloor + string + charCeil;
 };
 
 F.isJSON = function (string) {
@@ -328,7 +342,10 @@ F.capitalize = function (string, onlyFirst, keepCase) {
     if (string.constructor === Array) {
       string = string.join(" ");
     }
-    return string[0].toUpperCase() + string.slice(1).toLowerCase();
+    return (
+      string[0].toUpperCase() +
+      string.slice(1).toLowerCase()
+    );
   }
   if (string.constructor === String) {
     string = string.split(" ");
@@ -365,9 +382,17 @@ F.format = function (string, ...replace) {
 };
 
 F.escapeHTML = function (string) {
-  return string.replace(/[\u00A0-\u2666<>\&]/g, function (c) {
-    return "&" + (F.chars.html[c.charCodeAt(0)] || "#" + c.charCodeAt(0)) + ";";
-  });
+  return string.replace(
+    /[\u00A0-\u2666<>\&]/g,
+    function (c) {
+      return (
+        "&" +
+        (F.chars.html[c.charCodeAt(0)] ||
+          "#" + c.charCodeAt(0)) +
+        ";"
+      );
+    },
+  );
 };
 
 F.truncate = function (string, length, char, includeChar) {
@@ -375,7 +400,12 @@ F.truncate = function (string, length, char, includeChar) {
     return string;
   }
   char = char ? char.toString() : "";
-  return string.slice(0, length - (includeChar ? char.length : 0)) + char;
+  return (
+    string.slice(
+      0,
+      length - (includeChar ? char.length : 0),
+    ) + char
+  );
 };
 
 F.replace = function (string, old, char, onlyFirst) {
@@ -412,7 +442,8 @@ F.redact = function (string, amount, char) {
     return char.repeat(string.length);
   }
   return (
-    string.slice(0, amount) + char.repeat(Math.max(0, string.length - amount))
+    string.slice(0, amount) +
+    char.repeat(Math.max(0, string.length - amount))
   );
 };
 
@@ -422,7 +453,9 @@ F.splitAt = function (string, number) {
   }
   string = string.toString();
   number = number || 3;
-  return string.match(new RegExp(".{1," + number + "}", "g"));
+  return string.match(
+    new RegExp(".{1," + number + "}", "g"),
+  );
 };
 
 /* Number */
@@ -448,7 +481,7 @@ F.randomChoice = function (array) {
   if (!array) {
     return;
   }
-  return arr[F.randomInt(0, arr.length - 1)];
+  return array[F.randomInt(0, array.length - 1)];
 };
 
 F.round = function (number, decimals) {
@@ -552,16 +585,32 @@ F.operate = {
   },
   sin: function (x) {
     return (
-      Math.min(1, Math.floor(F.amod((2 * x) / Math.PI - 1, 4) / 2)) *
+      Math.min(
+        1,
+        Math.floor(F.amod((2 * x) / Math.PI - 1, 4) / 2),
+      ) *
         (Math.floor(F.amod((2 * x) / Math.PI, 2)) *
-          (Math.floor((2 * x) / Math.PI) - (2 * x) / Math.PI) ** 2 +
+          (Math.floor((2 * x) / Math.PI) -
+            (2 * x) / Math.PI) **
+            2 +
           Math.floor(F.amod((2 * x) / Math.PI + 1, 2)) *
-            (2 - (Math.floor((-2 * x) / Math.PI) + (2 * x) / Math.PI) ** 2)) +
-      Math.min(1, Math.floor(F.amod((2 * x) / Math.PI + 1, 4) / 2)) *
+            (2 -
+              (Math.floor((-2 * x) / Math.PI) +
+                (2 * x) / Math.PI) **
+                2)) +
+      Math.min(
+        1,
+        Math.floor(F.amod((2 * x) / Math.PI + 1, 4) / 2),
+      ) *
         (Math.floor(F.amod((-2 * x) / Math.PI, 2)) *
-          (Math.floor((-2 * x) / Math.PI) + (2 * x) / Math.PI) ** 2 +
+          (Math.floor((-2 * x) / Math.PI) +
+            (2 * x) / Math.PI) **
+            2 +
           Math.floor(F.amod((-2 * x) / Math.PI + 1, 2)) *
-            (2 - (Math.floor((2 * x) / Math.PI) - (2 * x) / Math.PI) ** 2)) -
+            (2 -
+              (Math.floor((2 * x) / Math.PI) -
+                (2 * x) / Math.PI) **
+                2)) -
       1
     );
   },
@@ -576,7 +625,9 @@ F.addCommas = function (number, ignoreDecimals) {
   }
   var string = number.toString().split(".")[0];
   length = 3 - (string.length % 3);
-  string = F.splitAt("~".repeat(length > 2 ? 0 : Math.abs(length)) + string);
+  string = F.splitAt(
+    "~".repeat(length > 2 ? 0 : Math.abs(length)) + string,
+  );
   string[0] = F.replace(string[0], "~", "");
   var decimals = number.toString().split(".")[1];
   if (!ignoreDecimals) {
@@ -677,7 +728,9 @@ F.parseRelativeTime = function (milliseconds, format) {
         time = [
           {
             ...units[i],
-            amount: Math.floor(time[0].amount / units[i].amount),
+            amount: Math.floor(
+              time[0].amount / units[i].amount,
+            ),
           },
           {
             ...time[0],
@@ -689,7 +742,9 @@ F.parseRelativeTime = function (milliseconds, format) {
         time = [
           {
             ...units[i],
-            amount: Math.floor(time[0].amount / units[i].amount),
+            amount: Math.floor(
+              time[0].amount / units[i].amount,
+            ),
           },
           ...time.slice(1),
         ];
@@ -707,7 +762,9 @@ F.parseRelativeTime = function (milliseconds, format) {
         output.push(
           amount.toString() +
             " " +
-            (amount === 1 ? array[i].singular : array[i].plural),
+            (amount === 1
+              ? array[i].singular
+              : array[i].plural),
         );
       }
       return output.join(", ");
@@ -722,11 +779,20 @@ F.getWeek = function (date) {
     date = new Date();
   }
   date = new Date(
-    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+    Date.UTC(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+    ),
   );
-  date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay() || 7));
+  date.setUTCDate(
+    date.getUTCDate() + 4 - (date.getUTCDay() || 7),
+  );
   return Math.ceil(
-    ((date - new Date(Date.UTC(date.getUTCFullYear(), 0, 1))) / 86400000 + 1) /
+    ((date -
+      new Date(Date.UTC(date.getUTCFullYear(), 0, 1))) /
+      86400000 +
+      1) /
       7,
   );
 };
@@ -743,7 +809,10 @@ F.removeItem = function (array, item, isIndex, onlyFirst) {
     array = array.split("");
   }
   if (isIndex) {
-    var output = [...array.slice(0, item), ...array.slice(item + 1)];
+    var output = [
+      ...array.slice(0, item),
+      ...array.slice(item + 1),
+    ];
     if (isString) {
       return output.join("");
     }
@@ -784,12 +853,22 @@ F.sort = function (object, callback) {};
 
 F.collide = {};
 
-F.collide.rect2rect = function (a, b) {};
+F.collide.rect2rect = function (a, b) {
+  return (
+    a.x + a.w > b.x &&
+    a.x < b.x + b.w &&
+    b.y + b.h > a.y &&
+    b.y < a.y + a.h
+  );
+};
 
 F.collide.rect2circle = function (a, b) {};
 
 F.collide.circle2circle = function (a, b) {
-  return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2) < a.r + b.r;
+  return (
+    Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2) <
+    a.r + b.r
+  );
 };
 
 F.collide.polygons = function (a, b) {};
@@ -849,13 +928,24 @@ if (
   F.mouse = {};
 
   F.setMouse = function (event) {
+    var {offsetLeft, offsetTop} = F.mouse;
     F.mouse = {
-      x: event.clientX,
-      y: event.clientY,
+      x: event.clientX - offsetLeft,
+      y: event.clientY - offsetTop,
       r: 1,
       w: 1,
       h: 1,
+      offsetLeft,
+      offsetTop,
     };
+    for (var i in F.mouseButtons) {
+      F.mouse[F.mouseButtons[i]] = false;
+    }
+  };
+
+  F.setMouseOffset = function (offset) {
+    F.mouse.offsetLeft = offset.left || 0;
+    F.mouse.offsetTop = offset.top || 0;
   };
 
   var mouseEvents = [
@@ -870,16 +960,22 @@ if (
     window[mouseEvents[i]] = F.setMouse;
   }
 
-  F.mouseButtons = ["left", "middle", "right", "four", "five"];
+  F.mouseButtons = [
+    "left",
+    "middle",
+    "right",
+    "four",
+    "five",
+  ];
   window.onmousedown = function (event) {
     F.mouse[F.mouseButtons[event.button]] = true;
   };
-  window.onmouseup = function (event) {
-    F.mouse[F.mouseButtons[event.button]] = false;
-  };
 
-  F.mouseOnCanvas = function (canvas) {
+  F.mouseOnCanvas = function (canvas, ignoreOffset) {
     var rect = canvas.getBoundingClientRect();
+    if (ignoreOffset) {
+      rect = {left: 0, top: 0};
+    }
     return (
       F.mouse.x > rect.left &&
       F.mouse.y > rect.top &&
@@ -916,7 +1012,9 @@ F.toHex = function (c) {
   if (c || c == 0) {
     let hex = c.toString(16);
     if (hex) {
-      return hex.length == 1 ? "0" + hex.toUpperCase() : hex.toUpperCase();
+      return hex.length == 1
+        ? "0" + hex.toUpperCase()
+        : hex.toUpperCase();
     }
   }
   return "FF";
@@ -939,7 +1037,9 @@ F.rgb2hex = function (r, g, b, a) {
   if (a == undefined) {
     return "#" + F.toHex(r) + F.toHex(g) + F.toHex(b);
   }
-  return "#" + F.toHex(r) + F.toHex(g) + F.toHex(b) + F.toHex(a);
+  return (
+    "#" + F.toHex(r) + F.toHex(g) + F.toHex(b) + F.toHex(a)
+  );
 };
 
 F.rgb2hsv = function (rgb) {};
