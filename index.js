@@ -890,9 +890,43 @@ F.fillCanvas = function (ctx, color) {
   ctx.fillStyle = old;
 };
 
-F.fillRoundRect = function (ctx, x, y, w, h, radius) {};
+F.fillRoundRect = function (ctx, x, y, w, h, radius) {
+  if (!radius && radius !== 0) {
+    radius = Math.min(w, h) / 2;
+  }
+  if (w < 2 * radius) {
+    radius = w / 2;
+  }
+  if (h < 2 * radius) {
+    radius = h / 2;
+  }
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.arcTo(x + w, y, x + w, y + h, radius);
+  ctx.arcTo(x + w, y + h, x, y + h, radius);
+  ctx.arcTo(x, y + h, x, y, radius);
+  ctx.arcTo(x, y, x + w, y, radius);
+  ctx.fill();
+};
 
-F.strokeRoundRect = function (ctx, x, y, w, h, radius) {};
+F.strokeRoundRect = function (ctx, x, y, w, h, radius) {
+  if (!radius && radius !== 0) {
+    radius = Math.min(w, h) / 2;
+  }
+  if (w < 2 * radius) {
+    radius = w / 2;
+  }
+  if (h < 2 * radius) {
+    radius = h / 2;
+  }
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.arcTo(x + w, y, x + w, y + h, radius);
+  ctx.arcTo(x + w, y + h, x, y + h, radius);
+  ctx.arcTo(x, y + h, x, y, radius);
+  ctx.arcTo(x, y, x + w, y, radius);
+  ctx.stroke();
+};
 
 F.getCanvasPixel = function (canvas, x, y) {};
 
