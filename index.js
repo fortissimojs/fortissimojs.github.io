@@ -1151,6 +1151,15 @@ F.rgb2hsv = function (r, g, b, a) {
       h /= 6 * d;
       break;
   }
+
+  if (a != undefined) {
+    return {
+      h: Math.round(h * 100),
+      s: Math.round(s * 100),
+      v: Math.round(v * 100),
+      a,
+    };
+  }
   return {
     h: Math.round(h * 100),
     s: Math.round(s * 100),
@@ -1162,7 +1171,7 @@ F.hsv2hex = function (hsv) {
   return F.rgb2hex(F.hsv2rgb(hsv));
 };
 
-F.hsv2rgb = function (h, s, v) {
+F.hsv2rgb = function (h, s, v, a) {
   if (arguments.length === 1) {
     if (h instanceof Object) {
       (s = h.s), (v = h.v), (h = h.h);
@@ -1205,6 +1214,15 @@ F.hsv2rgb = function (h, s, v) {
       (r = v), (g = p), (b = q);
       break;
   }
+
+  if (a != undefined) {
+    return {
+      r: Math.round(r * 255),
+      g: Math.round(g * 255),
+      b: Math.round(b * 255),
+      a: a,
+    };
+  }
   return {
     r: Math.round(r * 255),
     g: Math.round(g * 255),
@@ -1212,7 +1230,13 @@ F.hsv2rgb = function (h, s, v) {
   };
 };
 
-F.randomHex = function () {};
+F.randomHex = function () {
+  return F.rgb2hex(
+    F.randomInt(0, 256),
+    F.randomInt(0, 256),
+    F.randomInt(0, 256),
+  );
+};
 
 F.cssColors = {};
 
