@@ -890,6 +890,10 @@ F.fillCanvas = function (ctx, color) {
   ctx.fillStyle = old;
 };
 
+F.clearCanvas = function (ctx) {
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+};
+
 F.fillRoundRect = function (ctx, x, y, w, h, radius) {
   if (!radius && radius !== 0) {
     radius = Math.min(w, h) / 2;
