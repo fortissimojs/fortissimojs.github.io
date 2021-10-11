@@ -873,11 +873,21 @@ F.collide.circle2circle = function (a, b) {
 
 F.collide.polygons = function (a, b) {};
 
-F.coords2angle = function (x1, y1, x2, y2) {};
+F.distance = function (x1, y1, x2, y2) {
+  return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
+};
 
-F.distance = function (x1, y1, x2, y2) {};
+//? Why does this need Math.PI * 1.5 ?
+F.coords2angle = function (x1, y1, x2, y2) {
+  return Math.PI * 1.5 + Math.atan2(x2 - x1, y1 - y2);
+};
 
-F.angle2coords = function (x1, y1, angle, distance) {};
+F.angle2coords = function (x, y, angle, distance) {
+  return {
+    x: x + distance * Math.cos(angle),
+    y: y + distance * Math.sin(angle),
+  };
+};
 
 F.trace = function (x1, y1, x2, y2, density) {};
 
