@@ -978,8 +978,8 @@ if (
   F.setMouse = function (event) {
     var {offsetLeft, offsetTop} = F.mouse;
     F.mouse = {
-      x: event.clientX - offsetLeft,
-      y: event.clientY - offsetTop,
+      x: event.clientX - (offsetLeft || 0),
+      y: event.clientY - (offsetTop || 0),
       r: 1,
       w: 1,
       h: 1,
