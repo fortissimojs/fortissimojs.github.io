@@ -992,9 +992,9 @@ F.shuffle("abcdef"); // "daebcf"
 
 ---
 
-## F.output()
+## F.stringify()
 
-> **NOT CURRENTLY IMPLEMENTED**
+> **NOT CURRENTLY IMPLEMENTED FULLY**
 
 Output a simple object or array neatly without converting to JSON.
 

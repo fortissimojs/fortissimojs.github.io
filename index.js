@@ -845,7 +845,55 @@ F.shuffle = function (array) {
 
 /* Object */
 
-F.output = function (object) {};
+F.stringify = function (object, sepA, sepB, sepC) {
+  if (!object) {
+    return undefined;
+  }
+
+  if (sepA == undefined) {
+    sepA = ": ";
+  }
+  if (sepB == undefined) {
+    sepB = "\n";
+  }
+  if (sepC == undefined) {
+    sepC = "    ";
+  }
+
+  var output = [];
+  for (var i in object) {
+    var value = object[i];
+    if (value !== null && typeof value === "object") {
+      if (value instanceof Array) {
+        if (value.length > 0) {
+          value =
+            sepB +
+            sepC +
+            F.stringify(value, sepA, sepB + sepC);
+        } else {
+          value = "[]";
+        }
+      } else {
+        if (Object.keys(value).length > 0) {
+          value =
+            sepB +
+            sepC +
+            F.stringify(value, sepA, sepB + sepC);
+        } else {
+          value = "{}";
+        }
+      }
+    }
+
+    if (object instanceof Array) {
+      output.push(value);
+      continue;
+    }
+
+    output.push([i] + sepA + value);
+  }
+  return output.join(sepB);
+};
 
 F.sort = function (object, callback) {};
 
@@ -1252,9 +1300,130 @@ F.cssColors = {};
 
 /* HTML Element / Document */
 
-F.url = {};
+F.URL = {};
 
-F.getUrl = function () {};
+F.getURL = function () {
+  var full = location.href;
+  var protocol = full.split(":")[0];
+
+  var filepath = full.split("?")[0].split("/").slice(3);
+
+  var file = filepath.slice(-1)[0];
+
+  var status = undefined;
+  var online = false;
+  var secure = false;
+  switch (protocol) {
+    case "http":
+      status = "public";
+      break;
+    case "https":
+      status = "public";
+      secure = true;
+      break;
+    case "file":
+      status = "file";
+      break;
+    default: {
+      status = "other";
+    }
+  }
+  if (status === "public") {
+    if (name === "localhost") {
+      status = "localhost";
+    } else {
+      online = true;
+    }
+  }
+
+  var host = full.split("/")[2].split(":")[0].split(".");
+  
+  var domain = host.slice(1).join(".");
+  var subdomain = host[0];
+  if (!domain && subdomain) {
+    domain = subdomain;
+    subdomain = null;
+  }
+  if (!host || !host[0]) {
+    host = null;
+    domain = null;
+    subdomain = null;
+  }
+  
+  var port = full.split("/")[2].split(":");
+  if (port.length < 2) {
+    port = null;
+  } else {
+    port = port.slice(-1)[0];
+  }
+
+  var search = full.split("?");
+  var query = {};
+  if (search.length < 2) {
+    search = null;
+  } else {
+    search = search.slice(1).join("?").split("#")[0];
+
+    var array = search.split("&");
+    for (var i in array) {
+      var string = array[i].split("=");
+      if (string.length < 1 || !string[0]) {
+        continue;
+      }
+      if (string.length === 1) {
+        value = true;
+      } else {
+        value = string[1];
+        if (parseInt(value) == value) {
+          value = parseInt(value);
+        } else if (parseFloat(value) == value) {
+          value = parseFloat(value);
+        } else if (F.isJSON(value)) {
+          value = JSON.parse(value);
+        } else if (value === "true") {
+          value = true;
+        } else if (value === "false") {
+          value = false;
+        } else if (value === "null") {
+          value = null;
+        }
+      }
+      query[string[0]] = value;
+    }
+  }
+
+  var fragment = full.split("#");
+  if (fragment.length < 2) {
+    fragment = null;
+  } else {
+    fragment = fragment.slice(1)[0];
+  }
+
+  F.URL = {
+    full,
+    path: filepath.slice(0, -1).join("/"),
+    filepath: filepath.slice(0).join("/"),
+    file,
+    filename: file.split(".").slice(0, -1).join("."),
+    extension: file.split(".").slice(-1)[0],
+    protocol,
+    secure,
+    status,
+    online,
+    host: host ? host.join(".") : null,
+    domain,
+    subdomain,
+    name: host ? host[1] : null,
+    tld: host ? host.slice(2) : null,
+    port,
+    search,
+    query,
+    fragment,
+  };
+};
+F.getURL();
+
+F.setQuery = function (key, value) {};
 
 F.setCaret = function (element, position) {};
 
