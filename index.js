@@ -640,6 +640,24 @@ F.operate = {
 
 F.average = {};
 
+F.average.mean = function () {
+  var numbers = arguments;
+  if (numbers[0] instanceof Array) {
+    numbers = numbers[0];
+  }
+
+  var sum = 0;
+  var amount = 0;
+  for (var i in numbers) {
+    if (!isNaN(parseFloat(numbers[i]))) {
+      sum += parseFloat(numbers[i]);
+      amount++;
+    }
+  }
+
+  return sum / amount;
+}
+
 F.addCommas = function (number, ignoreDecimals) {
   if (isNaN(parseFloat(number))) {
     return NaN;
