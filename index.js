@@ -1041,7 +1041,19 @@ F.scanCanvas = function (canvas) {};
 /* Event listeners */
 
 if (F.env.DOM) {
-  F.getKeyCodes = function (object) {};
+  F.parseControls = function (object) {
+    var active = {};
+    I: for (var i in object) {
+      for (var j in object[i]) {
+        if (F.keys[object[i][j]]) {
+          active[i] = true;
+          continue I;
+        }
+      }
+      active[i] = "";
+    }
+    return active;
+  };
 
   F.keys = {};
   window.onkeydown = function (event) {
@@ -1050,9 +1062,9 @@ if (F.env.DOM) {
     F.keys[event.keyCode] = true;
   };
   window.onkeyup = function (event) {
-    F.keys[event.key] = false;
-    F.keys[event.code] = false;
-    F.keys[event.keyCode] = false;
+    delete F.keys[event.key];
+    delete F.keys[event.code] ;
+    delete F.keys[event.keyCode] ;
   };
 
   F.mouse = {};
