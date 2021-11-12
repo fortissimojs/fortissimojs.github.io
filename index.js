@@ -939,7 +939,29 @@ F.stringify = function (object, sepA, sepB, sepC) {
   return output.join(sepB);
 };
 
-F.sort = function (object, callback) {};
+F.sort = function (object, callback) { };
+
+F.deepCopy = function (object) {
+  if (typeof object == "object") {
+    if (object instanceof Array) {
+      var l = object.length;
+      var r = new Array(l);
+      for (var i = 0; i < l; i++) {
+        r[i] = F.deepCopy(object[i]);
+      }
+      return r;
+    } else {
+      var r = {};
+      r.prototype = object.prototype;
+      for (var k in object) {
+        r[k] = F.deepCopy(object[k]);
+      }
+      return r;
+    }
+  }
+  return object;
+}
+
 
 /* Game */
 
