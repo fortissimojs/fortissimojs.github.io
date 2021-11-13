@@ -1178,6 +1178,10 @@ F.rgb2hsv = function (r, g, b, a) {
   if (r == undefined || g == undefined || b == undefined) {
     throw new F.InputError("Unknown RGB format");
   }
+  r = Math.floor(r);
+  g = Math.floor(g);
+  b = Math.floor(b);
+  a = Math.floor(a);
 
   var max = Math.max(r, g, b),
     min = Math.min(r, g, b),
@@ -1218,8 +1222,25 @@ F.rgb2hsv = function (r, g, b, a) {
   };
 };
 
-F.hsv2hex = function (hsv) {
-  return F.rgb2hex(F.hsv2rgb(hsv));
+F.hsv2hex = function (h, s, v, a) {
+  if (arguments.length === 1) {
+    if (h instanceof Object) {
+      (s = h.s), (v = h.v), (h = h.h);
+    } else if (h instanceof Array) {
+      (s = h[1]), (v = h[2]), (h = h[0]);
+    } else {
+      throw new F.InputError("Unknown HSV format");
+    }
+  }
+  if (h == undefined || s == undefined || v == undefined) {
+    throw new F.InputError("Unknown HSV format");
+  }
+  h = Math.floor(h);
+  s = Math.floor(s);
+  v = Math.floor(v);
+  a = Math.floor(a);
+
+  return F.rgb2hex(F.hsv2rgb(h, s, v, a));
 };
 
 F.hsv2rgb = function (h, s, v, a) {
@@ -1235,6 +1256,10 @@ F.hsv2rgb = function (h, s, v, a) {
   if (h == undefined || s == undefined || v == undefined) {
     throw new F.InputError("Unknown HSV format");
   }
+  h = Math.floor(h);
+  s = Math.floor(s);
+  v = Math.floor(v);
+  a = Math.floor(a);
 
   var r, g, b, i, f, p, q, t;
   h /= 100;
