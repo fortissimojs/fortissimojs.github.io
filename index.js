@@ -680,7 +680,15 @@ F.addCommas = function (number, ignoreDecimals) {
   return string + (decimals ? "." + decimals : "");
 };
 
-F.snap = function (number, array, callback) {};
+F.snap = function (number, array, callback) { };
+
+F.pythag = function (a, b) {
+  return Math.sqrt(a ** 2 + b ** 2);
+}
+
+F.apythag = function (a, c) {
+  return Math.sqrt(c ** 2 - a ** 2);
+};
 
 /* Date / Time */
 
