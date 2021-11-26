@@ -892,6 +892,21 @@ F.deepCopy = function (object) {
   return object;
 };
 
+F.decircleJSON = function (object) {
+  var cache = [];
+  return JSON.parse(
+    JSON.stringify(object, (key, val) => {
+      if (typeof val === "object" && val !== null) {
+        if (cache.includes(val)) {
+          return;
+        }
+        cache.push(val);
+      }
+      return val;
+    }),
+  );
+};
+
 /* Game */
 
 F.collide = {};
@@ -1291,12 +1306,12 @@ F.hsv2rgb = function (h, s, v, a) {
       break;
   }
 
-  if (a != undefined) {
+  if (!isNaN(a)) {
     return {
       r: Math.round(r * 255),
       g: Math.round(g * 255),
       b: Math.round(b * 255),
-      a: a,
+      a,
     };
   }
   return {
