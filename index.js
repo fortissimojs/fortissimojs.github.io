@@ -929,7 +929,7 @@ F.distance = function (x1, y1, x2, y2) {
   return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
 };
 
-//? Why does this need Math.PI * 1.5 ?
+//? Why does this need Math.PI * 1.5 ? Switch x/y ?
 F.coords2angle = function (x1, y1, x2, y2) {
   return Math.PI * 1.5 + Math.atan2(x2 - x1, y1 - y2);
 };
