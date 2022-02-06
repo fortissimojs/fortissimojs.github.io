@@ -456,7 +456,6 @@ F.randomFloat = function (min, max) {
   }
   max = Math.max(min, max);
   min = Math.min(min, max);
-  // min--;
   return Math.random() * (max - min) + min;
 };
 
@@ -521,7 +520,7 @@ F.border = function (number, min, max) {
 };
 
 F.wrap = function (number, min, max) {
-  return F.operate.amod(number + min, max) - min;
+  return F.amod(number - min, max - min) + min;
 };
 
 F.hcf = function (a, b) {
@@ -546,19 +545,19 @@ F.ordinal = function (number) {
   if (isNaN(number)) {
     return NaN;
   }
-  var ordinal = "th";
+  number = Math.floor(number);
   switch (number.toString().slice(-1)) {
     case "1":
-      ordinal = "st";
+      return number + "st";
       break;
     case "2":
-      ordinal = "nd";
+      return number + "nd";
       break;
     case "3":
-      ordinal = "rd";
+      return number + "rd";
       break;
   }
-  return number + ordinal;
+  return number + "th";
 };
 
 F.bool2bin = function (...values) {
@@ -569,41 +568,20 @@ F.bool2bin = function (...values) {
   return string;
 };
 
-F.operate = {
-  amod: function (a, b) {
+F.amod = function (a, b) {
     return a - b * Math.floor(a / b);
-  },
-  sin: function (x) {
-    return (
-      Math.min(1, Math.floor(F.amod((2 * x) / Math.PI - 1, 4) / 2)) *
-        (Math.floor(F.amod((2 * x) / Math.PI, 2)) *
-          (Math.floor((2 * x) / Math.PI) - (2 * x) / Math.PI) ** 2 +
-          Math.floor(F.amod((2 * x) / Math.PI + 1, 2)) *
-            (2 - (Math.floor((-2 * x) / Math.PI) + (2 * x) / Math.PI) ** 2)) +
-      Math.min(1, Math.floor(F.amod((2 * x) / Math.PI + 1, 4) / 2)) *
-        (Math.floor(F.amod((-2 * x) / Math.PI, 2)) *
-          (Math.floor((-2 * x) / Math.PI) + (2 * x) / Math.PI) ** 2 +
-          Math.floor(F.amod((-2 * x) / Math.PI + 1, 2)) *
-            (2 - (Math.floor((2 * x) / Math.PI) - (2 * x) / Math.PI) ** 2)) -
-      1
-    );
-  },
-  cos: x => F.sin(x - Math.PI / 2),
 };
 
-F.average = {};
-
-F.average.mean = function () {
-  var numbers = arguments;
-  if (numbers[0] instanceof Array) {
-    numbers = numbers[0];
+F.mean = function (...values) {
+  if (values[0] instanceof Array) {
+    values = values[0];
   }
 
   var sum = 0;
   var amount = 0;
-  for (var i in numbers) {
-    if (!isNaN(parseFloat(numbers[i]))) {
-      sum += parseFloat(numbers[i]);
+  for (var i in values) {
+    if (!isNaN(parseFloat(values[i]))) {
+      sum += parseFloat(values[i]);
       amount++;
     }
   }
@@ -640,7 +618,7 @@ F.apythag = function (a, c) {
 
 F.sleep = function (time) {
   return new Promise(resolve => {
-    setTimeout(resolve, time * 1000);
+    setTimeout(resolve, time);
   });
 };
 

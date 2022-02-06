@@ -33,8 +33,11 @@ git clone https://github.com/fortissimojs/fortissimojs.github.io
 ```
 
 # Documentation
-
 ## F.fill
+
+Tags: _String_
+
+**Similar:**: [F.center](#fcenter)
 
 Fill a string with a character to one side.
 
@@ -42,12 +45,12 @@ Fill a string with a character to one side.
 
 ### Arguments
 
-| Name      | Type      | Description                                 | Default                    |
-| --------- | --------- | ------------------------------------------- | -------------------------- |
-| `string`  | `String`  | Input string                                | Empty String               |
-| `amount`  | `Integer` | Amount of characters to fill with character | `10`                       |
-| `char`    | `String`  | Character to fill space with                | `" "` Whitespace character |
-| `reverse` | `Boolean` | Reverse string alignment                    | `false`                    |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _string_ | `String` | Input string | `""` (Empty String) |
+| _amount_ | `Integer` | Amount of characters to fill with character | `10` |
+| _char_ | `String` | Character to fill space with | `" "` (Space) |
+| _reverse_ | `Boolean` | Reverse string alignment | `false` |
 
 ### Example
 
@@ -61,9 +64,13 @@ F.fill("testing", 4); // "testing"
 
 ---
 
-## F.center()
+## F.center
+
+Tags: _String_
 
 **Not**: _centre_
+
+**Similar:**: [F.fill](#ffill)
 
 Centers a string between characters.
 
@@ -71,12 +78,12 @@ Centers a string between characters.
 
 ### Arguments
 
-| Name     | Type      | Description                                 | Default                  |
-| -------- | --------- | ------------------------------------------- | ------------------------ |
-| `string` | `String`  | Input string                                | Empty String             |
-| `amount` | `Integer` | Amount of characters to fill with character | `10`                     |
-| `char`   | `String`  | Character to fill space with                | " " Whitespace character |
-| `left`   | `Boolean` | Prioritize left side for odd character      | `false`                  |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _string_ | `String` | Input string | `""` (Empty String) |
+| _amount_ | `Integer` | Amount of characters to fill with character | `10` |
+| _char_ | `String` | Character to fill space with | `" "` (Space) |
+| _left_ | `Boolean` | Prioritize left side for odd character | `false` |
 
 ### Example
 
@@ -92,7 +99,9 @@ F.center("testing", 4, "_"); // "testing"
 
 ---
 
-## F.isJSON()
+## F.isJSON
+
+Tags: _String_, _Test_
 
 **Not**: _isJson_
 
@@ -102,9 +111,9 @@ Tests whether a string is valid JSON.
 
 ### Arguments
 
-| Name     | Type     | Description          | Default      |
-| -------- | -------- | -------------------- | ------------ |
-| `string` | `String` | Input string to test | Empty String |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _string_ | `String` | Input string | `""` (Empty String) |
 
 ### Example
 
@@ -122,7 +131,9 @@ F.isJSON('{"a": true}'); // true
 
 ---
 
-## F.isURL()
+## F.isURL
+
+Tags: _String_, _Test_
 
 **Not**: _isUrl_
 
@@ -132,9 +143,9 @@ Tests whether a string is a valid URL.
 
 ### Arguments
 
-| Name     | Type     | Description          | Default      |
-| -------- | -------- | -------------------- | ------------ |
-| `string` | `String` | Input string to test | Empty String |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _string_ | `String` | Input string | `""` (Empty String) |
 
 ### Example
 
@@ -154,7 +165,9 @@ F.isURL("https://localhost:8080"); // false
 
 ---
 
-## F.capitalize()
+## F.capitalize
+
+Tags: _String_
 
 **Not**: _capitalise_
 
@@ -164,11 +177,11 @@ Capitalizes first letter of all words in a string.
 
 ### Arguments
 
-| Name       | Type      | Description                                                         | Default      |
-| ---------- | --------- | ------------------------------------------------------------------- | ------------ |
-| `string`   | `String`  | Input string                                                        | Empty String |
-| `allWords` | `Boolean` | Capitalize all words, rather than just the first                    | `false`      |
-| `keepCase` | `Boolean` | Leave remaining letters in original case, rather than lowering them | `false`      |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _string_ | `String` | Input string | `""` (Empty String) |
+| _allWords_ | `Boolean` | Capitalize all words, rather than just the first | `false` |
+| _preserveCase_ | `Boolean` | Leave remaining letters in original case, rather than lowering them | `false` |
 
 ### Example
 
@@ -184,12 +197,15 @@ F.capitalize("the QUICK brown fOx", true, true); // "The QUICK Brown FOx"
 
 ---
 
-## F.format()
+## F.format
 
-Formats a string by replacing variable names with values.
-Similar to `` `${variable}` `` in native JS, except without `$` dollar.
+Tags: _String_
 
-### Ways to use
+Formats a string by replacing variable names with values. Similar to `` `${variable}` `` in native JS, except without `$` dollar.
+
+**Returns**: `String`
+
+### Usage
 
 Free arguments: `F.format(string, a, b, c)`
 
@@ -215,14 +231,12 @@ Direct Object: `F.format(string, {a, b, c})`
 
 Values are value of variables, names to replace are the names of the variables (`a`, `b`, `c`)
 
-**Returns**: `String`
-
 ### Arguments
 
-| Name         | Type                           | Description                                                           | Default      |
-| ------------ | ------------------------------ | --------------------------------------------------------------------- | ------------ |
-| `string`     | `String`                       | Input string                                                          | Empty String |
-| `...replace` | `Arguments`, `Array`, `Object` | List of values to replace in string (`String`, otherwise stringified) | Empty Array  |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _string_ | `String` | Input string | `""` (Empty String) |
+| _(...)replace_ | `(Arguments, Array, Object) <String>` | List of values to replace in string | `[]` (Empty Array) |
 
 ### Example
 
@@ -230,14 +244,6 @@ Values are value of variables, names to replace are the names of the variables (
 // All return: "This is a string. Value: foo"
 
 F.format("This is a {0}. Value: {1}", "string", "foo");
-
-var thisName = "string";
-var whatIsTheValue = "foo";
-F.format(
-  "This is a {thisName}. Value: {whatIsTheValue}",
-  thisName,
-  whatIsTheValue,
-);
 
 F.format("This is a {0}. Value: {1}", ["string", "foo"]);
 
@@ -257,41 +263,51 @@ F.format("This is a {thisName}. Value: {whatIsTheValue}", object);
 
 var thisName = "string";
 var whatIsTheValue = "foo";
-F.format("This is a {thisName}. Value: {whatIsTheValue}", {
+F.format(
+  "This is a {thisName}. Value: {whatIsTheValue}",
   thisName,
   whatIsTheValue,
-});
+);
+
+F.format("This is a {0}. Value: {1}", [
+  thisName,
+  whatIsTheValue,
+]);
 ```
 
 ---
 
-## F.escapeHTML()
+## F.escapeHTML
 
-**Not**: _escapeHTML_
+Tags: _String_
 
-Replace characters with HTML codes, to insert to HTML safely.
+**Not**: _escapeHtml_
+
+Sanitize string with HTML codes, to insert to HTML safely.
 
 **Returns**: `String`
 
 ### Arguments
 
-| Name     | Type     | Description  | Default      |
-| -------- | -------- | ------------ | ------------ |
-| `string` | `String` | Input string | Empty String |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _string_ | `String` | Input string | `""` (Empty String) |
 
 ### Example
 
 ```js
 F.escapeHTML("400 > 3"); // "400 &gt; 3"
 
-F.escapeHTML("400 &gt; 3"); // "400 &gt; 3"
+F.escapeHTML("400 &gt; 3"); // "400 &amp;gt; 3"
 
 F.escapeHTML("<script> hack(); </script>"); // "&lt;script&gt; hack(); &lt;/script&gt;"
 ```
 
 ---
 
-## F.truncate()
+## F.truncate
+
+Tags: _String_
 
 Cuts a string off after a certain amount of characters. Adds a string to the end, such as an `...` ellipse if it is longer than it needs to be.
 
@@ -299,12 +315,12 @@ Cuts a string off after a certain amount of characters. Adds a string to the end
 
 ### Arguments
 
-| Name          | Type      | Description                                                | Default      |
-| ------------- | --------- | ---------------------------------------------------------- | ------------ |
-| `string`      | `String`  | Input string                                               | Empty String |
-| `length`      | `Integer` | Maximum length for string to be (not including end string) | `20`         |
-| `char`        | `String`  | Character / String to add to end                           | Empty String |
-| `includeChar` | `Boolean` | Cut length of character out if string is longer            | `false`      |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _string_ | `String` | Input string | `""` (Empty String) |
+| _length_ | `Integer` | Maximum length for string to be (not including ending characters, unless specified below) | `20` |
+| _char_ | `String` | Character / String to add to end | `"..."` |
+| _includeChar_ | `Boolean` | Include ending characters in string length | `false` |
 
 ### Example
 
@@ -322,7 +338,9 @@ F.truncate("foo bar", 5, "...", true); // "fo..."
 
 ---
 
-## F.replace()
+## F.replace
+
+Tags: _String_
 
 Replaces all characters in a string with another character.
 
@@ -330,28 +348,28 @@ Replaces all characters in a string with another character.
 
 ### Arguments
 
-| Name        | Type      | Description                                            | Default      |
-| ----------- | --------- | ------------------------------------------------------ | ------------ |
-| `string`    | `String`  | Input string                                           | Empty String |
-| `old`       | `String`  | Character to replace                                   | Empty String |
-| `char`      | `String`  | Character to replace with                              | Empty String |
-| `onlyFirst` | `Boolean` | Only replace first instance, rather that replacing all | `false`      |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _string_ | `String` | Input string | `""` (Empty String) |
+| _old_ | `String` | Character to replace | `""` (Empty String) |
+| _char_ | `String` | Character to replace with | `""` (Empty String) |
+| _onlyFirst_ | `Boolean` | Only replace first instance, rather that replacing all | `false` |
 
 ### Example
 
 ```js
+F.replace("foo bar test", "o", "_"); // "f__ bar test"
 
+F.replace("foo bar test", "t", "*"); // "foo bar *es*"
+
+F.replace("foo bar test", "t", "*", true); // "foo bar *est"
 ```
 
 ---
 
-F.replace("foo bar test", "o", "\_"); // "f\_\_ bar test"
+## F.hash
 
-F.replace("foo bar test", "t", "*"); // "foo bar *es\*"
-
-F.replace("foo bar test", "t", "*", true); // "foo bar *est"
-
-## F.hash()
+Tags: _String_, _Number_
 
 Converts a string to its hash value.
 
@@ -359,9 +377,9 @@ Converts a string to its hash value.
 
 ### Arguments
 
-| Name     | Type     | Description  | Default      |
-| -------- | -------- | ------------ | ------------ |
-| `string` | `String` | Input string | Empty String |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _string_ | `String` | Input string | `""` (Empty String) |
 
 ### Example
 
@@ -375,7 +393,9 @@ F.hash("Blah blah blah 123"); // 1764773123
 
 ---
 
-## F.redact()
+## F.redact
+
+Tags: _String_
 
 Redact the last part of a string, or all of it.
 
@@ -383,11 +403,11 @@ Redact the last part of a string, or all of it.
 
 ### Arguments
 
-| Name     | Type      | Description                  | Default      |
-| -------- | --------- | ---------------------------- | ------------ |
-| `string` | `String`  | Input string                 | Empty String |
-| `amount` | `Integer` | Amount of visible characters | `3`          |
-| `char`   | `String`  | Character to replace with    | `"*"`        |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _string_ | `String` | Input string | `""` (Empty String) |
+| _amount_ | `Integer` | Maximum amount of visible characters | `3` |
+| _char_ | `String` | Character to replace with | `"*"` |
 
 ### Example
 
@@ -403,7 +423,11 @@ F.redact("username123", 40, "#"); // "username123"
 
 ---
 
-## F.splitAt()
+## F.splitEvery
+
+Tags: _String_, _Array_
+
+**Not**: _splitAt_
 
 Splits a string every `n` characters; Splits into groups of `n`.
 
@@ -411,20 +435,24 @@ Splits a string every `n` characters; Splits into groups of `n`.
 
 ### Arguments
 
-| Name     | Type      | Description  | Default      |
-| -------- | --------- | ------------ | ------------ |
-| `string` | `String`  | Input string | Empty String |
-| `number` | `Integer` | Group size   | `3`          |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _string_ | `String` | Input string | `""` (Empty String) |
+| _number_ | `Integer` | Group size | `3` |
 
 ### Example
 
 ```js
-F.splitAt("the quick brown fox jumped", 4); // ["the ", "quic", "k br", "own ", "fox ", "jump", "ed"]
+F.splitEvery("the quick brown fox jumped", 4); // ["the ", "quic", "k br", "own ", "fox ", "jump", "ed"]
 ```
 
 ---
 
-## F.randomFloat()
+## F.randomFloat
+
+Tags: _Number_, _Random_
+
+**Similar:**: [F.randomInt](#frandomint), [F.randomChoice](#frandomchoice)
 
 Returns a random float between two numbers.
 
@@ -432,10 +460,10 @@ Returns a random float between two numbers.
 
 ### Arguments
 
-| Name  | Type    | Description   | Default |
-| ----- | ------- | ------------- | ------- |
-| `min` | `Float` | Minimum value | `0`     |
-| `max` | `Float` | Maximum value | `1`     |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _number_ | `Number` | Minimum value | `NaN` |
+| _number_ | `Number` | Maximum value | `NaN` |
 
 ### Example
 
@@ -447,7 +475,11 @@ F.randomFloat(100, 200); // 116.58609216903817
 
 ---
 
-## F.randomInt()
+## F.randomInt
+
+Tags: _Number_, _Random_
+
+**Similar:**: [F.randomFloat](#frandomfloat), [F.randomChoice](#frandomchoice)
 
 Returns a random integer between two numbers.
 
@@ -455,32 +487,36 @@ Returns a random integer between two numbers.
 
 ### Arguments
 
-| Name  | Type      | Description   | Default |
-| ----- | --------- | ------------- | ------- |
-| `min` | `Integer` | Minimum value | `0`     |
-| `max` | `Integer` | Maximum value | `1`     |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _number_ | `Number` | Minimum value | `NaN` |
+| _number_ | `Number` | Maximum value | `NaN` |
 
 ### Example
 
 ```js
-F.randomFloat(); // 1
+F.randomFloat(); // 0.6284287530575728
 
-F.randomFloat(100, 200); // 117
+F.randomFloat(100, 200); // 116.58609216903817
 ```
 
 ---
 
-## F.randomChoice()
+## F.randomChoice
+
+Tags: _Number_, _Random_, _Array_
+
+**Similar:**: [F.randomFloat](#frandomfloat), [F.randomInt](#frandomint)
 
 Randomly picks an item of an array or character of string.
 
-**Returns**: Item of `Array`, `String`
+**Returns**: `<Any> from (Array, String)`
 
 ### Arguments
 
-| Name    | Type              | Description                             | Default |
-| ------- | ----------------- | --------------------------------------- | ------- |
-| `array` | `Array`, `String` | Array or String of items to choose from | []      |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _array_ | `(Array, String) <Any>` | Input array | `null` |
 
 ### Example
 
@@ -494,7 +530,11 @@ F.randomChoice(["red", "yellow", "green", "blue", "purple"]); // "yellow"
 
 ---
 
-## F.round()
+## F.round
+
+Tags: _Number_, _Round_
+
+**Similar:**: [F.floor](#ffloor), [F.ceil](#fceil)
 
 Rounds a number to an amount of decimal points.
 
@@ -502,10 +542,10 @@ Rounds a number to an amount of decimal points.
 
 ### Arguments
 
-| Name       | Type      | Description              | Default |
-| ---------- | --------- | ------------------------ | ------- |
-| `number`   | `Float`   | Input number             | `NaN`   |
-| `decimals` | `Integer` | Amount of decimal points | `0`     |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _number_ | `Number` | Input number | `NaN` |
+| _decimals_ | `Integer` | Amount of decimal points | `"0"` |
 
 ### Example
 
@@ -521,101 +561,118 @@ F.round(6.53819, 3); // 6.538
 
 ---
 
-## F.floor()
+## F.floor
 
-Floors a number to an amount of decimal points.
+Tags: _Number_, _Round_
 
-**Returns**: `Number`
+**Similar:**: [F.round](#fround), [F.ceil](#fceil)
 
-### Arguments
-
-| Name       | Type      | Description              | Default |
-| ---------- | --------- | ------------------------ | ------- |
-| `number`   | `Float`   | Input number             | `NaN`   |
-| `decimals` | `Integer` | Amount of decimal points | `0`     |
-
-### Example
-
-```js
-F.floor(6.53819); // 6
-
-F.floor(6.53819, 1); // 6.5
-
-F.floor(6.53819, 2); // 6.53
-
-F.floor(6.53819, 3); // 6.538
-```
-
----
-
-## F.ceil()
-
-Ceilings a number to an amount of decimal points.
+Rounds a number down (floor) to an amount of decimal points.
 
 **Returns**: `Number`
 
 ### Arguments
 
-| Name       | Type      | Description              | Default |
-| ---------- | --------- | ------------------------ | ------- |
-| `number`   | `Float`   | Input number             | `NaN`   |
-| `decimals` | `Integer` | Amount of decimal points | `0`     |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _number_ | `Number` | Input number | `NaN` |
+| _decimals_ | `Integer` | Amount of decimal points | `"0"` |
 
 ### Example
 
 ```js
-F.ceil(6.53819); // 7
+F.round(6.53819); // 6
 
-F.ceil(6.53819, 1); // 6.6
+F.round(6.53819, 1); // 6.5
 
-F.ceil(6.53819, 2); // 6.54
+F.round(6.53819, 2); // 6.53
 
-F.ceil(6.53819, 3); // 6.539
+F.round(6.53819, 3); // 6.538
 ```
 
 ---
 
-## F.range()
+## F.ceil
+
+Tags: _Number_, _Round_
+
+**Similar:**: [F.round](#fround), [F.floor](#ffloor)
+
+Rounds a number up (ceil / ceiling) to an amount of decimal points.
+
+**Returns**: `Number`
+
+### Arguments
+
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _number_ | `Number` | Input number | `NaN` |
+| _decimals_ | `Integer` | Amount of decimal points | `"0"` |
+
+### Example
+
+```js
+F.round(6.53819); // 7
+
+F.round(6.53819, 1); // 6.6
+
+F.round(6.53819, 2); // 6.54
+
+F.round(6.53819, 3); // 6.539
+```
+
+---
+
+## F.range
+
+Tags: _Number_, _Array_
 
 Returns an array filled with numbers from minimum to maximum. Does not include maximum.
 
-**Returns**: `Array` of `Number`
+**Returns**: `Array <Number>`
 
 ### Arguments
 
-| Name   | Type     | Description    | Default |
-| ------ | -------- | -------------- | ------- |
-| `min`  | `Number` | Minimum value  | `0`     |
-| `max`  | `Number` | Maximum value  | `10`    |
-| `step` | `Number` | Increase value | `1`     |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _min_ | `Number` | Minimum value | `0` |
+| _max_ | `Number` | Maximum value | `10` |
+| _step_ | `Number` | Increase value | `1` |
+| _includeMin_ | `Boolean` | Include minimum value in output | `true` |
+| _includeMax_ | `Boolean` | Include maximum value in output | `false` |
 
 ### Example
 
 ```js
 F.range(); // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
+F.range(2, 6, 0.5); // [2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5]
+
+// Usage like this would be very slow;
 for (i in F.range(2, 6)) {
   i; // 2, 3, 4, 5
 }
-
-F.range(2, 6, 0.5); // [2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5]
 ```
 
 ---
 
-## F.border()
+## F.border
 
-Applies min, max functions to a number in a more simple way.
+Tags: _Number_
 
-**Returns**: `Float`
+**Similar:**: [F.wrap](#fwrap)
+
+Applies min, max functions to a number in a simpler way.
+
+**Returns**: `Number`
 
 ### Arguments
 
-| Name     | Type     | Description   | Default |
-| -------- | -------- | ------------- | ------- |
-| `number` | `Number` | Input number  | `NaN`   |
-| `min`    | `Number` | Minimum value | `0`     |
-| `max`    | `Number` | Maximum value | `1`     |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _number_ | `Number` | Input number | `NaN` |
+| _min_ | `Number` | Minimum value | `0` |
+| _max_ | `Number` | Maximum value | `1` |
 
 ### Example
 
@@ -629,69 +686,91 @@ F.border(-3, 0, 10); // 0
 
 ---
 
-## F.wrap()
+## F.wrap
 
-Applies modulo (modulus) function to a number in a more simple way.
+Tags: _Number_
 
-**Returns**: `Float`
+**Similar:**: [F.border](#fborder)
+
+Applies a modulo-like function to a number. Different from native `%` operator, see [F.amod](#famod)
+
+**Returns**: `Number`
 
 ### Arguments
 
-| Name     | Type     | Description   | Default |
-| -------- | -------- | ------------- | ------- |
-| `number` | `Number` | Input number  | `NaN`   |
-| `min`    | `Number` | Minimum value | `0`     |
-| `max`    | `Number` | Maximum value | `1`     |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _number_ | `Number` | Input number | `NaN` |
+| _min_ | `Number` | Minimum value | `0` |
+| _max_ | `Number` | Maximum value | `1` |
 
 ### Example
 
 ```js
-F.wrap(5, 0, 10); // 5
+F.wrap(3, 0, 10); // 3
+3 % 10 // 3
 
-F.wrap(12, 0, 10); // 2
+F.wrap(13, 0, 10); // 3
+13 % 10 // 3
 
-F.wrap(-3, 0, 10); // 7
+F.wrap(-7, 0, 10); // 3
+-7 % 10 // -7
+
+F.wrap(-17, 0, 10); // 3
+-17 % 7 // -7
+
+F.wrap(3, 10, 20); // 13
+
+F.wrap(23, 10, 20); // 13
 ```
 
 ---
 
-## F.hcf()
+## F.hcf
+
+Tags: _Number_
 
 **Not**: _gcf_
 
-Gets the highest common factor of two numbers.
+**Similar:**: [F.lcm](#flcm)
+
+Returns the highest common factor of two numbers.
 
 **Returns**: `Integer`
 
 ### Arguments
 
-| Name | Type      | Description   | Default |
-| ---- | --------- | ------------- | ------- |
-| `a`  | `Integer` | First Number  | `NaN`   |
-| `b`  | `Integer` | Second Number | `NaN`   |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _a_ | `Integer` | First number | `NaN` |
+| _b_ | `Integer` | Second number | `NaN` |
 
 ### Example
 
 ```js
 F.hfc(20, 24); // 4
 
-F.hfc(1029, 238); // 7
+F.hfc(1029, 238); // 7]
 ```
 
 ---
 
-## F.lcm()
+## F.lcm
 
-Gets the lowest common multiple of two numbers.
+Tags: _Number_
+
+**Similar:**: [F.hcf](#fhcf)
+
+Returns the lowest common multiple of two numbers.
 
 **Returns**: `Integer`
 
 ### Arguments
 
-| Name | Type      | Description   | Default |
-| ---- | --------- | ------------- | ------- |
-| `a`  | `Integer` | First Number  | `NaN`   |
-| `b`  | `Integer` | Second Number | `NaN`   |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _a_ | `Integer` | First number | `NaN` |
+| _b_ | `Integer` | Second number | `NaN` |
 
 ### Example
 
@@ -703,7 +782,9 @@ F.lcm(1029, 238); // 34986
 
 ---
 
-## F.ordinal()
+## F.ordinal
+
+Tags: _Number_
 
 **Not**: _ordinate_
 
@@ -713,9 +794,9 @@ Adds ordinal notation to number (1*st*, 2*nd*, ...)
 
 ### Arguments
 
-| Name     | Type      | Description  | Default |
-| -------- | --------- | ------------ | ------- |
-| `number` | `Integer` | Input number | NaN     |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _number_ | `Integer` | Input number | `NaN` |
 
 ### Example
 
@@ -731,7 +812,9 @@ F.ordinal(40); // 40th
 
 ---
 
-## F.bool2bin()
+## F.bool2bin
+
+Tags: _Number_, _Convert_
 
 **Not**: _bool_bin_
 
@@ -741,9 +824,9 @@ Converts all arguments to truthy value in binary.
 
 ### Arguments
 
-| Name        | Type                           | Description           | Default   |
-| ----------- | ------------------------------ | --------------------- | --------- |
-| `...values` | `Arguments`, `Array`, `Object` | Any values to convert | undefined |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _(...)values_ | `(Arguments, Array, Object) <Boolean>` | Any values to convert | `null` |
 
 ### Example
 
@@ -755,7 +838,68 @@ F.bool2bin(0, "a", "", [], 123); // "01011"
 
 ---
 
-## F.addCommas()
+## F.amod
+
+Tags: _Number_, _Operate_
+
+Applies a modulo function to a number. Different from native `%` modulo operator when handling negative numbers. An example is [here](https://www.desmos.com/calculator/epznmvbzgf)
+
+**Returns**: `Number`
+
+### Arguments
+
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _a_ | `Number` | Input number | `NaN` |
+| _b_ | `Number` | Divisor | `NaN` |
+
+### Example
+
+```js
+F.amod(3, 0, 10); // 3
+3 % 10 // 3
+
+F.amod(13, 0, 10); // 3
+13 % 10 // 3
+
+F.amod(-7, 0, 10); // 3
+-7 % 10 // -7
+
+F.amod(-17, 0, 10); // 3
+-17 % 7 // -7
+```
+
+---
+
+## F.mean
+
+Tags: _Number_
+
+Calculate the mean average of a list of numbers
+
+**Returns**: `Number`
+
+### Arguments
+
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _(...)values_ | `(Arguments, Array) <Number>` | Input array | `NaN` |
+
+### Example
+
+```js
+F.mean(1, 2, 3, 4, 5) // 3
+
+F.mean(29, 23, 102, 44, 1, 1, -11) // 27
+
+F.mean([29, 23, 102, 44, 1, 1, -11]) // 27
+```
+
+---
+
+## F.addCommas
+
+Tags: _Number_
 
 Inserts commas into numbers every third digit.
 
@@ -763,10 +907,10 @@ Inserts commas into numbers every third digit.
 
 ### Arguments
 
-| Name             | Type      | Description                       | Default |
-| ---------------- | --------- | --------------------------------- | ------- |
-| `number`         | `Number`  | Input number                      | `NaN`   |
-| `ignoreDecimals` | `Boolean` | Add commas to post-decimal digits | `true`  |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _number_ | `Number` | Input number | `NaN` |
+| _ignoreDecimals_ | `Boolean` | Add commas to post-decimal digits (10^(-n)) | `false` |
 
 ### Example
 
@@ -782,47 +926,59 @@ F.addCommas(1931.10293, true); // 1,931.10293
 
 ---
 
-## F.snap()
+## F.pythag
 
-> **NOT CURRENTLY IMPLEMENTED**
+Tags: _Number_
 
-Sets a number to the closest one in an array or object.
+Calculates the hypotenuse of a triangle simply
 
-**Returns**: `Number`, item of `Array`
+**Returns**: `Number`
 
 ### Arguments
 
-| Name       | Type       | Description                                                                    | Default           |
-| ---------- | ---------- | ------------------------------------------------------------------------------ | ----------------- |
-| `number`   | `Number`   | Input number                                                                   | `NaN`             |
-| `array`    | `Array`    | Array of items to select from                                                  | Empty Array       |
-| `callback` | `Function` | How to select closest number. `a` is the input number, `b` is an item of array | `(a, b) => a > b` |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _a_ | `Number` | Side length A | `NaN` |
+| _b_ | `Number` | Side length B | `NaN` |
 
 ### Example
 
 ```js
-F.snap(5, [0, 2, 4, 6, 8, 10]); // 4
+F.pythag(4, 3) // 5
 
-F.snap(5, [
-  [2, "a"],
-  [4, "b"],
-  [7, "c"],
-]); // undefined
-
-F.snap(
-  [5, null],
-  [
-    [2, "a"],
-    [4, "b"],
-    [7, "c"],
-  ],
-  (a, b) => a[1] > b[1],
-); // [4, "b"]
+F.pythag(1093, 194) // 1110.08333020544
 ```
 
 ---
 
-## F.sleep()
+## F.apythag
+
+Tags: _Number_
+
+Calculates the remaining side length of a triangle simply
+
+**Returns**: `Number`
+
+### Arguments
+
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _a_ | `Number` | Side length A | `NaN` |
+| _c_ | `Number` | Hypotenuse | `NaN` |
+
+### Example
+
+```js
+F.pythag(4, 5) // 3
+
+F.apythag(1093, 1110.08333020544) // 194
+```
+
+---
+
+## F.sleep
+
+Tags: _Time_
 
 Async function to wait in seconds.
 
@@ -830,58 +986,70 @@ Async function to wait in seconds.
 
 ### Arguments
 
-| Name   | Type     | Description             | Default |
-| ------ | -------- | ----------------------- | ------- |
-| `time` | `Number` | Time to wait in seconds | `0`     |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _time_ | `Number` | Time to wait in __milliseconds__ | `0` |
 
 ### Example
 
 ```js
 async function () {
-  await F.sleep(1) // Waits 1 second before continuing
+  console.log("Before...")
+  await F.sleep(1000)
+  console.log("After...") // 1 second after
 }
 ```
 
 ---
 
-## F.twelveHour()
+## F.twelveHour
+
+Tags: _Time_
 
 **Not**: _12Hour_
 
 Converts 24 hour number to 12 hour.
 
-**Returns**: ``
+**Returns**: `Number, String`
 
 ### Arguments
 
-| Name   | Type      | Description  | Default |
-| ------ | --------- | ------------ | ------- |
-| `hour` | `Integer` | Input number | `NaN`   |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _hour_ | `Number` | Input hours | `NaN` |
+| _addPeriod_ | `Boolean` | Add the 'AM' or 'PM' to the end | `false` |
 
 ### Example
 
 ```js
 F.twelveHour(11); // 11
+F.twelveHour(11, true); // "11AM"
 
 F.twelveHour(12); // 12
+F.twelveHour(12, true); // "12PM"
 
 F.twelveHour(13); // 1
+F.twelveHour(13, true); // "1PM"
 ```
 
 ---
 
-## F.parseRelativeTime()
+## F.parseRelativeTime
+
+Tags: _Time_
 
 Converts milliseconds into time value with unit (Eg. `10 minutes`).
 
-**Returns**: `Array` of `Number` and `String`
+**Returns**: `String? << callback`
 
 ### Arguments
 
-| Name     | Type       | Description                  | Default     |
-| -------- | ---------- | ---------------------------- | ----------- |
-| `number` | `Integer`  | Input number in milliseconds | `NaN`       |
-| `format` | `Function` | Format of time               | Shown Below |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _number_ | `Integer` | Input number in milliseconds | `NaN` |
+| _format_ | `Function` | How to format the output | _See Below_ |
+
+#### Argument _format_ Default Value
 
 ```js
 array => {
@@ -912,7 +1080,9 @@ F.parseRelativeTime(10280230911); // "3 months"
 
 ---
 
-## F.getWeek()
+## F.getWeek
+
+Tags: _Time_
 
 Get week of the year from Date.
 
@@ -920,9 +1090,9 @@ Get week of the year from Date.
 
 ### Arguments
 
-| Name   | Type   | Description           | Default      |
-| ------ | ------ | --------------------- | ------------ |
-| `date` | `Date` | Date object reference | `new Date()` |
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| _date_ | `Date` | Date object reference | `new Date()` |
 
 ### Example
 
@@ -936,481 +1106,3 @@ F.getWeek(new Date()); // 13
 // 2 Weeks in the future
 F.getWeek(new Date(Date.now() + 1.21e9)); // 15
 ```
-
----
-
-## F.removeItem()
-
-> **NOT CURRENTLY IMPLEMENTED**
-
-Remove item from array.
-
-**Returns**: `Array`
-
-### Arguments
-
-| Name    | Type            | Description    | Default     |
-| ------- | --------------- | -------------- | ----------- |
-| `array` | `Array`         | Input array    | Empty Array |
-| `item`  | Item of `Array` | Item to remove | `undefined` |
-
-### Example
-
-```js
-var arr = [1, 2, 3, 4, 5];
-
-F.removeItem(arr, 3); // [1, 2, 4, 5]
-
-F.removeItem(arr, 5); // [1, 2, 3, 4]
-```
-
----
-
-## F.shuffle()
-
-> **NOT CURRENTLY IMPLEMENTED**
-
-Shuffles an array or string randomly.
-
-**Returns**: `Array` or `String`
-
-### Arguments
-
-| Name    | Type                | Description | Default     |
-| ------- | ------------------- | ----------- | ----------- |
-| `array` | `Array` or `String` | Input array | Empty Array |
-
-### Example
-
-```js
-var arr = [1, 2, 3, 4, 5];
-
-F.shuffle(arr); // [3, 5, 1, 2, 4]
-
-F.shuffle("abcdef"); // "daebcf"
-```
-
----
-
-## F.stringify()
-
-> **NOT CURRENTLY IMPLEMENTED FULLY**
-
-Output a simple object or array neatly without converting to JSON.
-
-**Returns**: `String`
-
-### Arguments
-
-| Name       | Type                | Description                                   | Default             |
-| ---------- | ------------------- | --------------------------------------------- | ------------------- |
-| `object`   | `Object` or `Array` | Input object                                  | Empty Array         |
-| `itemSep`  | `String`            | Seperator between items                       | Linebreak Character |
-| `valueSep` | `String`            | Seperator between key and value (for objects) | `": "`              |
-
-### Example
-
-```js
-F.output({a: 1, b: 3, c: "foo"}, " --- ", " = "); // 'a = 1 --- b = 3 --- c = "foo"'
-
-F.output([1, 3, "foo"], ", "); // '1, 3, "foo"'
-```
-
----
-
-## F.sort()
-
-> **NOT CURRENTLY IMPLEMENTED**
-
-Sort an object by keys like an array.
-
-**Returns**: `Object`
-
-### Arguments
-
-| Name       | Type       | Description          | Default           |
-| ---------- | ---------- | -------------------- | ----------------- |
-| `object`   | `Object`   | Input object         | Empty Object      |
-| `callback` | `Function` | Custom sort function | `(a, b) => a - b` |
-
-### Example
-
-```js
-F.sort({b: 1, a: 4, d: 0.1}); // {a: 4, b: 1, d: 0.1}
-
-F.sort({b: 1, a: 4, d: 0.1}, (a, b) => b - a); // {d: 0.1, b: 1, a: 4}
-```
-
----
-
-## F.collide.rect2rect()
-
-> **NOT CURRENTLY IMPLEMENTED**
-
-Check collision between 2 rectangles.
-
-**Returns**: `Boolean`
-
-### Arguments
-
-| Name | Type                  | Description                                  | Default      |
-| ---- | --------------------- | -------------------------------------------- | ------------ |
-| `a`  | `Object [x, y, w, h]` | First rectangle (x, y are top right corner)  | Empty Object |
-| `b`  | `Object [x, y, w, h]` | Second rectangle (x, y are top right corner) | Empty Object |
-
-### Example
-
-```js
-F.collide.rect2rect(
-  {
-    x: 1,
-    y: 1,
-    w: 3,
-    h: 1,
-  },
-  {
-    x: 2,
-    y: 1.5,
-    w: 0.5,
-    h: 5,
-  },
-); // true
-
-F.collide.rect2rect(
-  {
-    x: 1,
-    y: 1,
-    w: 3,
-    h: 1,
-  },
-  {
-    x: 2,
-    y: 2.5,
-    w: 0.5,
-    h: 5,
-  },
-); // false
-```
-
----
-
-## F.collide.rect2circle()
-
-> **NOT CURRENTLY IMPLEMENTED**
-
-Check collision between rectangle and circle.
-
-**Returns**: `Boolean`
-
-### Arguments
-
-| Name | Type                  | Description                           | Default      |
-| ---- | --------------------- | ------------------------------------- | ------------ |
-| `a`  | `Object [x, y, w, h]` | Rectangle (x, y are top right corner) | Empty Object |
-| `b`  | `Object [x, y, r]`    | Circle (x, y are center)              | Empty Object |
-
-### Example
-
-```js
-F.collide.rect2circle(
-  {
-    x: 1,
-    y: 1,
-    w: 3,
-    h: 1,
-  },
-  {
-    x: 2,
-    y: 1.5,
-    r: 2,
-  },
-); // true
-
-F.collide.rect2circle(
-  {
-    x: 1,
-    y: 1,
-    w: 3,
-    h: 1,
-  },
-  {
-    x: 2,
-    y: 2.5,
-    r: 0.1,
-  },
-); // false
-```
-
----
-
-## F.collide.circle2circle()
-
-> **NOT CURRENTLY IMPLEMENTED**
-
-Check collision between 2 circles.
-
-**Returns**: `Boolean`
-
-### Arguments
-
-| Name | Type               | Description                     | Default      |
-| ---- | ------------------ | ------------------------------- | ------------ |
-| `a`  | `Object [x, y, r]` | First Circle (x, y are center)  | Empty Object |
-| `b`  | `Object [x, y, r]` | Second Circle (x, y are center) | Empty Object |
-
-### Example
-
-```js
-F.collide.circle2circle(
-  {
-    x: 1,
-    y: 1,
-    r: 3,
-  },
-  {
-    x: 2,
-    y: 1.5,
-    r: 2,
-  },
-); // true
-
-F.collide.circle2circle(
-  {
-    x: 1,
-    y: 1,
-    r: 0.5,
-  },
-  {
-    x: 2,
-    y: 2.5,
-    r: 0.1,
-  },
-); // false
-```
-
----
-
-## F.collide.polygons()
-
-> **NOT CURRENTLY IMPLEMENTED**
-
----
-
-## F.coords2angle()
-
-> **NOT CURRENTLY IMPLEMENTED**
-
-Converts coordinates to angle.
-
-**Returns**: `Float`
-
-### Arguments
-
-| Name | Type     | Description               | Default |
-| ---- | -------- | ------------------------- | ------- |
-| `x1` | `Number` | First point X coordinate  | `NaN`   |
-| `y1` | `Number` | First point Y coordinate  | `NaN`   |
-| `x1` | `Number` | Second point X coordinate | `NaN`   |
-| `y1` | `Number` | Second point Y coordinate | `NaN`   |
-
-### Example
-
-```js
-F.coords2angle(1, 1, 2, 2); // [UNKNOWN]
-
-F.coords2angle(1.9, 1.05, 2.1, 3.81); // [UNKNOWN]
-```
-
----
-
-## F.distance()
-
-> **NOT CURRENTLY IMPLEMENTED**
-
-Get pythagorean distance between two points.
-
-**Returns**: `Float`
-
-### Arguments
-
-| Name | Type     | Description               | Default |
-| ---- | -------- | ------------------------- | ------- |
-| `x1` | `Number` | First point X coordinate  | `NaN`   |
-| `y1` | `Number` | First point Y coordinate  | `NaN`   |
-| `x1` | `Number` | Second point X coordinate | `NaN`   |
-| `y1` | `Number` | Second point Y coordinate | `NaN`   |
-
-### Example
-
-```js
-F.distance(1, 1, 2, 2); // [UNKNOWN]
-
-F.distance(1.9, 1.05, 2.1, 3.81); // [UNKNOWN]
-```
-
----
-
-## F.angle2coords()
-
-> **NOT CURRENTLY IMPLEMENTED**
-
-Converts coordinates, angle, and distance into new coordinates.
-
-**Returns**: `Array` of 2 `Floats`
-
-### Arguments
-
-| Name       | Type     | Description                      | Default |
-| ---------- | -------- | -------------------------------- | ------- |
-| `x1`       | `Number` | X coordinate                     | `NaN`   |
-| `y1`       | `Number` | Y coordinate                     | `NaN`   |
-| `angle`    | `Number` | Angle of new coordinate          | `NaN`   |
-| `distance` | `Number` | Distance between two coordinates | `NaN`   |
-
-### Example
-
-```js
-
-```
-
----
-
-## F.trace()
-
-> **NOT CURRENTLY IMPLEMENTED**
-
----
-
-## F.fillCanvas()
-
-> **NOT CURRENTLY IMPLEMENTED**
-
-Fill entire HTML Canvas with a color.
-
-**Returns**: `undefined`
-
-### Arguments
-
-| Name    | Type                       | Description                 | Default               |
-| ------- | -------------------------- | --------------------------- | --------------------- |
-| `ctx`   | `CanvasRenderingContext2D` | Context to render on        | `undefined`           |
-| `color` | `String`                   | HTML compliant color string | Current context color |
-
-### Example
-
-```js
-ctx.fillStyle = "#0F0";
-F.fillCanvas(ctx); // Fills lime
-
-F.fillCanvas(ctx, "#F00"); // Fills red
-
-F.fillCanvas(ctx); // Fills lime
-```
-
----
-
-## F.fillRoundRect()
-
-> NOT CURRENTLY IMPLEMENTED
-
-Fills a rounded rectangle on HTML Canvas. Same as ctx.fillRect, with extra argument for corner radius.
-
-**Returns**: `undefined`
-
-### Arguments
-
-| Name  | Type                       | Description          | Default     |
-| ----- | -------------------------- | -------------------- | ----------- |
-| `ctx` | `CanvasRenderingContext2D` | Context to render on | `undefined` |
-| `x`   | `Number`                   | X coordinate (Right) | `NaN`       |
-| `y`   | `Number`                   | Y coordinate (Top)   | `NaN`       |
-| `w`   | `Number`                   | Width                | `NaN`       |
-| `h`   | `Number`                   | Height               | `NaN`       |
-| `r`   | `Number`                   | Corner Radius        | `NaN`       |
-
-### Example
-
-```js
-ctx.fillRect(100, 100, 50, 80);
-
-ctx.fillRoundRect(100, 100, 50, 80, 20);
-```
-
----
-
-## F.strokeRoundRect()
-
-> NOT CURRENTLY IMPLEMENTED
-
-Strokes a rounded rectangle on HTML Canvas. Same as ctx.strokeRoundRect, with extra argument for corner radius.
-
-**Returns**: `undefined`
-
-### Arguments
-
-| Name  | Type                       | Description          | Default     |
-| ----- | -------------------------- | -------------------- | ----------- |
-| `ctx` | `CanvasRenderingContext2D` | Context to render on | `undefined` |
-| `x`   | `Number`                   | X coordinate (Right) | `NaN`       |
-| `y`   | `Number`                   | Y coordinate (Top)   | `NaN`       |
-| `w`   | `Number`                   | Width                | `NaN`       |
-| `h`   | `Number`                   | Height               | `NaN`       |
-| `r`   | `Number`                   | Corner Radius        | `NaN`       |
-
-### Example
-
-```js
-ctx.strokeRect(100, 100, 50, 80);
-
-ctx.strokeRoundRect(100, 100, 50, 80, 20);
-```
-
----
-
-## F.getCanvasPixel()
-
-> NOT CURRENTLY IMPLEMENTED
-
-Get pixel color of point in HTML Canvas as hex code.
-
-**Returns**: `String`
-
-### Arguments
-
-| Name     | Type                | Description           | Default     |
-| -------- | ------------------- | --------------------- | ----------- |
-| `canvas` | `HTMLCanvasElement` | Canvas to get pixel   | `undefined` |
-| `x`      | `Number`            | X coordinate of pixel | `NaN`       |
-| `y`      | `Number`            | Y coordinate of pixel | `NaN`       |
-
-### Example
-
-```js
-F.fillCanvas(ctx, "#FF0");
-F.getCanvasPixel(canvas, 10, 40); // "#FF0"
-```
-
----
-
-## F.scanCanvas()
-
-> NOT CURRENTLY IMPLEMENTED
-
-Get all pixels of canvas.
-
-**Returns**: 2D `Array` of `Strings`
-
-### Arguments
-
-| Name     | Type                | Description | Default     |
-| -------- | ------------------- | ----------- | ----------- |
-| `canvas` | `HTMLCanvasElement` | Canvas      | `undefined` |
-
-### Example
-
-```js
-F.fillCanvas(ctx, "#FF0");
-F.scanCanvas(canvas); // [["#FF0", "#FF0", "#FF0"...], ["#FF0", "#FF0", "#FF0"...]...]
-```
-
-### Created by [darcy](https://github.com/darccyy) (`/dɐːsi/`)
