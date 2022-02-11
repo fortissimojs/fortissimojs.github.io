@@ -285,6 +285,9 @@ const F = {
 
 /* Environment Tests */
 F.env = {
+  A: (() => {
+    return true;
+  })(),
   DOM: (() => {
     try {
       document;
@@ -309,6 +312,12 @@ F.InputError = class extends Error {
   constructor(message) {
     super(message);
     this.name = "F.InputError";
+  }
+};
+F.EnvError = class extends Error {
+  constructor(message) {
+    super(`Current environment does not support '${message}'`);
+    this.name = "F.EnvError";
   }
 };
 
@@ -569,7 +578,7 @@ F.bool2bin = function (...values) {
 };
 
 F.amod = function (a, b) {
-    return a - b * Math.floor(a / b);
+  return a - b * Math.floor(a / b);
 };
 
 F.mean = function (...values) {
@@ -978,22 +987,86 @@ F.scanCanvas = function (canvas) {};
 
 /* Event listeners */
 
-if (F.env.DOM) {
-  F.parseControls = function (object) {
-    var active = {};
-    I: for (var i in object) {
-      for (var j in object[i]) {
-        if (F.keys[object[i][j]]) {
-          active[i] = true;
-          continue I;
-        }
-      }
-      active[i] = "";
-    }
-    return active;
-  };
+F.parseControls = function (object) {
+  if (!F.env.DOM) {
+    throw F.EnvError("DOM");
+  }
 
-  F.keys = {};
+  var active = {};
+  I: for (var i in object) {
+    for (var j in object[i]) {
+      if (F.keys[object[i][j]]) {
+        active[i] = true;
+        continue I;
+      }
+    }
+    active[i] = "";
+  }
+  return active;
+};
+
+F.keys = {};
+F.mouse = {};
+
+F.setMouse = function (event) {
+  if (!F.env.DOM) {
+    throw F.EnvError("DOM");
+  }
+
+  var { offsetLeft, offsetTop } = F.mouse;
+  var buttons = {};
+  for (var i in F.mouseButtons) {
+    buttons[F.mouseButtons[i]] = F.mouse[F.mouseButtons[i]] || false;
+  }
+  F.mouse = {
+    x: event.clientX - (offsetLeft || 0),
+    y: event.clientY - (offsetTop || 0),
+    r: 1,
+    w: 1,
+    h: 1,
+    offsetLeft,
+    offsetTop,
+    touchDown: false,
+    isFirstTouch: false,
+    ...buttons,
+  };
+};
+
+F.setMouseOffset = function (offset) {
+  if (!F.env.DOM) {
+    throw F.EnvError("DOM");
+  }
+
+  F.mouse.offsetLeft = offset.left || 0;
+  F.mouse.offsetTop = offset.top || 0;
+};
+
+F.mouseOnCanvas = function (canvas, ignoreOffset) {
+  if (!F.env.DOM) {
+    throw F.EnvError("DOM");
+  }
+
+  var rect = canvas.getBoundingClientRect();
+  if (ignoreOffset) {
+    rect = { left: 0, top: 0 };
+  }
+  return (
+    F.mouse.x > rect.left &&
+    F.mouse.y > rect.top &&
+    F.mouse.x < canvas.width + rect.left &&
+    F.mouse.y < canvas.height + rect.top
+  );
+};
+
+F.initEvents = function (skipIfError) {
+  if (!F.env.DOM) {
+    if (skipIfError) {
+      return false;
+    }
+
+    throw new F.EnvError("DOM");
+  }
+
   window.onkeydown = function (event) {
     F.keys[event.key] = true;
     F.keys[event.code] = true;
@@ -1003,33 +1076,6 @@ if (F.env.DOM) {
     delete F.keys[event.key];
     delete F.keys[event.code];
     delete F.keys[event.keyCode];
-  };
-
-  F.mouse = {};
-
-  F.setMouse = function (event) {
-    var { offsetLeft, offsetTop } = F.mouse;
-    var buttons = {};
-    for (var i in F.mouseButtons) {
-      buttons[F.mouseButtons[i]] = F.mouse[F.mouseButtons[i]] || false;
-    }
-    F.mouse = {
-      x: event.clientX - (offsetLeft || 0),
-      y: event.clientY - (offsetTop || 0),
-      r: 1,
-      w: 1,
-      h: 1,
-      offsetLeft,
-      offsetTop,
-      touchDown: false,
-      isFirstTouch: false,
-      ...buttons,
-    };
-  };
-
-  F.setMouseOffset = function (offset) {
-    F.mouse.offsetLeft = offset.left || 0;
-    F.mouse.offsetTop = offset.top || 0;
   };
 
   var mouseEvents = [
@@ -1052,19 +1098,6 @@ if (F.env.DOM) {
     F.mouse[F.mouseButtons[event.button]] = false;
   };
 
-  F.mouseOnCanvas = function (canvas, ignoreOffset) {
-    var rect = canvas.getBoundingClientRect();
-    if (ignoreOffset) {
-      rect = { left: 0, top: 0 };
-    }
-    return (
-      F.mouse.x > rect.left &&
-      F.mouse.y > rect.top &&
-      F.mouse.x < canvas.width + rect.left &&
-      F.mouse.y < canvas.height + rect.top
-    );
-  };
-
   addEventListener("touchstart", function (event) {
     F.setMouse(event.touches[0]);
     F.mouse.touchDown = true;
@@ -1077,7 +1110,8 @@ if (F.env.DOM) {
   addEventListener("touchend", function (event) {
     F.mouse.touchDown = false;
   });
-}
+};
+F.initEvents(true);
 
 /* Colour */
 
