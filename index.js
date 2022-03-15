@@ -323,8 +323,8 @@ F.EnvError = class extends Error {
 
 /* String */
 F.fill = function (string, amount, char, reverse) {
-  string = string || "";
-  char = (char || " ").repeat(Math.max(0, (amount || 10) - string.length));
+  string = string?.toString() || "";
+  char = (char?.toString() || " ").repeat(Math.max(0, (amount || 10) - string.length));
   return reverse ? char + string : string + char;
 };
 

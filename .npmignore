@@ -1,4 +1,6 @@
-src
-temp
+node_modules
+.vscode
 test
+temp
+src
 TODO.md
