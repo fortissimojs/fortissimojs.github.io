@@ -411,3 +411,8 @@ const F = {
     throw new F.DormantError();
   },
 };
+
+/* Export to Node */
+try {
+  module.exports = F;
+} catch {}

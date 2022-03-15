@@ -1,7 +1,7 @@
 # TO DO
 
-- Create documentation
 - Populate functions
+- Create documentation
 
 ## Add functions
 
