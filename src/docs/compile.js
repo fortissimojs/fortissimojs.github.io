@@ -91,7 +91,7 @@ for (var i in docs) {
 }
 
 fs.writeFileSync(
-  __dirname + "/../README.md",
+  __dirname + "/../../README.md",
   fs.readFileSync(__dirname + "/main.md").toString() +
   "\n" + output.join("\n\n---\n\n"),
 );
