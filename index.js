@@ -2,12 +2,10 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -27,7 +25,7 @@ var F = {
     EnvError: /** @class */ (function (_super) {
         __extends(class_2, _super);
         function class_2(message) {
-            var _this = _super.call(this, "Current environment does not support ".concat(message)) || this;
+            var _this = _super.call(this, "Current environment does not support " + message) || this;
             _this.name = "F.EnvError";
             return _this;
         }
@@ -183,7 +181,7 @@ var F = {
     sleep: function (time) {
         throw new F.DormantError();
     },
-    parseTime: function (milliseconds, format) {
+    parseTime: function (milliseconds, method) {
         throw new F.DormantError();
     },
     getWeek: function (date) {
@@ -193,6 +191,147 @@ var F = {
     removeItem: function (array, item, isIndex, onlyFirst) {
         if (isIndex === void 0) { isIndex = false; }
         if (onlyFirst === void 0) { onlyFirst = false; }
+        throw new F.DormantError();
+    },
+    shuffle: function (array) {
+        throw new F.DormantError();
+    },
+    /* Object */
+    stringify: function (object, keySeperator, valueSeperator, indent) {
+        throw new F.DormantError();
+    },
+    sort: function (object, method) {
+        throw new F.DormantError();
+    },
+    deepCopy: function (object) {
+        throw new F.DormantError();
+    },
+    decircleJSON: function (object) {
+        throw new F.DormantError();
+    },
+    /* Color */
+    toHex: function (number) {
+        throw new F.DormantError();
+    },
+    hex2rgb: function (hex) {
+        throw new F.DormantError();
+    },
+    hex2hsv: function (hex) {
+        throw new F.DormantError();
+    },
+    rgb2hex: function () {
+        var rgba = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            rgba[_i] = arguments[_i];
+        }
+        throw new F.DormantError();
+    },
+    rgb2hsv: function () {
+        var rgba = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            rgba[_i] = arguments[_i];
+        }
+        throw new F.DormantError();
+    },
+    hsv2hex: function () {
+        var hsva = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            hsva[_i] = arguments[_i];
+        }
+        throw new F.DormantError();
+    },
+    hsv2rgb: function () {
+        var hsva = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            hsva[_i] = arguments[_i];
+        }
+        throw new F.DormantError();
+    },
+    randomHex: function () {
+        throw new F.DormantError();
+    },
+    /* Game */
+    collide: {
+        polygon: function (a, b) {
+            throw new F.DormantError();
+        },
+        rect2rect: function (a, b) {
+            throw new F.DormantError();
+        },
+        rect2circle: function (a, b) {
+            throw new F.DormantError();
+        },
+        circle2circle: function (a, b) {
+            throw new F.DormantError();
+        },
+        distance: function (x1, y1, x2, y2) {
+            throw new F.DormantError();
+        },
+        coords2angle: function (x1, y1, x2, y2) {
+            throw new F.DormantError();
+        },
+        angle2coords: function (x, y, angle, distance) {
+            throw new F.DormantError();
+        },
+        trace: function (x, y, angle, density, maxDistance, callback) {
+            throw new F.DormantError();
+        }
+    },
+    /* Event Listener */
+    keys: {},
+    mouse: {},
+    setMouseOffset: function (offset) {
+        throw new F.DormantError();
+    },
+    mouseOver: function (element, ignoreOffset) {
+        if (ignoreOffset === void 0) { ignoreOffset = false; }
+        throw new F.DormantError();
+    },
+    createListeners: function () {
+        throw new F.DormantError();
+    },
+    parseControls: function () {
+        throw new F.DormantError();
+    },
+    /* HTML Document */
+    URL: {},
+    getURL: function () {
+        throw new F.DormantError();
+    },
+    setQuery: function (key, value) {
+        throw new F.DormantError();
+    },
+    setCaret: function (element, position) {
+        throw new F.DormantError();
+    },
+    getCaret: function (element) {
+        throw new F.DormantError();
+    },
+    copy: function (text) {
+        throw new F.DormantError();
+    },
+    download: function (image) {
+        throw new F.DormantError();
+    },
+    /* HTML Canvas */
+    fillCanvas: function (ctx, color) {
+        throw new F.DormantError();
+    },
+    clearCanvas: function (ctx) {
+        throw new F.DormantError();
+    },
+    fillRoundRect: function (ctx, x, y, w, h, radius) {
+        if (radius === void 0) { radius = Math.min(w, h) / 2; }
+        throw new F.DormantError();
+    },
+    strokeRoundRect: function (ctx, x, y, w, h, radius) {
+        if (radius === void 0) { radius = Math.min(w, h) / 2; }
+        throw new F.DormantError();
+    },
+    getCanvasPixel: function (canvas, x, y) {
+        throw new F.DormantError();
+    },
+    scanCanvas: function (canvas) {
         throw new F.DormantError();
     }
 };

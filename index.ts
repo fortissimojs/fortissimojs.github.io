@@ -182,11 +182,11 @@ const F = {
   },
 
   /* Date / Time */
-  sleep: function (time: number) {
+  sleep: function (time: number): void {
     throw new F.DormantError();
   },
 
-  parseTime: function (milliseconds: number, format: Function): string {
+  parseTime: function (milliseconds: number, method: Function): string {
     throw new F.DormantError();
   },
 
@@ -204,11 +204,210 @@ const F = {
     throw new F.DormantError();
   },
 
+  shuffle: function (array: any[]): any[] {
+    throw new F.DormantError();
+  },
+
   /* Object */
+  stringify: function (
+    object: object,
+    keySeperator: string,
+    valueSeperator: string,
+    indent: string,
+  ): string {
+    throw new F.DormantError();
+  },
+
+  sort: function (object: object, method: Function): object {
+    throw new F.DormantError();
+  },
+
+  deepCopy: function (object: object): object {
+    throw new F.DormantError();
+  },
+
+  decircleJSON: function (object: object): object {
+    throw new F.DormantError();
+  },
+
   /* Color */
+  toHex: function (number): string {
+    throw new F.DormantError();
+  },
+
+  hex2rgb: function (hex: string): object {
+    throw new F.DormantError();
+  },
+
+  hex2hsv: function (hex: string): object {
+    throw new F.DormantError();
+  },
+
+  rgb2hex: function (...rgba: number[]): number {
+    throw new F.DormantError();
+  },
+
+  rgb2hsv: function (...rgba: number[]): object {
+    throw new F.DormantError();
+  },
+
+  hsv2hex: function (...hsva: number[]): number {
+    throw new F.DormantError();
+  },
+
+  hsv2rgb: function (...hsva: number[]): object {
+    throw new F.DormantError();
+  },
+
+  randomHex: function (): string {
+    throw new F.DormantError();
+  },
+
   /* Game */
+
+  collide: {
+    polygon: function (a, b): boolean {
+      throw new F.DormantError();
+    },
+
+    rect2rect: function (a: object, b: object): boolean {
+      throw new F.DormantError();
+    },
+
+    rect2circle: function (a: object, b: object): boolean {
+      throw new F.DormantError();
+    },
+
+    circle2circle: function (a: object, b: object): boolean {
+      throw new F.DormantError();
+    },
+
+    distance: function (
+      x1: number,
+      y1: number,
+      x2: number,
+      y2: number,
+    ): number {
+      throw new F.DormantError();
+    },
+
+    coords2angle: function (
+      x1: number,
+      y1: number,
+      x2: number,
+      y2: number,
+    ): number {
+      throw new F.DormantError();
+    },
+
+    angle2coords: function (
+      x: number,
+      y: number,
+      angle: number,
+      distance: number,
+    ): object {
+      throw new F.DormantError();
+    },
+
+    trace: function (
+      x: number,
+      y: number,
+      angle: number,
+      density: number,
+      maxDistance: number,
+      callback: Function,
+    ): boolean {
+      throw new F.DormantError();
+    },
+  },
+
   /* Event Listener */
+  keys: {},
+  mouse: {},
+
+  setMouseOffset: function (offset: object): void {
+    throw new F.DormantError();
+  },
+
+  mouseOver: function (element: HTMLElement, ignoreOffset = false): boolean {
+    throw new F.DormantError();
+  },
+
+  createListeners: function (): void {
+    throw new F.DormantError();
+  },
+
+  parseControls: function (): object {
+    throw new F.DormantError();
+  },
+
   /* HTML Document */
+  URL: {},
+
+  getURL: function (): object {
+    throw new F.DormantError();
+  },
+
+  setQuery: function (key: string, value: any): void {
+    throw new F.DormantError();
+  },
+
+  setCaret: function (element: HTMLElement, position: number): void {
+    throw new F.DormantError();
+  },
+
+  getCaret: function (element: HTMLElement): number {
+    throw new F.DormantError();
+  },
+
+  copy: function (text): void {
+    throw new F.DormantError();
+  },
+
+  download: function (image): void {
+    throw new F.DormantError();
+  },
+
   /* HTML Canvas */
-  /* Characters */
+  fillCanvas: function (ctx: CanvasRenderingContext2D, color: string): void {
+    throw new F.DormantError();
+  },
+
+  clearCanvas: function (ctx: CanvasRenderingContext2D): void {
+    throw new F.DormantError();
+  },
+
+  fillRoundRect: function (
+    ctx: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    radius = Math.min(w, h) / 2,
+  ): void {
+    throw new F.DormantError();
+  },
+
+  strokeRoundRect: function (
+    ctx: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    radius = Math.min(w, h) / 2,
+  ): void {
+    throw new F.DormantError();
+  },
+
+  getCanvasPixel: function (
+    canvas: HTMLCanvasElement,
+    x: number,
+    y: number,
+  ): void {
+    throw new F.DormantError();
+  },
+
+  scanCanvas: function (canvas: HTMLCanvasElement): void {
+    throw new F.DormantError();
+  },
 };

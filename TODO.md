@@ -5,4 +5,5 @@
 
 ## Add functions
 
-- Is email - validate email address
+- HSL functions
+- Add touch screen event listeners
