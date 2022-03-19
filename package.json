@@ -29,5 +29,8 @@
   "bugs": {
     "url": "https://github.com/darccyy/fortissimo/issues"
   },
-  "homepage": "https://github.com/darccyy/fortissimo#readme"
+  "homepage": "https://github.com/darccyy/fortissimo#readme",
+  "dependencies": {
+    "typescript": "^4.6.2"
+  }
 }

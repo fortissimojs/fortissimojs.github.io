@@ -1,6 +1,7 @@
 # TO DO
 
 - Populate functions
+- Add variable checking
 - Create documentation
 
 ## Add functions
