@@ -1,5 +1,5 @@
 "use strict";
-module.exports = {
+const F = {
     /* Error */
     InputError: class extends Error {
         constructor(message) {
@@ -150,13 +150,13 @@ module.exports = {
         return Math.random() * (max - min) + min;
     },
     randomInt: function (min, max) {
-        return Math.round(module.exports.randomFloat(min, max));
+        return Math.round(F.randomFloat(min, max));
     },
     randomChoice: function (array) {
         if (!array) {
             return;
         }
-        return array[module.exports.randomInt(0, array.length - 1)];
+        return array[F.randomInt(0, array.length - 1)];
     },
     round: function (number, decimals = 0) {
         decimals = 10 ** Math.floor(decimals);
@@ -174,7 +174,7 @@ module.exports = {
         return Math.max(min, Math.min(max, number));
     },
     wrap: function (number, min, max) {
-        return module.exports.mod(number - min, max - min) + min;
+        return F.mod(number - min, max - min) + min;
     },
     hcf: function (a, b) {
         for (var i = Math.floor(a / 2); i > 1; i--) {
@@ -231,19 +231,19 @@ module.exports = {
     addCommas: function (number, ignoreDecimal = false, interval = 3) {
         var string = number.toString().split(".")[0];
         length = interval - (string.length % interval);
-        var array = module.exports.splitAt("~".repeat(length > interval - 1 ? 0 : Math.abs(length)) + string, interval);
-        array[0] = module.exports.replace(array[0], "~", "");
+        var array = F.splitAt("~".repeat(length > interval - 1 ? 0 : Math.abs(length)) + string, interval);
+        array[0] = F.replace(array[0], "~", "");
         var decimals = number.toString().split(".")[1];
         return (array.join(",") +
             (decimals
                 ? "." +
                     (ignoreDecimal
                         ? decimals
-                        : module.exports.splitAt(decimals, interval).join(","))
+                        : F.splitAt(decimals, interval).join(","))
                 : ""));
     },
     snap: function (number, array) {
-        throw new module.exports.DormantError();
+        throw new F.DormantError();
     },
     pythag: function (a, b) {
         return Math.sqrt(a ** 2 + b ** 2);
@@ -407,7 +407,7 @@ module.exports = {
                             value =
                                 valueSeperator +
                                     indent +
-                                    module.exports.stringify(value, keySeperator, valueSeperator + indent, indent);
+                                    F.stringify(value, keySeperator, valueSeperator + indent, indent);
                         }
                         else {
                             value = "[]";
@@ -418,7 +418,7 @@ module.exports = {
                             value =
                                 valueSeperator +
                                     indent +
-                                    module.exports.stringify(value, keySeperator, valueSeperator + indent, indent);
+                                    F.stringify(value, keySeperator, valueSeperator + indent, indent);
                         }
                         else {
                             value = "{}";
@@ -426,7 +426,7 @@ module.exports = {
                     }
                 }
                 else if (typeof value === "function") {
-                    value = `function (${module.exports
+                    value = `function (${F
                         .getParameters(value)
                         .join(", ")})`;
                 }
@@ -440,21 +440,21 @@ module.exports = {
         return output.join(valueSeperator);
     },
     sort: function (object, method) {
-        throw new module.exports.DormantError();
+        throw new F.DormantError();
     },
     deepCopy: function (object) {
         if (object && typeof object === "object") {
             if (object.constructor === Array) {
                 var copiedArray = new Array(object.length);
                 for (var i = 0; i < object.length; i++) {
-                    copiedArray[i] = module.exports.deepCopy(object[i]);
+                    copiedArray[i] = F.deepCopy(object[i]);
                 }
                 return copiedArray;
             }
             else {
                 var copiedObject = {};
                 for (var j in object) {
-                    copiedObject[j] = module.exports.deepCopy(object[j]);
+                    copiedObject[j] = F.deepCopy(object[j]);
                 }
                 return copiedObject;
             }
@@ -534,19 +534,19 @@ module.exports = {
                 a: number & 255,
             };
         }
-        throw new module.exports.InputError("Unknown hex format");
+        throw new F.InputError("Unknown hex format");
     },
     hex2hsv: function (hex) {
-        throw new module.exports.DormantError();
+        throw new F.DormantError();
     },
     rgb2hex: function (rgb, ignoreOpacity = false) {
         return ("#" +
-            module.exports.toHex(rgb.r) +
-            module.exports.toHex(rgb.g) +
-            module.exports.toHex(rgb.b) +
+            F.toHex(rgb.r) +
+            F.toHex(rgb.g) +
+            F.toHex(rgb.b) +
             (ignoreOpacity
                 ? ""
-                : module.exports.toHex(Math.floor(rgb.a || rgb.a === 0 ? rgb.a : 255))));
+                : F.toHex(Math.floor(rgb.a || rgb.a === 0 ? rgb.a : 255))));
     },
     rgb2hsv: function (rgb, round = true) {
         var r = round ? Math.floor(rgb.r) : rgb.r, g = round ? Math.floor(rgb.g) : rgb.g, b = round ? Math.floor(rgb.b) : rgb.b, a = rgb.a || rgb.a === 0 ? (round ? Math.floor(rgb.a) : rgb.a) : 255, max = Math.max(r, g, b), min = Math.min(r, g, b), difference = max - min, h = 0, s = max === 0 ? 0 : difference / max, v = max / 255;
@@ -582,8 +582,8 @@ module.exports = {
         };
     },
     hsv2hex: function (hsv, ignoreOpacity = false) {
-        console.log(module.exports.hsv2rgb(hsv));
-        throw new module.exports.DormantError();
+        console.log(F.hsv2rgb(hsv));
+        throw new F.DormantError();
     },
     hsv2rgb: function (hsv, round = true) {
         var h = round ? Math.floor(hsv.h) : hsv.h, s = round ? Math.floor(hsv.s) : hsv.s, v = round ? Math.floor(hsv.v) : hsv.v, a = hsv.a || hsv.a === 0 ? (round ? Math.floor(hsv.a) : hsv.a) : 255, i = Math.floor(h * 6), f = h * 6 - i, p = v * (1 - s), q = v * (1 - f * s), t = v * (1 - (1 - f) * s), r = 0, g = 0, b = 0;
@@ -623,18 +623,18 @@ module.exports = {
         };
     },
     randomHex: function () {
-        return module.exports.rgb2hex(module.exports.randomInt(0, 256), module.exports.randomInt(0, 256), module.exports.randomInt(0, 256));
+        return F.rgb2hex(F.randomInt(0, 256), F.randomInt(0, 256), F.randomInt(0, 256));
     },
     /* Game */
     collide: {
         polygon: function (a, b) {
-            throw new module.exports.DormantError();
+            throw new F.DormantError();
         },
         rect2rect: function (a, b) {
             return (a.x + a.w > b.x && a.x < b.x + b.w && b.y + b.h > a.y && b.y < a.y + a.h);
         },
         rect2circle: function (a, b) {
-            throw new module.exports.DormantError();
+            throw new F.DormantError();
         },
         circle2circle: function (a, b) {
             return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2) < a.r + b.r;
@@ -653,42 +653,42 @@ module.exports = {
             };
         },
         trace: function (x, y, angle, density, maxDistance, callback) {
-            throw new module.exports.DormantError();
+            throw new F.DormantError();
         },
     },
     /* Event Listener */
     keys: {},
     mouse: {},
     setMouseOffset: function (offset) {
-        if (!module.exports.env.DOM()) {
-            throw module.exports.EnvError("DOM");
+        if (!F.env.DOM()) {
+            throw F.EnvError("DOM");
         }
-        module.exports.mouse.offsetLeft = offset.left;
-        module.exports.mouse.offsetTop = offset.top;
+        F.mouse.offsetLeft = offset.left;
+        F.mouse.offsetTop = offset.top;
     },
     mouseOver: function (element, ignoreOffset = false) {
-        if (!module.exports.env.DOM()) {
-            throw module.exports.EnvError("DOM");
+        if (!F.env.DOM()) {
+            throw F.EnvError("DOM");
         }
         var rect = element.getBoundingClientRect();
-        return (module.exports.mouse.x > (ignoreOffset ? 0 : rect.left) &&
-            module.exports.mouse.y > (ignoreOffset ? 0 : rect.top) &&
-            module.exports.mouse.x < rect.width + rect.left &&
-            module.exports.mouse.y < rect.height + rect.top);
+        return (F.mouse.x > (ignoreOffset ? 0 : rect.left) &&
+            F.mouse.y > (ignoreOffset ? 0 : rect.top) &&
+            F.mouse.x < rect.width + rect.left &&
+            F.mouse.y < rect.height + rect.top);
     },
     createListeners: function () {
-        if (!module.exports.env.DOM()) {
-            throw module.exports.EnvError("DOM");
+        if (!F.env.DOM()) {
+            throw F.EnvError("DOM");
         }
         window.onkeydown = function (event) {
-            module.exports.keys[event.key] = true;
-            module.exports.keys[event.code] = true;
-            module.exports.keys[event.keyCode] = true;
+            F.keys[event.key] = true;
+            F.keys[event.code] = true;
+            F.keys[event.keyCode] = true;
         };
         window.onkeyup = function (event) {
-            delete module.exports.keys[event.key];
-            delete module.exports.keys[event.code];
-            delete module.exports.keys[event.keyCode];
+            delete F.keys[event.key];
+            delete F.keys[event.code];
+            delete F.keys[event.keyCode];
         };
         var mouseEvents = [
             "onclick",
@@ -699,40 +699,40 @@ module.exports = {
             "onmouseup",
         ];
         for (var i = 0; i < mouseEvents.length; i++) {
-            window[mouseEvents[i]] = module.exports.setMouse;
+            window[mouseEvents[i]] = F.setMouse;
         }
-        module.exports.mouseButtons = ["left", "middle", "right", "four", "five"];
+        F.mouseButtons = ["left", "middle", "right", "four", "five"];
         window.onmousedown = function (event) {
-            module.exports.mouse[module.exports.mouseButtons[event.button]] = true;
+            F.mouse[F.mouseButtons[event.button]] = true;
         };
         window.onmouseup = function (event) {
-            module.exports.mouse[module.exports.mouseButtons[event.button]] = false;
+            F.mouse[F.mouseButtons[event.button]] = false;
         };
         addEventListener("touchstart", function (event) {
-            module.exports.setMouse(event.touches[0]);
-            module.exports.mouse.touchDown = true;
-            module.exports.mouse.isFirstTouch = true;
+            F.setMouse(event.touches[0]);
+            F.mouse.touchDown = true;
+            F.mouse.isFirstTouch = true;
         });
         addEventListener("touchmove", function (event) {
-            module.exports.setMouse(event.touches[0]);
-            module.exports.mouse.touchDown = true;
+            F.setMouse(event.touches[0]);
+            F.mouse.touchDown = true;
         });
         addEventListener("touchend", function (event) {
-            module.exports.mouse.touchDown = false;
+            F.mouse.touchDown = false;
         });
     },
     parseControls: function (object) {
-        throw new module.exports.DormantError();
+        throw new F.DormantError();
     },
     /* HTML Document */
     setQuery: function (key, value) {
-        throw new module.exports.DormantError();
+        throw new F.DormantError();
     },
     setCaret: function (element, position) {
-        throw new module.exports.DormantError();
+        throw new F.DormantError();
     },
     getCaret: function (element) {
-        throw new module.exports.DormantError();
+        throw new F.DormantError();
     },
     copy: function (text) {
         if (!navigator.clipboard || !navigator.clipboard.writeText) {
@@ -758,7 +758,7 @@ module.exports = {
         });
     },
     download: function (image) {
-        throw new module.exports.DormantError();
+        throw new F.DormantError();
     },
     /* HTML Canvas */
     fillCanvas: function (ctx) {
@@ -804,9 +804,9 @@ module.exports = {
         ctx.stroke();
     },
     getCanvasPixel: function (canvas, x, y) {
-        throw new module.exports.DormantError();
+        throw new F.DormantError();
     },
     scanCanvas: function (canvas) {
-        throw new module.exports.DormantError();
+        throw new F.DormantError();
     },
 };

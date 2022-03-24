@@ -1,8 +1,10 @@
 # TO DO
 
-- Create documentation
 - Populate functions
+- Add variable checking
+- Create documentation
 
 ## Add functions
 
-- Is email - validate email address
+- HSL functions
+- Add touch screen event listeners
