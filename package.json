@@ -4,6 +4,7 @@
   "version": "0.2.0",
   "description": "Collection of helpful functions for JavaScript",
   "main": "index.min.js",
+  "icon": "./image/icon/white.png",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

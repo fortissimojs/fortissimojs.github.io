@@ -1,4 +1,4 @@
-# Fortissimo <img src="image/icon-white.png" width="30">
+# Fortissimo <img src="image/icon/white.png" width="30">
 
 Collection of helpful functions for JavaScript
 
@@ -9,7 +9,7 @@ Collection of helpful functions for JavaScript
 Add this code before your main JavaScript file
 
 ```html
-<script src="https://fortissimojs.github.io/index.min.js"></script>
+<script src="https://fortissimojs.github.io/index.vanilla.min.js"></script>
 ```
 
 ## NodeJS
@@ -28,7 +28,7 @@ const F = require("fortissimo");
 
 # Contribution
 
-```ps
+```powershell
 git clone https://github.com/fortissimojs/fortissimojs.github.io
 ```
 

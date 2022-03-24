@@ -1,13 +1,14 @@
 const fs = require("fs");
 
-const docs = require("./DOCS.js");
 const noDocs = true;
-fs.writeFileSync(__dirname + "/DOCS.json", JSON.stringify(docs, null, 2));
 var output = [];
 
 if (noDocs) {
-  output.push("\r\n## Docs coming soon...");
+  output.push("## Docs coming soon...");
 } else {
+  const docs = require("./DOCS.js");
+  fs.writeFileSync(__dirname + "/DOCS.json", JSON.stringify(docs, null, 2));
+
   for (var i in docs) {
     var item = docs[i];
 
