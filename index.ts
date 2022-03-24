@@ -19,19 +19,51 @@ type hsv = {
   a?: number;
 };
 
+type coords = {
+  x: number;
+  y: number;
+};
+
+interface rect extends coords {
+  w: number;
+  h: number;
+}
+
+interface circle extends coords {
+  r: number;
+}
+
+type boxSimple = {
+  left: number;
+  top: number;
+  right: number;
+  bottom: number;
+  width: number;
+  height: number;
+};
+
+interface box extends boxSimple {
+  left: number;
+  top: number;
+  right: number;
+  bottom: number;
+  width: number;
+  height: number;
+}
+
 module.exports = {
   /* Error */
   InputError: class extends Error {
     constructor(message: string) {
       super(message);
-      this.name = "F.InputError";
+      this.name = "Fortissimo - InputError";
     }
   },
 
   EnvError: class extends Error {
     constructor(message: string) {
       super(`Current environment does not support ${message}`);
-      this.name = "F.EnvError";
+      this.name = "Fortissimo - EnvError";
     }
   },
 
@@ -40,8 +72,30 @@ module.exports = {
       super(
         "This function is not implemented yet! Try use an older version, or hold tight!",
       );
-      this.name = "F.DormantError";
+      this.name = "Fortissimo - DormantError";
     }
+  },
+
+  // Check environment
+  env: {
+    DOM: function () {
+      try {
+        window;
+        document;
+      } catch {
+        return false;
+      }
+      return true;
+    },
+
+    NODE: function () {
+      try {
+        require;
+      } catch {
+        return false;
+      }
+      return true;
+    },
   },
 
   /* String */
@@ -308,7 +362,9 @@ module.exports = {
       array.join(",") +
       (decimals
         ? "." +
-          (ignoreDecimal ? decimals : module.exports.splitAt(decimals, interval).join(","))
+          (ignoreDecimal
+            ? decimals
+            : module.exports.splitAt(decimals, interval).join(","))
         : "")
     );
   },
@@ -530,7 +586,9 @@ module.exports = {
             }
           }
         } else if (typeof value === "function") {
-          value = `function (${module.exports.getParameters(value).join(", ")})`;
+          value = `function (${module.exports
+            .getParameters(value)
+            .join(", ")})`;
         }
       }
 
@@ -774,7 +832,11 @@ module.exports = {
   },
 
   randomHex: function (): string {
-    throw new module.exports.DormantError();
+    return module.exports.rgb2hex(
+      module.exports.randomInt(0, 256),
+      module.exports.randomInt(0, 256),
+      module.exports.randomInt(0, 256),
+    );
   },
 
   /* Game */
@@ -784,16 +846,18 @@ module.exports = {
       throw new module.exports.DormantError();
     },
 
-    rect2rect: function (a: object, b: object): boolean {
+    rect2rect: function (a: rect, b: rect): boolean {
+      return (
+        a.x + a.w > b.x && a.x < b.x + b.w && b.y + b.h > a.y && b.y < a.y + a.h
+      );
+    },
+
+    rect2circle: function (a: rect, b: circle): boolean {
       throw new module.exports.DormantError();
     },
 
-    rect2circle: function (a: object, b: object): boolean {
-      throw new module.exports.DormantError();
-    },
-
-    circle2circle: function (a: object, b: object): boolean {
-      throw new module.exports.DormantError();
+    circle2circle: function (a: circle, b: circle): boolean {
+      return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2) < a.r + b.r;
     },
 
     distance: function (
@@ -802,16 +866,17 @@ module.exports = {
       x2: number,
       y2: number,
     ): number {
-      throw new module.exports.DormantError();
+      return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
     },
 
+    //? Why does this need Math.PI * 1.5 ? Switch x/y ?
     coords2angle: function (
       x1: number,
       y1: number,
       x2: number,
       y2: number,
     ): number {
-      throw new module.exports.DormantError();
+      return Math.PI * 1.5 + Math.atan2(x2 - x1, y1 - y2);
     },
 
     angle2coords: function (
@@ -819,8 +884,11 @@ module.exports = {
       y: number,
       angle: number,
       distance: number,
-    ): object {
-      throw new module.exports.DormantError();
+    ): coords {
+      return {
+        x: x + distance * Math.cos(angle),
+        y: y + distance * Math.sin(angle),
+      };
     },
 
     trace: function (
@@ -830,7 +898,7 @@ module.exports = {
       density: number,
       maxDistance: number,
       callback: Function,
-    ): boolean {
+    ): void {
       throw new module.exports.DormantError();
     },
   },
@@ -839,29 +907,84 @@ module.exports = {
   keys: {},
   mouse: {},
 
-  setMouseOffset: function (offset: object): void {
-    throw new module.exports.DormantError();
+  setMouseOffset: function (offset: boxSimple): void {
+    if (!module.exports.env.DOM()) {
+      throw module.exports.EnvError("DOM");
+    }
+
+    module.exports.mouse.offsetLeft = offset.left;
+    module.exports.mouse.offsetTop = offset.top;
   },
 
   mouseOver: function (element: HTMLElement, ignoreOffset = false): boolean {
-    throw new module.exports.DormantError();
+    if (!module.exports.env.DOM()) {
+      throw module.exports.EnvError("DOM");
+    }
+
+    var rect: box = element.getBoundingClientRect();
+    return (
+      module.exports.mouse.x > (ignoreOffset ? 0 : rect.left) &&
+      module.exports.mouse.y > (ignoreOffset ? 0 : rect.top) &&
+      module.exports.mouse.x < rect.width + rect.left &&
+      module.exports.mouse.y < rect.height + rect.top
+    );
   },
 
   createListeners: function (): void {
-    throw new module.exports.DormantError();
+    if (!module.exports.env.DOM()) {
+      throw module.exports.EnvError("DOM");
+    }
+
+    window.onkeydown = function (event) {
+      module.exports.keys[event.key] = true;
+      module.exports.keys[event.code] = true;
+      module.exports.keys[event.keyCode] = true;
+    };
+    window.onkeyup = function (event) {
+      delete module.exports.keys[event.key];
+      delete module.exports.keys[event.code];
+      delete module.exports.keys[event.keyCode];
+    };
+
+    var mouseEvents: any[] = [
+      "onclick",
+      "ondblclick",
+      "onmousemove",
+      "onmouseout",
+      "onmouseover",
+      "onmouseup",
+    ];
+    for (var i = 0; i < mouseEvents.length; i++) {
+      window[mouseEvents[i]] = module.exports.setMouse;
+    }
+
+    module.exports.mouseButtons = ["left", "middle", "right", "four", "five"];
+    window.onmousedown = function (event) {
+      module.exports.mouse[module.exports.mouseButtons[event.button]] = true;
+    };
+    window.onmouseup = function (event) {
+      module.exports.mouse[module.exports.mouseButtons[event.button]] = false;
+    };
+
+    addEventListener("touchstart", function (event) {
+      module.exports.setMouse(event.touches[0]);
+      module.exports.mouse.touchDown = true;
+      module.exports.mouse.isFirstTouch = true;
+    });
+    addEventListener("touchmove", function (event) {
+      module.exports.setMouse(event.touches[0]);
+      module.exports.mouse.touchDown = true;
+    });
+    addEventListener("touchend", function (event) {
+      module.exports.mouse.touchDown = false;
+    });
   },
 
-  parseControls: function (): object {
+  parseControls: function (object: any): object {
     throw new module.exports.DormantError();
   },
 
   /* HTML Document */
-  URL: {},
-
-  getURL: function (): object {
-    throw new module.exports.DormantError();
-  },
-
   setQuery: function (key: string, value: any): void {
     throw new module.exports.DormantError();
   },
@@ -875,7 +998,29 @@ module.exports = {
   },
 
   copy: function (text: string): void {
-    throw new module.exports.DormantError();
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+      var textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.top = "0";
+      textArea.style.left = "0";
+      textArea.style.position = "fixed";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand("copy");
+      } catch (err) {
+        throw err;
+      }
+      document.body.removeChild(textArea);
+      return;
+    }
+    navigator.clipboard.writeText(text).then(
+      function () {},
+      function (err) {
+        throw err;
+      },
+    );
   },
 
   download: function (image: null): void {
@@ -883,12 +1028,12 @@ module.exports = {
   },
 
   /* HTML Canvas */
-  fillCanvas: function (ctx: CanvasRenderingContext2D, color: string): void {
-    throw new module.exports.DormantError();
+  fillCanvas: function (ctx: CanvasRenderingContext2D): void {
+    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   },
 
   clearCanvas: function (ctx: CanvasRenderingContext2D): void {
-    throw new module.exports.DormantError();
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   },
 
   fillRoundRect: function (
@@ -899,7 +1044,22 @@ module.exports = {
     h: number,
     radius = Math.min(w, h) / 2,
   ): void {
-    throw new module.exports.DormantError();
+    if (!radius && radius !== 0) {
+      radius = Math.min(w, h) / 2;
+    }
+    if (w < 2 * radius) {
+      radius = w / 2;
+    }
+    if (h < 2 * radius) {
+      radius = h / 2;
+    }
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.arcTo(x + w, y, x + w, y + h, radius);
+    ctx.arcTo(x + w, y + h, x, y + h, radius);
+    ctx.arcTo(x, y + h, x, y, radius);
+    ctx.arcTo(x, y, x + w, y, radius);
+    ctx.fill();
   },
 
   strokeRoundRect: function (
@@ -910,7 +1070,22 @@ module.exports = {
     h: number,
     radius = Math.min(w, h) / 2,
   ): void {
-    throw new module.exports.DormantError();
+    if (!radius && radius !== 0) {
+      radius = Math.min(w, h) / 2;
+    }
+    if (w < 2 * radius) {
+      radius = w / 2;
+    }
+    if (h < 2 * radius) {
+      radius = h / 2;
+    }
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.arcTo(x + w, y, x + w, y + h, radius);
+    ctx.arcTo(x + w, y + h, x, y + h, radius);
+    ctx.arcTo(x, y + h, x, y, radius);
+    ctx.arcTo(x, y, x + w, y, radius);
+    ctx.stroke();
   },
 
   getCanvasPixel: function (

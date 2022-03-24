@@ -1,4 +1,4 @@
-# Fortissimo <img src="image/icon-alt.png" width="30">
+# Fortissimo <img src="image/icon-white.png" width="30">
 
 Collection of helpful functions for JavaScript
 
