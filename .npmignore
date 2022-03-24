@@ -1,6 +1,6 @@
-node_modules
-.vscode
-test
-temp
-src
+node_modules/
+.vscode/
+test/
+temp/
+image/
 TODO.md
