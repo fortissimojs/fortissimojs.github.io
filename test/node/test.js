@@ -1,4 +1,4 @@
-const F = require("../");
+const F = require("../../");
 
-console.log(F.center("bruh", 20, "."));
-console.log(F.collide.rect2rect());
+var time = 182390;
+console.log(F.parseTime(time, " - "));

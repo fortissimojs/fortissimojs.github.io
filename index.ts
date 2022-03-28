@@ -390,6 +390,7 @@ module.exports = {
 
   parseTime: function (
     milliseconds: number,
+    join = ", ",
     method = (item: TimeUnit): string => {
       return (
         Math.floor(item.amount).toString() +
@@ -397,7 +398,6 @@ module.exports = {
         (Math.floor(item.amount) === 1 ? item.singular : item.plural)
       );
     },
-    join = ", ",
   ): any {
     var units: TimeUnit[] = [
       {

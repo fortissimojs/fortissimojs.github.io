@@ -257,11 +257,11 @@ module.exports = {
             setTimeout(resolve, time);
         });
     },
-    parseTime: function (milliseconds, method = (item) => {
+    parseTime: function (milliseconds, join = ", ", method = (item) => {
         return (Math.floor(item.amount).toString() +
             " " +
             (Math.floor(item.amount) === 1 ? item.singular : item.plural));
-    }, join = ", ") {
+    }) {
         var units = [
             {
                 amount: 1000,
