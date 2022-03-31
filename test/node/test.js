@@ -1,4 +1,4 @@
 const F = require("../../");
 
-var time = 182390;
-console.log(F.parseTime(time, " - "));
+console.log(F.randomHex());
+console.log(F.randomHex(true));

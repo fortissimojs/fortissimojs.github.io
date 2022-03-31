@@ -664,7 +664,7 @@ module.exports = {
         return hex.length === 1 ? "0" + hex : hex;
       }
     }
-    return "FF";
+    throw new module.exports.InputError("`number` is not defined");
   },
 
   hex2rgb: function (hex: string): rgb | undefined {
@@ -831,12 +831,21 @@ module.exports = {
     };
   },
 
-  randomHex: function (): string {
-    return module.exports.rgb2hex(
-      module.exports.randomInt(0, 256),
-      module.exports.randomInt(0, 256),
-      module.exports.randomInt(0, 256),
-    );
+  randomHex: function (opacity = false): string {
+    if (opacity) {
+      return module.exports.rgb2hex({
+        r: module.exports.randomInt(0, 256),
+        g: module.exports.randomInt(0, 256),
+        b: module.exports.randomInt(0, 256),
+        a: module.exports.randomInt(0, 256),
+      });
+    }
+    
+    return module.exports.rgb2hex({
+      r: module.exports.randomInt(0, 256),
+      g: module.exports.randomInt(0, 256),
+      b: module.exports.randomInt(0, 256),
+    });
   },
 
   /* Game */
