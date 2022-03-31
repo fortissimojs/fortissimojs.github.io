@@ -775,14 +775,13 @@ module.exports = {
   },
 
   hsv2hex: function (hsv: hsv, ignoreOpacity = false): string {
-    console.log(module.exports.hsv2rgb(hsv));
-    throw new module.exports.DormantError();
+    return module.exports.rgb2hex(module.exports.hsv2rgb(hsv));
   },
 
   hsv2rgb: function (hsv: hsv, round = true): object {
-    var h = round ? Math.floor(hsv.h) : hsv.h,
-      s = round ? Math.floor(hsv.s) : hsv.s,
-      v = round ? Math.floor(hsv.v) : hsv.v,
+    var h = (round ? Math.floor(hsv.h) : hsv.h) / 360,
+      s = (round ? Math.floor(hsv.s) : hsv.s) / 100,
+      v = (round ? Math.floor(hsv.v) : hsv.v) / 100,
       a = hsv.a || hsv.a === 0 ? (round ? Math.floor(hsv.a) : hsv.a) : 255,
       i = Math.floor(h * 6),
       f = h * 6 - i,
@@ -814,20 +813,24 @@ module.exports = {
         break;
     }
 
+    r *= 255;
+    g *= 255;
+    b *= 255;
+
     if (!round) {
       return {
-        r: r * 255,
-        g: g * 255,
-        b: b * 255,
-        a: a * (255 / 100),
+        r,
+        g,
+        b,
+        a: a,
       };
     }
 
     return {
-      r: Math.floor(r * 255),
-      g: Math.floor(g * 255),
-      b: Math.floor(b * 255),
-      a: Math.floor(a * (255 / 100)),
+      r: Math.round(r),
+      g: Math.round(g),
+      b: Math.round(b),
+      a: Math.round(a),
     };
   },
 
@@ -840,7 +843,7 @@ module.exports = {
         a: module.exports.randomInt(0, 256),
       });
     }
-    
+
     return module.exports.rgb2hex({
       r: module.exports.randomInt(0, 256),
       g: module.exports.randomInt(0, 256),

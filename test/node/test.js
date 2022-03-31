@@ -1,4 +1,3 @@
 const F = require("../../");
 
-console.log(F.randomHex());
-console.log(F.randomHex(true));
+console.log(F.hsv2hex({h: 312, s: 73, v: 90}));
