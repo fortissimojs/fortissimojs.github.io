@@ -656,19 +656,19 @@ const F = {
         distance: function (x1, y1, x2, y2) {
             return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
         },
-        //? Why does this need Math.PI * 1.5 ? Switch x/y ?
-        coords2angle: function (x1, y1, x2, y2) {
-            return Math.PI * 1.5 + Math.atan2(x2 - x1, y1 - y2);
-        },
-        angle2coords: function (x, y, angle, distance) {
-            return {
-                x: x + distance * Math.cos(angle),
-                y: y + distance * Math.sin(angle),
-            };
-        },
-        trace: function (x, y, angle, density, maxDistance, callback) {
-            throw new F.DormantError();
-        },
+    },
+    //? Why does this need Math.PI * 1.5 ? Switch x/y ?
+    coords2angle: function (x1, y1, x2, y2) {
+        return Math.PI * 1.5 + Math.atan2(x2 - x1, y1 - y2);
+    },
+    angle2coords: function (x, y, angle, distance) {
+        return {
+            x: x + distance * Math.cos(angle),
+            y: y + distance * Math.sin(angle),
+        };
+    },
+    trace: function (x, y, angle, density, maxDistance, callback) {
+        throw new F.DormantError();
     },
     /* Event Listener */
     keys: {},

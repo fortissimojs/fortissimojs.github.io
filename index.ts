@@ -880,39 +880,39 @@ module.exports = {
     ): number {
       return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
     },
+  },
 
-    //? Why does this need Math.PI * 1.5 ? Switch x/y ?
-    coords2angle: function (
-      x1: number,
-      y1: number,
-      x2: number,
-      y2: number,
-    ): number {
-      return Math.PI * 1.5 + Math.atan2(x2 - x1, y1 - y2);
-    },
+  //? Why does this need Math.PI * 1.5 ? Switch x/y ?
+  coords2angle: function (
+    x1: number,
+    y1: number,
+    x2: number,
+    y2: number,
+  ): number {
+    return Math.PI * 1.5 + Math.atan2(x2 - x1, y1 - y2);
+  },
 
-    angle2coords: function (
-      x: number,
-      y: number,
-      angle: number,
-      distance: number,
-    ): coords {
-      return {
-        x: x + distance * Math.cos(angle),
-        y: y + distance * Math.sin(angle),
-      };
-    },
+  angle2coords: function (
+    x: number,
+    y: number,
+    angle: number,
+    distance: number,
+  ): coords {
+    return {
+      x: x + distance * Math.cos(angle),
+      y: y + distance * Math.sin(angle),
+    };
+  },
 
-    trace: function (
-      x: number,
-      y: number,
-      angle: number,
-      density: number,
-      maxDistance: number,
-      callback: Function,
-    ): void {
-      throw new module.exports.DormantError();
-    },
+  trace: function (
+    x: number,
+    y: number,
+    angle: number,
+    density: number,
+    maxDistance: number,
+    callback: Function,
+  ): void {
+    throw new module.exports.DormantError();
   },
 
   /* Event Listener */
