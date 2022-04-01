@@ -556,6 +556,7 @@ module.exports = {
                 break;
             case r:
                 h = g - b + difference * (g < b ? 6 : 0);
+                h /= 6 * difference;
                 break;
             case g:
                 h = b - r + difference * 2;
@@ -566,19 +567,23 @@ module.exports = {
                 h /= 6 * difference;
                 break;
         }
+        h *= 360;
+        s *= 100;
+        v *= 100;
+        a *= 1 / 2.55;
         if (!round) {
             return {
-                h: h * 100,
-                s: s * 100,
-                v: v * 100,
-                a: a * (100 / 255),
+                h,
+                s,
+                v,
+                a,
             };
         }
         return {
-            h: Math.round(h * 100),
-            s: Math.round(s * 100),
-            v: Math.round(v * 100),
-            a: Math.round(a * (100 / 255)),
+            h: Math.round(h),
+            s: Math.round(s),
+            v: Math.round(v),
+            a: Math.round(a),
         };
     },
     hsv2hex: function (hsv, ignoreOpacity = false) {

@@ -1,3 +1,4 @@
 const F = require("../../");
 
-console.log(F.hsv2hex({h: 312, s: 73, v: 90}));
+console.log(...Object.values(F.rgb2hsv({ r: 56, g: 226, b: 110 })));
+console.log(139, 75, 89, 100)
