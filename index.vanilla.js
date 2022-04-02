@@ -587,7 +587,7 @@ const F = {
         };
     },
     hsv2hex: function (hsv, ignoreOpacity = false) {
-        return F.rgb2hex(F.hsv2rgb(hsv));
+        return F.rgb2hex(F.hsv2rgb(hsv), ignoreOpacity);
     },
     hsv2rgb: function (hsv, round = true) {
         var h = (round ? Math.floor(hsv.h) : hsv.h) / 360, s = (round ? Math.floor(hsv.s) : hsv.s) / 100, v = (round ? Math.floor(hsv.v) : hsv.v) / 100, a = hsv.a || hsv.a === 0 ? (round ? Math.floor(hsv.a) : hsv.a) : 255, i = Math.floor(h * 6), f = h * 6 - i, p = v * (1 - s), q = v * (1 - f * s), t = v * (1 - (1 - f) * s), r = 0, g = 0, b = 0;
@@ -630,18 +630,11 @@ const F = {
         };
     },
     randomHex: function (opacity = false) {
-        if (opacity) {
-            return F.rgb2hex({
-                r: F.randomInt(0, 256),
-                g: F.randomInt(0, 256),
-                b: F.randomInt(0, 256),
-                a: F.randomInt(0, 256),
-            });
-        }
         return F.rgb2hex({
-            r: F.randomInt(0, 256),
-            g: F.randomInt(0, 256),
-            b: F.randomInt(0, 256),
+            r: F.randomInt(0, 255),
+            g: F.randomInt(0, 255),
+            b: F.randomInt(0, 255),
+            a: opacity ? F.randomInt(0, 255) : 255,
         });
     },
     /* Game */

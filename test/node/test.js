@@ -1,4 +1,8 @@
 const F = require("../../");
 
-console.log(...Object.values(F.rgb2hsv({ r: 56, g: 226, b: 110 })));
-console.log(139, 75, 89, 100)
+for (var i = 0; i < 1e5; i++) {
+  var hex = F.randomHex(true);
+
+  console.log(hex);
+  F.hex2rgb(hex);
+}

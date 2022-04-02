@@ -781,7 +781,7 @@ module.exports = {
   },
 
   hsv2hex: function (hsv: hsv, ignoreOpacity = false): string {
-    return module.exports.rgb2hex(module.exports.hsv2rgb(hsv));
+    return module.exports.rgb2hex(module.exports.hsv2rgb(hsv), ignoreOpacity);
   },
 
   hsv2rgb: function (hsv: hsv, round = true): object {
@@ -841,19 +841,11 @@ module.exports = {
   },
 
   randomHex: function (opacity = false): string {
-    if (opacity) {
-      return module.exports.rgb2hex({
-        r: module.exports.randomInt(0, 256),
-        g: module.exports.randomInt(0, 256),
-        b: module.exports.randomInt(0, 256),
-        a: module.exports.randomInt(0, 256),
-      });
-    }
-
     return module.exports.rgb2hex({
-      r: module.exports.randomInt(0, 256),
-      g: module.exports.randomInt(0, 256),
-      b: module.exports.randomInt(0, 256),
+      r: module.exports.randomInt(0, 255),
+      g: module.exports.randomInt(0, 255),
+      b: module.exports.randomInt(0, 255),
+      a: opacity ? module.exports.randomInt(0, 255) : 255,
     });
   },
 
