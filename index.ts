@@ -840,13 +840,13 @@ module.exports = {
     };
   },
 
-  randomHex: function (opacity = false): string {
+  randomHex: function (ignoreOpacity = false, randomOpacity = false): string {
     return module.exports.rgb2hex({
       r: module.exports.randomInt(0, 255),
       g: module.exports.randomInt(0, 255),
       b: module.exports.randomInt(0, 255),
-      a: opacity ? module.exports.randomInt(0, 255) : 255,
-    });
+      a: randomOpacity ? module.exports.randomInt(0, 255) : 255,
+    }, ignoreOpacity);
   },
 
   /* Game */

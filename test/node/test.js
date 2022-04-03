@@ -1,8 +1,6 @@
 const F = require("../../");
 
-for (var i = 0; i < 1e5; i++) {
-  var hex = F.randomHex(true);
-
-  console.log(hex);
-  F.hex2rgb(hex);
-}
+console.log(F.hsv2hex({ h: 100, s: 100, v: 100 }));
+console.log(F.hsv2hex({ h: 100, s: 100, v: 100 }, true));
+console.log(F.hsv2hex({ h: 100, s: 100, v: 100, a: 100 }));
+console.log(F.hsv2hex({ h: 100, s: 100, v: 100, a: 100 }, true));

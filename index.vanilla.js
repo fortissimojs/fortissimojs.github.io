@@ -629,13 +629,13 @@ const F = {
             a: Math.round(a),
         };
     },
-    randomHex: function (opacity = false) {
+    randomHex: function (ignoreOpacity = false, randomOpacity = false) {
         return F.rgb2hex({
             r: F.randomInt(0, 255),
             g: F.randomInt(0, 255),
             b: F.randomInt(0, 255),
-            a: opacity ? F.randomInt(0, 255) : 255,
-        });
+            a: randomOpacity ? F.randomInt(0, 255) : 255,
+        }, ignoreOpacity);
     },
     /* Game */
     collide: {
