@@ -570,7 +570,7 @@ module.exports = {
         h *= 360;
         s *= 100;
         v *= 100;
-        a *= 1 / 2.55;
+        a /= 2.55;
         if (!round) {
             return {
                 h,
@@ -590,7 +590,7 @@ module.exports = {
         return module.exports.rgb2hex(module.exports.hsv2rgb(hsv), ignoreOpacity);
     },
     hsv2rgb: function (hsv, round = true) {
-        var h = (round ? Math.floor(hsv.h) : hsv.h) / 360, s = (round ? Math.floor(hsv.s) : hsv.s) / 100, v = (round ? Math.floor(hsv.v) : hsv.v) / 100, a = hsv.a || hsv.a === 0 ? (round ? Math.floor(hsv.a) : hsv.a) : 255, i = Math.floor(h * 6), f = h * 6 - i, p = v * (1 - s), q = v * (1 - f * s), t = v * (1 - (1 - f) * s), r = 0, g = 0, b = 0;
+        var h = (round ? Math.floor(hsv.h) : hsv.h) / 360, s = (round ? Math.floor(hsv.s) : hsv.s) / 100, v = (round ? Math.floor(hsv.v) : hsv.v) / 100, a = hsv.a || hsv.a === 0 ? (round ? Math.floor(hsv.a) : hsv.a) : 100, i = Math.floor(h * 6), f = h * 6 - i, p = v * (1 - s), q = v * (1 - f * s), t = v * (1 - (1 - f) * s), r = 0, g = 0, b = 0;
         switch (i % 6) {
             case 0:
                 (r = v), (g = t), (b = p);
@@ -614,12 +614,13 @@ module.exports = {
         r *= 255;
         g *= 255;
         b *= 255;
+        a *= 2.55;
         if (!round) {
             return {
                 r,
                 g,
                 b,
-                a: a,
+                a,
             };
         }
         return {
