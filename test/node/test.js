@@ -1,3 +1,5 @@
 const F = require("../../");
 
-console.log(F.rgb2hsv({ r: 10, g: 100, b: 100, a: 255 }));
+for (var i = 0; i < 10; i++) {
+  console.log(F.center("#".repeat(i), 10, "."));
+}

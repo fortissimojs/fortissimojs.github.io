@@ -49,7 +49,7 @@ module.exports = {
     center: function (string, amount = 10, char = " ", preferLeft = false) {
         var halfAmount = Math.max(0, amount - string.length) / 2;
         var fillFloor = char.repeat(Math.floor(halfAmount));
-        var fillCeil = char.repeat(Math.floor(halfAmount));
+        var fillCeil = char.repeat(Math.ceil(halfAmount));
         return preferLeft
             ? fillCeil + string + fillFloor
             : fillFloor + string + fillCeil;
