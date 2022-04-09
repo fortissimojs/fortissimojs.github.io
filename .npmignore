@@ -4,3 +4,5 @@ test/
 temp/
 image/
 TODO.md
+index.vanilla.js
+index.vanilla.min.js
