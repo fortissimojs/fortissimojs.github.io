@@ -3,6 +3,7 @@ type TimeUnit = {
   prefix: string;
   singular: string;
   plural: string;
+  size: number;
 };
 
 type rgb = {
@@ -90,7 +91,7 @@ module.exports = {
 
     NODE: function () {
       try {
-        require;
+        process;
       } catch {
         return false;
       }
@@ -405,54 +406,63 @@ module.exports = {
         prefix: "s",
         singular: "second",
         plural: "seconds",
+        size: 1,
       },
       {
         amount: 60,
         prefix: "m",
         singular: "minute",
         plural: "minutes",
+        size: 2,
       },
       {
         amount: 60,
         prefix: "h",
         singular: "hour",
         plural: "hours",
+        size: 3,
       },
       {
         amount: 24,
         prefix: "d",
         singular: "day",
         plural: "days",
+        size: 4,
       },
       {
         amount: 7,
         prefix: "w",
         singular: "week",
         plural: "weeks",
+        size: 5,
       },
       {
         amount: 4.34524,
         prefix: "M",
         singular: "month",
         plural: "months",
+        size: 6,
       },
       {
         amount: 12,
         prefix: "Y",
         singular: "year",
         plural: "years",
+        size: 7,
       },
       {
         amount: 10,
         prefix: "D",
         singular: "decade",
         plural: "decades",
+        size: 8,
       },
       {
         amount: 10,
         prefix: "C",
         singular: "century",
         plural: "centuries",
+        size: 9,
       },
     ];
     var time: TimeUnit[] = [
@@ -461,6 +471,7 @@ module.exports = {
         prefix: "ms",
         singular: "millisecond",
         plural: "millisecond",
+        size: 0,
       },
     ];
 
@@ -492,7 +503,10 @@ module.exports = {
       }
     }
 
-    return time.map(method).join(join);
+    return time
+      .map(method)
+      .filter(i => i !== undefined)
+      .join(join);
   },
 
   getWeek: function (date = new Date()): number {

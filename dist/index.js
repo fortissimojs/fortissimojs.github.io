@@ -1,5 +1,5 @@
 "use strict";
-const F = {
+module.exports = {
     /* Error */
     InputError: class extends Error {
         constructor(message) {
@@ -150,13 +150,13 @@ const F = {
         return Math.random() * (max - min) + min;
     },
     randomInt: function (min, max) {
-        return Math.round(F.randomFloat(min, max));
+        return Math.round(module.exports.randomFloat(min, max));
     },
     randomChoice: function (array) {
         if (!array) {
             return;
         }
-        return array[F.randomInt(0, array.length - 1)];
+        return array[module.exports.randomInt(0, array.length - 1)];
     },
     round: function (number, decimals = 0) {
         decimals = 10 ** Math.floor(decimals);
@@ -174,7 +174,7 @@ const F = {
         return Math.max(min, Math.min(max, number));
     },
     wrap: function (number, min, max) {
-        return F.mod(number - min, max - min) + min;
+        return module.exports.mod(number - min, max - min) + min;
     },
     hcf: function (a, b) {
         for (var i = Math.floor(a / 2); i > 1; i--) {
@@ -231,19 +231,19 @@ const F = {
     addCommas: function (number, ignoreDecimal = false, interval = 3) {
         var string = number.toString().split(".")[0];
         length = interval - (string.length % interval);
-        var array = F.splitAt("~".repeat(length > interval - 1 ? 0 : Math.abs(length)) + string, interval);
-        array[0] = F.replace(array[0], "~", "");
+        var array = module.exports.splitAt("~".repeat(length > interval - 1 ? 0 : Math.abs(length)) + string, interval);
+        array[0] = module.exports.replace(array[0], "~", "");
         var decimals = number.toString().split(".")[1];
         return (array.join(",") +
             (decimals
                 ? "." +
                     (ignoreDecimal
                         ? decimals
-                        : F.splitAt(decimals, interval).join(","))
+                        : module.exports.splitAt(decimals, interval).join(","))
                 : ""));
     },
     snap: function (number, array) {
-        throw new F.DormantError();
+        throw new module.exports.DormantError();
     },
     pythag: function (a, b) {
         return Math.sqrt(a ** 2 + b ** 2);
@@ -268,63 +268,54 @@ const F = {
                 prefix: "s",
                 singular: "second",
                 plural: "seconds",
-                size: 1,
             },
             {
                 amount: 60,
                 prefix: "m",
                 singular: "minute",
                 plural: "minutes",
-                size: 2,
             },
             {
                 amount: 60,
                 prefix: "h",
                 singular: "hour",
                 plural: "hours",
-                size: 3,
             },
             {
                 amount: 24,
                 prefix: "d",
                 singular: "day",
                 plural: "days",
-                size: 4,
             },
             {
                 amount: 7,
                 prefix: "w",
                 singular: "week",
                 plural: "weeks",
-                size: 5,
             },
             {
                 amount: 4.34524,
                 prefix: "M",
                 singular: "month",
                 plural: "months",
-                size: 6,
             },
             {
                 amount: 12,
                 prefix: "Y",
                 singular: "year",
                 plural: "years",
-                size: 7,
             },
             {
                 amount: 10,
                 prefix: "D",
                 singular: "decade",
                 plural: "decades",
-                size: 8,
             },
             {
                 amount: 10,
                 prefix: "C",
                 singular: "century",
                 plural: "centuries",
-                size: 9,
             },
         ];
         var time = [
@@ -333,7 +324,6 @@ const F = {
                 prefix: "ms",
                 singular: "millisecond",
                 plural: "millisecond",
-                size: 0,
             },
         ];
         for (var i in units) {
@@ -420,7 +410,7 @@ const F = {
                             value =
                                 valueSeperator +
                                     indent +
-                                    F.stringify(value, keySeperator, valueSeperator + indent, indent);
+                                    module.exports.stringify(value, keySeperator, valueSeperator + indent, indent);
                         }
                         else {
                             value = "[]";
@@ -431,7 +421,7 @@ const F = {
                             value =
                                 valueSeperator +
                                     indent +
-                                    F.stringify(value, keySeperator, valueSeperator + indent, indent);
+                                    module.exports.stringify(value, keySeperator, valueSeperator + indent, indent);
                         }
                         else {
                             value = "{}";
@@ -439,7 +429,7 @@ const F = {
                     }
                 }
                 else if (typeof value === "function") {
-                    value = `function (${F
+                    value = `function (${module.exports
                         .getParameters(value)
                         .join(", ")})`;
                 }
@@ -453,21 +443,21 @@ const F = {
         return output.join(valueSeperator);
     },
     sort: function (object, method) {
-        throw new F.DormantError();
+        throw new module.exports.DormantError();
     },
     deepCopy: function (object) {
         if (object && typeof object === "object") {
             if (object.constructor === Array) {
                 var copiedArray = new Array(object.length);
                 for (var i = 0; i < object.length; i++) {
-                    copiedArray[i] = F.deepCopy(object[i]);
+                    copiedArray[i] = module.exports.deepCopy(object[i]);
                 }
                 return copiedArray;
             }
             else {
                 var copiedObject = {};
                 for (var j in object) {
-                    copiedObject[j] = F.deepCopy(object[j]);
+                    copiedObject[j] = module.exports.deepCopy(object[j]);
                 }
                 return copiedObject;
             }
@@ -506,7 +496,7 @@ const F = {
                 return hex.length === 1 ? "0" + hex : hex;
             }
         }
-        throw new F.InputError("`number` is not defined");
+        throw new module.exports.InputError("`number` is not defined");
     },
     hex2rgb: function (hex) {
         if (!/^#/.test(hex)) {
@@ -547,19 +537,19 @@ const F = {
                 a: number & 255,
             };
         }
-        throw new F.InputError("Unknown hex format");
+        throw new module.exports.InputError("Unknown hex format");
     },
     hex2hsv: function (hex) {
-        throw new F.DormantError();
+        throw new module.exports.DormantError();
     },
     rgb2hex: function (rgb, ignoreOpacity = false) {
         return ("#" +
-            F.toHex(rgb.r) +
-            F.toHex(rgb.g) +
-            F.toHex(rgb.b) +
+            module.exports.toHex(rgb.r) +
+            module.exports.toHex(rgb.g) +
+            module.exports.toHex(rgb.b) +
             (ignoreOpacity
                 ? ""
-                : F.toHex(Math.floor(rgb.a || rgb.a === 0 ? rgb.a : 255))));
+                : module.exports.toHex(Math.floor(rgb.a || rgb.a === 0 ? rgb.a : 255))));
     },
     rgb2hsv: function (rgb, round = true) {
         var r = round ? Math.floor(rgb.r) : rgb.r, g = round ? Math.floor(rgb.g) : rgb.g, b = round ? Math.floor(rgb.b) : rgb.b, a = rgb.a || rgb.a === 0 ? (round ? Math.floor(rgb.a) : rgb.a) : 255, max = Math.max(r, g, b), min = Math.min(r, g, b), difference = max - min, h = 0, s = max === 0 ? 0 : difference / max, v = max / 255;
@@ -600,7 +590,7 @@ const F = {
         };
     },
     hsv2hex: function (hsv, ignoreOpacity = false) {
-        return F.rgb2hex(F.hsv2rgb(hsv), ignoreOpacity);
+        return module.exports.rgb2hex(module.exports.hsv2rgb(hsv), ignoreOpacity);
     },
     hsv2rgb: function (hsv, round = true) {
         var h = (round ? Math.floor(hsv.h) : hsv.h) / 360, s = (round ? Math.floor(hsv.s) : hsv.s) / 100, v = (round ? Math.floor(hsv.v) : hsv.v) / 100, a = hsv.a || hsv.a === 0 ? (round ? Math.floor(hsv.a) : hsv.a) : 100, i = Math.floor(h * 6), f = h * 6 - i, p = v * (1 - s), q = v * (1 - f * s), t = v * (1 - (1 - f) * s), r = 0, g = 0, b = 0;
@@ -644,23 +634,23 @@ const F = {
         };
     },
     randomHex: function (ignoreOpacity = false, randomOpacity = false) {
-        return F.rgb2hex({
-            r: F.randomInt(0, 255),
-            g: F.randomInt(0, 255),
-            b: F.randomInt(0, 255),
-            a: randomOpacity ? F.randomInt(0, 255) : 255,
+        return module.exports.rgb2hex({
+            r: module.exports.randomInt(0, 255),
+            g: module.exports.randomInt(0, 255),
+            b: module.exports.randomInt(0, 255),
+            a: randomOpacity ? module.exports.randomInt(0, 255) : 255,
         }, ignoreOpacity);
     },
     /* Game */
     collide: {
         polygon: function (a, b) {
-            throw new F.DormantError();
+            throw new module.exports.DormantError();
         },
         rect2rect: function (a, b) {
             return (a.x + a.w > b.x && a.x < b.x + b.w && b.y + b.h > a.y && b.y < a.y + a.h);
         },
         rect2circle: function (a, b) {
-            throw new F.DormantError();
+            throw new module.exports.DormantError();
         },
         circle2circle: function (a, b) {
             return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2) < a.r + b.r;
@@ -680,41 +670,41 @@ const F = {
         };
     },
     trace: function (x, y, angle, density, maxDistance, callback) {
-        throw new F.DormantError();
+        throw new module.exports.DormantError();
     },
     /* Event Listener */
     keys: {},
     mouse: {},
     setMouseOffset: function (offset) {
-        if (!F.env.DOM()) {
-            throw F.EnvError("DOM");
+        if (!module.exports.env.DOM()) {
+            throw module.exports.EnvError("DOM");
         }
-        F.mouse.offsetLeft = offset.left;
-        F.mouse.offsetTop = offset.top;
+        module.exports.mouse.offsetLeft = offset.left;
+        module.exports.mouse.offsetTop = offset.top;
     },
     mouseOver: function (element, ignoreOffset = false) {
-        if (!F.env.DOM()) {
-            throw F.EnvError("DOM");
+        if (!module.exports.env.DOM()) {
+            throw module.exports.EnvError("DOM");
         }
         var rect = element.getBoundingClientRect();
-        return (F.mouse.x > (ignoreOffset ? 0 : rect.left) &&
-            F.mouse.y > (ignoreOffset ? 0 : rect.top) &&
-            F.mouse.x < rect.width + rect.left &&
-            F.mouse.y < rect.height + rect.top);
+        return (module.exports.mouse.x > (ignoreOffset ? 0 : rect.left) &&
+            module.exports.mouse.y > (ignoreOffset ? 0 : rect.top) &&
+            module.exports.mouse.x < rect.width + rect.left &&
+            module.exports.mouse.y < rect.height + rect.top);
     },
     createListeners: function () {
-        if (!F.env.DOM()) {
-            throw F.EnvError("DOM");
+        if (!module.exports.env.DOM()) {
+            throw module.exports.EnvError("DOM");
         }
         window.onkeydown = function (event) {
-            F.keys[event.key] = true;
-            F.keys[event.code] = true;
-            F.keys[event.keyCode] = true;
+            module.exports.keys[event.key] = true;
+            module.exports.keys[event.code] = true;
+            module.exports.keys[event.keyCode] = true;
         };
         window.onkeyup = function (event) {
-            delete F.keys[event.key];
-            delete F.keys[event.code];
-            delete F.keys[event.keyCode];
+            delete module.exports.keys[event.key];
+            delete module.exports.keys[event.code];
+            delete module.exports.keys[event.keyCode];
         };
         var mouseEvents = [
             "onclick",
@@ -725,40 +715,40 @@ const F = {
             "onmouseup",
         ];
         for (var i = 0; i < mouseEvents.length; i++) {
-            window[mouseEvents[i]] = F.setMouse;
+            window[mouseEvents[i]] = module.exports.setMouse;
         }
-        F.mouseButtons = ["left", "middle", "right", "four", "five"];
+        module.exports.mouseButtons = ["left", "middle", "right", "four", "five"];
         window.onmousedown = function (event) {
-            F.mouse[F.mouseButtons[event.button]] = true;
+            module.exports.mouse[module.exports.mouseButtons[event.button]] = true;
         };
         window.onmouseup = function (event) {
-            F.mouse[F.mouseButtons[event.button]] = false;
+            module.exports.mouse[module.exports.mouseButtons[event.button]] = false;
         };
         addEventListener("touchstart", function (event) {
-            F.setMouse(event.touches[0]);
-            F.mouse.touchDown = true;
-            F.mouse.isFirstTouch = true;
+            module.exports.setMouse(event.touches[0]);
+            module.exports.mouse.touchDown = true;
+            module.exports.mouse.isFirstTouch = true;
         });
         addEventListener("touchmove", function (event) {
-            F.setMouse(event.touches[0]);
-            F.mouse.touchDown = true;
+            module.exports.setMouse(event.touches[0]);
+            module.exports.mouse.touchDown = true;
         });
         addEventListener("touchend", function (event) {
-            F.mouse.touchDown = false;
+            module.exports.mouse.touchDown = false;
         });
     },
     parseControls: function (object) {
-        throw new F.DormantError();
+        throw new module.exports.DormantError();
     },
     /* HTML Document */
     setQuery: function (key, value) {
-        throw new F.DormantError();
+        throw new module.exports.DormantError();
     },
     setCaret: function (element, position) {
-        throw new F.DormantError();
+        throw new module.exports.DormantError();
     },
     getCaret: function (element) {
-        throw new F.DormantError();
+        throw new module.exports.DormantError();
     },
     copy: function (text) {
         if (!navigator.clipboard || !navigator.clipboard.writeText) {
@@ -784,7 +774,7 @@ const F = {
         });
     },
     download: function (image) {
-        throw new F.DormantError();
+        throw new module.exports.DormantError();
     },
     /* HTML Canvas */
     fillCanvas: function (ctx) {
@@ -830,9 +820,9 @@ const F = {
         ctx.stroke();
     },
     getCanvasPixel: function (canvas, x, y) {
-        throw new F.DormantError();
+        throw new module.exports.DormantError();
     },
     scanCanvas: function (canvas) {
-        throw new F.DormantError();
+        throw new module.exports.DormantError();
     },
 };

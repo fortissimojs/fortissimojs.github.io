@@ -1,5 +1,18 @@
 const F = require("../../");
 
-for (var i = 0; i < 10; i++) {
-  console.log(F.center("#".repeat(i), 10, "."));
-}
+console.log(
+  F.parseTime(
+    1650940347323,
+    undefined,
+    (method = item => {
+      if (item.size < 2) {
+        return;
+      }
+      return (
+        Math.floor(item.amount).toString() +
+        " " +
+        (Math.floor(item.amount) === 1 ? item.singular : item.plural)
+      );
+    }),
+  ),
+);
