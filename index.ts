@@ -727,7 +727,7 @@ module.exports = {
   },
 
   hex2hsv: function (hex: string): object {
-    throw new module.exports.DormantError();
+    return module.exports.rgb2hsv(module.exports.hex2rgb(hex));
   },
 
   rgb2hex: function (rgb: rgb, ignoreOpacity = false): string {
@@ -934,6 +934,11 @@ module.exports = {
   /* Event Listener */
   keys: {},
   mouse: {},
+
+  setMouse: function (event: any): void {
+    module.exports.mouse.x = event.clientX;
+    module.exports.mouse.y = event.clientY;
+  },
 
   setMouseOffset: function (offset: boxSimple): void {
     if (!module.exports.env.DOM()) {

@@ -550,7 +550,7 @@ module.exports = {
         throw new module.exports.InputError("Unknown hex format");
     },
     hex2hsv: function (hex) {
-        throw new module.exports.DormantError();
+        return module.exports.rgb2hsv(module.exports.hex2rgb(hex));
     },
     rgb2hex: function (rgb, ignoreOpacity = false) {
         return ("#" +
@@ -685,6 +685,10 @@ module.exports = {
     /* Event Listener */
     keys: {},
     mouse: {},
+    setMouse: function (event) {
+        module.exports.mouse.x = event.clientX;
+        module.exports.mouse.y = event.clientY;
+    },
     setMouseOffset: function (offset) {
         if (!module.exports.env.DOM()) {
             throw module.exports.EnvError("DOM");

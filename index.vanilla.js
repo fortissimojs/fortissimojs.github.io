@@ -33,7 +33,7 @@ const F = {
         },
         NODE: function () {
             try {
-                require;
+                process;
             }
             catch {
                 return false;
@@ -550,7 +550,7 @@ const F = {
         throw new F.InputError("Unknown hex format");
     },
     hex2hsv: function (hex) {
-        throw new F.DormantError();
+        return F.rgb2hsv(F.hex2rgb(hex));
     },
     rgb2hex: function (rgb, ignoreOpacity = false) {
         return ("#" +
@@ -685,6 +685,10 @@ const F = {
     /* Event Listener */
     keys: {},
     mouse: {},
+    setMouse: function (event) {
+        F.mouse.x = event.clientX;
+        F.mouse.y = event.clientY;
+    },
     setMouseOffset: function (offset) {
         if (!F.env.DOM()) {
             throw F.EnvError("DOM");
