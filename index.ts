@@ -936,8 +936,8 @@ module.exports = {
   mouse: {},
 
   setMouse: function (event: any): void {
-    module.exports.mouse.x = event.clientX;
-    module.exports.mouse.y = event.clientY;
+    module.exports.mouse.x = event.clientX - (module.exports.mouse.offsetLeft || 0);
+    module.exports.mouse.y = event.clientY - (module.exports.mouse.offsetTop || 0);
   },
 
   setMouseOffset: function (offset: boxSimple): void {

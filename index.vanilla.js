@@ -686,8 +686,8 @@ const F = {
     keys: {},
     mouse: {},
     setMouse: function (event) {
-        F.mouse.x = event.clientX;
-        F.mouse.y = event.clientY;
+        F.mouse.x = event.clientX - (F.mouse.offsetLeft || 0);
+        F.mouse.y = event.clientY - (F.mouse.offsetTop || 0);
     },
     setMouseOffset: function (offset) {
         if (!F.env.DOM()) {
