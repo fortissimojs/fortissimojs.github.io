@@ -63,7 +63,9 @@ module.exports = {
 
   EnvError: class extends Error {
     constructor(message: string) {
-      super(`Current environment does not support ${message}`);
+      super(
+        `Current environment does not support ${message}`,
+      );
       this.name = "Fortissimo - EnvError";
     }
   },
@@ -106,7 +108,9 @@ module.exports = {
     char = " ",
     reverse = false,
   ): string {
-    var fill = char.repeat(Math.max(0, amount - string.length));
+    var fill = char.repeat(
+      Math.max(0, amount - string.length),
+    );
     return reverse ? fill + string : string + fill;
   },
 
@@ -116,7 +120,8 @@ module.exports = {
     char: string = " ",
     preferLeft: boolean = false,
   ): string {
-    var halfAmount = Math.max(0, amount - string.length) / 2;
+    var halfAmount =
+      Math.max(0, amount - string.length) / 2;
     var fillFloor = char.repeat(Math.floor(halfAmount));
     var fillCeil = char.repeat(Math.ceil(halfAmount));
     return preferLeft
@@ -154,7 +159,10 @@ module.exports = {
       return string;
     }
     if (onlyFirst && lowerElse) {
-      return string[0].toUpperCase() + string.slice(1).toLowerCase();
+      return (
+        string[0].toUpperCase() +
+        string.slice(1).toLowerCase()
+      );
     }
 
     var array = string.split(" ");
@@ -166,13 +174,20 @@ module.exports = {
 
       output +=
         (i ? " " : "") +
-        (!onlyFirst || i === 0 ? array[i][0].toUpperCase() : array[i][0]) +
-        (!lowerElse ? array[i].slice(1) : array[i].slice(1).toLowerCase());
+        (!onlyFirst || i === 0
+          ? array[i][0].toUpperCase()
+          : array[i][0]) +
+        (!lowerElse
+          ? array[i].slice(1)
+          : array[i].slice(1).toLowerCase());
     }
     return output;
   },
 
-  format: function (string: string, ...replace: any): string {
+  format: function (
+    string: string,
+    ...replace: any
+  ): string {
     if (!replace || !string || typeof string !== "string") {
       return string;
     }
@@ -194,7 +209,12 @@ module.exports = {
     if (string.length <= length) {
       return string;
     }
-    return string.slice(0, length - (includeChar ? char.length : 0)) + char;
+    return (
+      string.slice(
+        0,
+        length - (includeChar ? char.length : 0),
+      ) + char
+    );
   },
 
   replace: function (
@@ -218,14 +238,17 @@ module.exports = {
     }
     var hash = 0;
     for (var i = 0; i < string.length; i++) {
-      var character = string.charCodeAt(i);
-      hash = (hash << 5) - hash + character;
-      hash = hash & hash;
+      hash = (hash << 5) - hash + string.charCodeAt(i);
+      hash &= hash;
     }
     return hash;
   },
 
-  redact: function (string: string, amount = 3, char = "*"): string {
+  redact: function (
+    string: string,
+    amount = 3,
+    char = "*",
+  ): string {
     if (string.length <= length) {
       return string;
     }
@@ -233,15 +256,23 @@ module.exports = {
       return char.repeat(string.length);
     }
     return (
-      string.slice(0, amount) + char.repeat(Math.max(0, string.length - amount))
+      string.slice(0, amount) +
+      char.repeat(Math.max(0, string.length - amount))
     );
   },
 
-  splitAt: function (string: string, number: number): string[] {
+  splitAt: function (
+    string: string,
+    number: number,
+  ): string[] {
     if (!string) {
       return [];
     }
-    return string.match(new RegExp(".{1," + number + "}", "g")) || [];
+    return (
+      string.match(
+        new RegExp(".{1," + number + "}", "g"),
+      ) || []
+    );
   },
 
   /* Number */
@@ -259,7 +290,9 @@ module.exports = {
     if (!array) {
       return;
     }
-    return array[module.exports.randomInt(0, array.length - 1)];
+    return array[
+      module.exports.randomInt(0, array.length - 1)
+    ];
   },
 
   round: function (number: number, decimals = 0): number {
@@ -277,12 +310,22 @@ module.exports = {
     return Math.ceil(number * decimals) / decimals;
   },
 
-  border: function (number: number, min: number, max: number): number {
+  border: function (
+    number: number,
+    min: number,
+    max: number,
+  ): number {
     return Math.max(min, Math.min(max, number));
   },
 
-  wrap: function (number: number, min: number, max: number): number {
-    return module.exports.mod(number - min, max - min) + min;
+  wrap: function (
+    number: number,
+    min: number,
+    max: number,
+  ): number {
+    return (
+      module.exports.mod(number - min, max - min) + min
+    );
   },
 
   hcf: function (a: number, b: number): number {
@@ -353,7 +396,9 @@ module.exports = {
     length = interval - (string.length % interval);
 
     var array = module.exports.splitAt(
-      "~".repeat(length > interval - 1 ? 0 : Math.abs(length)) + string,
+      "~".repeat(
+        length > interval - 1 ? 0 : Math.abs(length),
+      ) + string,
       interval,
     );
     array[0] = module.exports.replace(array[0], "~", "");
@@ -365,7 +410,9 @@ module.exports = {
         ? "." +
           (ignoreDecimal
             ? decimals
-            : module.exports.splitAt(decimals, interval).join(","))
+            : module.exports
+                .splitAt(decimals, interval)
+                .join(","))
         : "")
     );
   },
@@ -396,7 +443,9 @@ module.exports = {
       return (
         Math.floor(item.amount).toString() +
         " " +
-        (Math.floor(item.amount) === 1 ? item.singular : item.plural)
+        (Math.floor(item.amount) === 1
+          ? item.singular
+          : item.plural)
       );
     },
   ): any {
@@ -481,7 +530,9 @@ module.exports = {
           time = [
             {
               ...units[i],
-              amount: Math.floor(time[0].amount / units[i].amount),
+              amount: Math.floor(
+                time[0].amount / units[i].amount,
+              ),
             },
             {
               ...time[0],
@@ -493,7 +544,9 @@ module.exports = {
           time = [
             {
               ...units[i],
-              amount: Math.floor(time[0].amount / units[i].amount),
+              amount: Math.floor(
+                time[0].amount / units[i].amount,
+              ),
             },
             ...time.slice(1),
           ];
@@ -510,9 +563,13 @@ module.exports = {
   },
 
   getWeek: function (date = new Date()): number {
-    date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay() || 7));
+    date.setUTCDate(
+      date.getUTCDate() + 4 - (date.getUTCDay() || 7),
+    );
     return Math.ceil(
-      ((date.getTime() - Date.UTC(date.getUTCFullYear(), 0, 1)) / 86400000 +
+      ((date.getTime() -
+        Date.UTC(date.getUTCFullYear(), 0, 1)) /
+        86400000 +
         1) /
         7,
     );
@@ -529,7 +586,10 @@ module.exports = {
       return array;
     }
     if (isIndex) {
-      return [...array.slice(0, item), ...array.slice(item + 1)];
+      return [
+        ...array.slice(0, item),
+        ...array.slice(item + 1),
+      ];
     }
 
     var removed = [];
@@ -616,7 +676,10 @@ module.exports = {
     return output.join(valueSeperator);
   },
 
-  sort: function (object: object, method: Function): object {
+  sort: function (
+    object: object,
+    method: Function,
+  ): object {
     throw new module.exports.DormantError();
   },
 
@@ -625,13 +688,17 @@ module.exports = {
       if (object.constructor === Array) {
         var copiedArray = new Array(object.length);
         for (var i = 0; i < object.length; i++) {
-          copiedArray[i] = module.exports.deepCopy(object[i]);
+          copiedArray[i] = module.exports.deepCopy(
+            object[i],
+          );
         }
         return copiedArray;
       } else {
         var copiedObject: any = {};
         for (var j in object) {
-          copiedObject[j] = module.exports.deepCopy(object[j]);
+          copiedObject[j] = module.exports.deepCopy(
+            object[j],
+          );
         }
         return copiedObject;
       }
@@ -648,7 +715,9 @@ module.exports = {
       JSON.stringify(object, (key, value) => {
         if (value && typeof value === "object") {
           if (cache.includes(value)) {
-            return markReference ? markReference : undefined;
+            return markReference
+              ? markReference
+              : undefined;
           }
           cache.push(value);
         }
@@ -673,12 +742,16 @@ module.exports = {
       return "00";
     }
     if (number) {
-      var hex = Math.floor(number).toString(16).toUpperCase();
+      var hex = Math.floor(number)
+        .toString(16)
+        .toUpperCase();
       if (hex) {
         return hex.length === 1 ? "0" + hex : hex;
       }
     }
-    throw new module.exports.InputError("`number` is not defined");
+    throw new module.exports.InputError(
+      "`number` is not defined",
+    );
   },
 
   hex2rgb: function (hex: string): rgb | undefined {
@@ -690,7 +763,12 @@ module.exports = {
       var string = hex.substring(1);
       if (string.length === 3) {
         string =
-          string[0] + string[0] + string[1] + string[1] + string[2] + string[2];
+          string[0] +
+          string[0] +
+          string[1] +
+          string[1] +
+          string[2] +
+          string[2];
       }
       var number = parseInt("0x" + string);
       return {
@@ -723,14 +801,21 @@ module.exports = {
       };
     }
 
-    throw new module.exports.InputError("Unknown hex format");
+    throw new module.exports.InputError(
+      "Unknown hex format",
+    );
   },
 
   hex2hsv: function (hex: string): object {
-    return module.exports.rgb2hsv(module.exports.hex2rgb(hex));
+    return module.exports.rgb2hsv(
+      module.exports.hex2rgb(hex),
+    );
   },
 
-  rgb2hex: function (rgb: rgb, ignoreOpacity = false): string {
+  rgb2hex: function (
+    rgb: rgb,
+    ignoreOpacity = false,
+  ): string {
     return (
       "#" +
       module.exports.toHex(rgb.r) +
@@ -738,7 +823,9 @@ module.exports = {
       module.exports.toHex(rgb.b) +
       (ignoreOpacity
         ? ""
-        : module.exports.toHex(Math.floor(rgb.a || rgb.a === 0 ? rgb.a : 255)))
+        : module.exports.toHex(
+            Math.floor(rgb.a || rgb.a === 0 ? rgb.a : 255),
+          ))
     );
   },
 
@@ -746,7 +833,12 @@ module.exports = {
     var r = round ? Math.floor(rgb.r) : rgb.r,
       g = round ? Math.floor(rgb.g) : rgb.g,
       b = round ? Math.floor(rgb.b) : rgb.b,
-      a = rgb.a || rgb.a === 0 ? (round ? Math.floor(rgb.a) : rgb.a) : 255,
+      a =
+        rgb.a || rgb.a === 0
+          ? round
+            ? Math.floor(rgb.a)
+            : rgb.a
+          : 255,
       max = Math.max(r, g, b),
       min = Math.min(r, g, b),
       difference = max - min,
@@ -794,15 +886,26 @@ module.exports = {
     };
   },
 
-  hsv2hex: function (hsv: hsv, ignoreOpacity = false): string {
-    return module.exports.rgb2hex(module.exports.hsv2rgb(hsv), ignoreOpacity);
+  hsv2hex: function (
+    hsv: hsv,
+    ignoreOpacity = false,
+  ): string {
+    return module.exports.rgb2hex(
+      module.exports.hsv2rgb(hsv),
+      ignoreOpacity,
+    );
   },
 
   hsv2rgb: function (hsv: hsv, round = true): object {
     var h = (round ? Math.floor(hsv.h) : hsv.h) / 360,
       s = (round ? Math.floor(hsv.s) : hsv.s) / 100,
       v = (round ? Math.floor(hsv.v) : hsv.v) / 100,
-      a = hsv.a || hsv.a === 0 ? (round ? Math.floor(hsv.a) : hsv.a) : 100,
+      a =
+        hsv.a || hsv.a === 0
+          ? round
+            ? Math.floor(hsv.a)
+            : hsv.a
+          : 100,
       i = Math.floor(h * 6),
       f = h * 6 - i,
       p = v * (1 - s),
@@ -855,13 +958,18 @@ module.exports = {
     };
   },
 
-  randomHex: function (ignoreOpacity = false, randomOpacity = false): string {
+  randomHex: function (
+    ignoreOpacity = false,
+    randomOpacity = false,
+  ): string {
     return module.exports.rgb2hex(
       {
         r: module.exports.randomInt(0, 255),
         g: module.exports.randomInt(0, 255),
         b: module.exports.randomInt(0, 255),
-        a: randomOpacity ? module.exports.randomInt(0, 255) : 255,
+        a: randomOpacity
+          ? module.exports.randomInt(0, 255)
+          : 255,
       },
       ignoreOpacity,
     );
@@ -876,7 +984,10 @@ module.exports = {
 
     rect2rect: function (a: rect, b: rect): boolean {
       return (
-        a.x + a.w > b.x && a.x < b.x + b.w && b.y + b.h > a.y && b.y < a.y + a.h
+        a.x + a.w > b.x &&
+        a.x < b.x + b.w &&
+        b.y + b.h > a.y &&
+        b.y < a.y + a.h
       );
     },
 
@@ -884,8 +995,14 @@ module.exports = {
       throw new module.exports.DormantError();
     },
 
-    circle2circle: function (a: circle, b: circle): boolean {
-      return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2) < a.r + b.r;
+    circle2circle: function (
+      a: circle,
+      b: circle,
+    ): boolean {
+      return (
+        Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2) <
+        a.r + b.r
+      );
     },
 
     distance: function (
@@ -936,8 +1053,11 @@ module.exports = {
   mouse: {},
 
   setMouse: function (event: any): void {
-    module.exports.mouse.x = event.clientX - (module.exports.mouse.offsetLeft || 0);
-    module.exports.mouse.y = event.clientY - (module.exports.mouse.offsetTop || 0);
+    module.exports.mouse.x =
+      event.clientX -
+      (module.exports.mouse.offsetLeft || 0);
+    module.exports.mouse.y =
+      event.clientY - (module.exports.mouse.offsetTop || 0);
   },
 
   setMouseOffset: function (offset: boxSimple): void {
@@ -949,15 +1069,20 @@ module.exports = {
     module.exports.mouse.offsetTop = offset.top;
   },
 
-  mouseOver: function (element: HTMLElement, ignoreOffset = false): boolean {
+  mouseOver: function (
+    element: HTMLElement,
+    ignoreOffset = false,
+  ): boolean {
     if (!module.exports.env.DOM()) {
       throw module.exports.EnvError("DOM");
     }
 
     var rect: box = element.getBoundingClientRect();
     return (
-      module.exports.mouse.x > (ignoreOffset ? 0 : rect.left) &&
-      module.exports.mouse.y > (ignoreOffset ? 0 : rect.top) &&
+      module.exports.mouse.x >
+        (ignoreOffset ? 0 : rect.left) &&
+      module.exports.mouse.y >
+        (ignoreOffset ? 0 : rect.top) &&
       module.exports.mouse.x < rect.width + rect.left &&
       module.exports.mouse.y < rect.height + rect.top
     );
@@ -972,11 +1097,25 @@ module.exports = {
       module.exports.keys[event.key] = true;
       module.exports.keys[event.code] = true;
       module.exports.keys[event.keyCode] = true;
+
+      // Case-insensitive
+      if (
+        "abcdefghijklmnopqrstuvwxyz".includes(
+          event.key.toLowerCase(),
+        )
+      ) {
+        module.exports.keys[event.key.toLowerCase() + "_"] =
+          true;
+      }
     };
+
     window.onkeyup = function (event) {
       delete module.exports.keys[event.key];
       delete module.exports.keys[event.code];
       delete module.exports.keys[event.keyCode];
+      delete module.exports.keys[
+        event.key.toLowerCase() + "_"
+      ];
     };
 
     var mouseEvents: any[] = [
@@ -991,12 +1130,22 @@ module.exports = {
       window[mouseEvents[i]] = module.exports.setMouse;
     }
 
-    module.exports.mouseButtons = ["left", "middle", "right", "four", "five"];
+    module.exports.mouseButtons = [
+      "left",
+      "middle",
+      "right",
+      "four",
+      "five",
+    ];
     window.onmousedown = function (event) {
-      module.exports.mouse[module.exports.mouseButtons[event.button]] = true;
+      module.exports.mouse[
+        module.exports.mouseButtons[event.button]
+      ] = true;
     };
     window.onmouseup = function (event) {
-      module.exports.mouse[module.exports.mouseButtons[event.button]] = false;
+      module.exports.mouse[
+        module.exports.mouseButtons[event.button]
+      ] = false;
     };
 
     addEventListener("touchstart", function (event) {
@@ -1022,7 +1171,10 @@ module.exports = {
     throw new module.exports.DormantError();
   },
 
-  setCaret: function (element: HTMLElement, position: number): void {
+  setCaret: function (
+    element: HTMLElement,
+    position: number,
+  ): void {
     throw new module.exports.DormantError();
   },
 
@@ -1031,7 +1183,10 @@ module.exports = {
   },
 
   copy: function (text: string): void {
-    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+    if (
+      !navigator.clipboard ||
+      !navigator.clipboard.writeText
+    ) {
       var textArea = document.createElement("textarea");
       textArea.value = text;
       textArea.style.top = "0";
@@ -1061,12 +1216,21 @@ module.exports = {
   },
 
   /* HTML Canvas */
-  fillCanvas: function (ctx: CanvasRenderingContext2D): void {
+  fillCanvas: function (
+    ctx: CanvasRenderingContext2D,
+  ): void {
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   },
 
-  clearCanvas: function (ctx: CanvasRenderingContext2D): void {
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  clearCanvas: function (
+    ctx: CanvasRenderingContext2D,
+  ): void {
+    ctx.clearRect(
+      0,
+      0,
+      ctx.canvas.width,
+      ctx.canvas.height,
+    );
   },
 
   fillRoundRect: function (
