@@ -152,7 +152,7 @@ module.exports = {
         }
         return Math.random() * (max - min) + min;
     },
-    randomInt: function (min, max, floor = false) {
+    randomInt: function (min, max, floor = true) {
         return Math[floor ? "floor" : "round"](module.exports.randomFloat(min, max));
     },
     randomChoice: function (array) {
