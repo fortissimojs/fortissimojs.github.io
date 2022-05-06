@@ -74,8 +74,7 @@ const F = {
             return string;
         }
         if (onlyFirst && lowerElse) {
-            return (string[0].toUpperCase() +
-                string.slice(1).toLowerCase());
+            return string[0].toUpperCase() + string.slice(1).toLowerCase();
         }
         var array = string.split(" ");
         var output = "";
@@ -85,12 +84,8 @@ const F = {
             }
             output +=
                 (i ? " " : "") +
-                    (!onlyFirst || i === 0
-                        ? array[i][0].toUpperCase()
-                        : array[i][0]) +
-                    (!lowerElse
-                        ? array[i].slice(1)
-                        : array[i].slice(1).toLowerCase());
+                    (!onlyFirst || i === 0 ? array[i][0].toUpperCase() : array[i][0]) +
+                    (!lowerElse ? array[i].slice(1) : array[i].slice(1).toLowerCase());
         }
         return output;
     },
@@ -110,7 +105,7 @@ const F = {
         if (string.length <= length) {
             return string;
         }
-        return (string.slice(0, length - (includeChar ? char.length : 0)) + char);
+        return string.slice(0, length - (includeChar ? char.length : 0)) + char;
     },
     replace: function (string, old, char, onlyFirst = false) {
         if (!string || typeof string !== "string") {
@@ -139,23 +134,26 @@ const F = {
         if (amount <= 0) {
             return char.repeat(string.length);
         }
-        return (string.slice(0, amount) +
-            char.repeat(Math.max(0, string.length - amount)));
+        return (string.slice(0, amount) + char.repeat(Math.max(0, string.length - amount)));
     },
     splitAt: function (string, number) {
         if (!string) {
             return [];
         }
-        return (string.match(new RegExp(".{1," + number + "}", "g")) || []);
+        return string.match(new RegExp(".{1," + number + "}", "g")) || [];
     },
     /* Number */
     randomFloat: function (min, max) {
-        max = Math.max(min, max);
-        min = Math.min(min, max);
+        if (min === max) {
+            return min;
+        }
+        if (min > max) {
+            throw F.InputError("Minimum greater than maximum");
+        }
         return Math.random() * (max - min) + min;
     },
-    randomInt: function (min, max) {
-        return Math.round(F.randomFloat(min, max));
+    randomInt: function (min, max, floor = false) {
+        return Math[floor ? "floor" : "round"](F.randomFloat(min, max));
     },
     randomChoice: function (array) {
         if (!array) {
@@ -179,7 +177,7 @@ const F = {
         return Math.max(min, Math.min(max, number));
     },
     wrap: function (number, min, max) {
-        return (F.mod(number - min, max - min) + min);
+        return F.mod(number - min, max - min) + min;
     },
     hcf: function (a, b) {
         for (var i = Math.floor(a / 2); i > 1; i--) {
@@ -244,9 +242,7 @@ const F = {
                 ? "." +
                     (ignoreDecimal
                         ? decimals
-                        : F
-                            .splitAt(decimals, interval)
-                            .join(","))
+                        : F.splitAt(decimals, interval).join(","))
                 : ""));
     },
     snap: function (number, array) {
@@ -267,9 +263,7 @@ const F = {
     parseTime: function (milliseconds, join = ", ", method = (item) => {
         return (Math.floor(item.amount).toString() +
             " " +
-            (Math.floor(item.amount) === 1
-                ? item.singular
-                : item.plural));
+            (Math.floor(item.amount) === 1 ? item.singular : item.plural));
     }) {
         var units = [
             {
@@ -381,9 +375,7 @@ const F = {
     },
     getWeek: function (date = new Date()) {
         date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay() || 7));
-        return Math.ceil(((date.getTime() -
-            Date.UTC(date.getUTCFullYear(), 0, 1)) /
-            86400000 +
+        return Math.ceil(((date.getTime() - Date.UTC(date.getUTCFullYear(), 0, 1)) / 86400000 +
             1) /
             7);
     },
@@ -393,10 +385,7 @@ const F = {
             return array;
         }
         if (isIndex) {
-            return [
-                ...array.slice(0, item),
-                ...array.slice(item + 1),
-            ];
+            return [...array.slice(0, item), ...array.slice(item + 1)];
         }
         var removed = [];
         for (var i = 0; i < array.length; i++) {
@@ -493,9 +482,7 @@ const F = {
         return JSON.parse(JSON.stringify(object, (key, value) => {
             if (value && typeof value === "object") {
                 if (cache.includes(value)) {
-                    return markReference
-                        ? markReference
-                        : undefined;
+                    return markReference ? markReference : undefined;
                 }
                 cache.push(value);
             }
@@ -517,9 +504,7 @@ const F = {
             return "00";
         }
         if (number) {
-            var hex = Math.floor(number)
-                .toString(16)
-                .toUpperCase();
+            var hex = Math.floor(number).toString(16).toUpperCase();
             if (hex) {
                 return hex.length === 1 ? "0" + hex : hex;
             }
@@ -534,12 +519,7 @@ const F = {
             var string = hex.substring(1);
             if (string.length === 3) {
                 string =
-                    string[0] +
-                        string[0] +
-                        string[1] +
-                        string[1] +
-                        string[2] +
-                        string[2];
+                    string[0] + string[0] + string[1] + string[1] + string[2] + string[2];
             }
             var number = parseInt("0x" + string);
             return {
@@ -585,11 +565,7 @@ const F = {
                 : F.toHex(Math.floor(rgb.a || rgb.a === 0 ? rgb.a : 255))));
     },
     rgb2hsv: function (rgb, round = true) {
-        var r = round ? Math.floor(rgb.r) : rgb.r, g = round ? Math.floor(rgb.g) : rgb.g, b = round ? Math.floor(rgb.b) : rgb.b, a = rgb.a || rgb.a === 0
-            ? round
-                ? Math.floor(rgb.a)
-                : rgb.a
-            : 255, max = Math.max(r, g, b), min = Math.min(r, g, b), difference = max - min, h = 0, s = max === 0 ? 0 : difference / max, v = max / 255;
+        var r = round ? Math.floor(rgb.r) : rgb.r, g = round ? Math.floor(rgb.g) : rgb.g, b = round ? Math.floor(rgb.b) : rgb.b, a = rgb.a || rgb.a === 0 ? (round ? Math.floor(rgb.a) : rgb.a) : 255, max = Math.max(r, g, b), min = Math.min(r, g, b), difference = max - min, h = 0, s = max === 0 ? 0 : difference / max, v = max / 255;
         switch (max) {
             case min:
                 h = 0;
@@ -630,11 +606,7 @@ const F = {
         return F.rgb2hex(F.hsv2rgb(hsv), ignoreOpacity);
     },
     hsv2rgb: function (hsv, round = true) {
-        var h = (round ? Math.floor(hsv.h) : hsv.h) / 360, s = (round ? Math.floor(hsv.s) : hsv.s) / 100, v = (round ? Math.floor(hsv.v) : hsv.v) / 100, a = hsv.a || hsv.a === 0
-            ? round
-                ? Math.floor(hsv.a)
-                : hsv.a
-            : 100, i = Math.floor(h * 6), f = h * 6 - i, p = v * (1 - s), q = v * (1 - f * s), t = v * (1 - (1 - f) * s), r = 0, g = 0, b = 0;
+        var h = (round ? Math.floor(hsv.h) : hsv.h) / 360, s = (round ? Math.floor(hsv.s) : hsv.s) / 100, v = (round ? Math.floor(hsv.v) : hsv.v) / 100, a = hsv.a || hsv.a === 0 ? (round ? Math.floor(hsv.a) : hsv.a) : 100, i = Math.floor(h * 6), f = h * 6 - i, p = v * (1 - s), q = v * (1 - f * s), t = v * (1 - (1 - f) * s), r = 0, g = 0, b = 0;
         switch (i % 6) {
             case 0:
                 (r = v), (g = t), (b = p);
@@ -679,9 +651,7 @@ const F = {
             r: F.randomInt(0, 255),
             g: F.randomInt(0, 255),
             b: F.randomInt(0, 255),
-            a: randomOpacity
-                ? F.randomInt(0, 255)
-                : 255,
+            a: randomOpacity ? F.randomInt(0, 255) : 255,
         }, ignoreOpacity);
     },
     /* Game */
@@ -690,17 +660,13 @@ const F = {
             throw new F.DormantError();
         },
         rect2rect: function (a, b) {
-            return (a.x + a.w > b.x &&
-                a.x < b.x + b.w &&
-                b.y + b.h > a.y &&
-                b.y < a.y + a.h);
+            return (a.x + a.w > b.x && a.x < b.x + b.w && b.y + b.h > a.y && b.y < a.y + a.h);
         },
         rect2circle: function (a, b) {
             throw new F.DormantError();
         },
         circle2circle: function (a, b) {
-            return (Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2) <
-                a.r + b.r);
+            return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2) < a.r + b.r;
         },
         distance: function (x1, y1, x2, y2) {
             return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
@@ -724,8 +690,7 @@ const F = {
     mouse: {},
     setMouse: function (event) {
         F.mouse.x =
-            event.clientX -
-                (F.mouse.offsetLeft || 0);
+            event.clientX - (F.mouse.offsetLeft || 0);
         F.mouse.y =
             event.clientY - (F.mouse.offsetTop || 0);
     },
@@ -741,10 +706,8 @@ const F = {
             throw F.EnvError("DOM");
         }
         var rect = element.getBoundingClientRect();
-        return (F.mouse.x >
-            (ignoreOffset ? 0 : rect.left) &&
-            F.mouse.y >
-                (ignoreOffset ? 0 : rect.top) &&
+        return (F.mouse.x > (ignoreOffset ? 0 : rect.left) &&
+            F.mouse.y > (ignoreOffset ? 0 : rect.top) &&
             F.mouse.x < rect.width + rect.left &&
             F.mouse.y < rect.height + rect.top);
     },
@@ -758,8 +721,7 @@ const F = {
             F.keys[event.keyCode] = true;
             // Case-insensitive
             if ("abcdefghijklmnopqrstuvwxyz".includes(event.key.toLowerCase())) {
-                F.keys[event.key.toLowerCase() + "_"] =
-                    true;
+                F.keys[event.key.toLowerCase() + "_"] = true;
             }
         };
         window.onkeyup = function (event) {
@@ -779,13 +741,7 @@ const F = {
         for (var i = 0; i < mouseEvents.length; i++) {
             window[mouseEvents[i]] = F.setMouse;
         }
-        F.mouseButtons = [
-            "left",
-            "middle",
-            "right",
-            "four",
-            "five",
-        ];
+        F.mouseButtons = ["left", "middle", "right", "four", "five"];
         window.onmousedown = function (event) {
             F.mouse[F.mouseButtons[event.button]] = true;
         };
@@ -819,8 +775,7 @@ const F = {
         throw new F.DormantError();
     },
     copy: function (text) {
-        if (!navigator.clipboard ||
-            !navigator.clipboard.writeText) {
+        if (!navigator.clipboard || !navigator.clipboard.writeText) {
             var textArea = document.createElement("textarea");
             textArea.value = text;
             textArea.style.top = "0";
