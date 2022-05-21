@@ -662,8 +662,21 @@ module.exports = {
         rect2rect: function (a, b) {
             return (a.x + a.w > b.x && a.x < b.x + b.w && b.y + b.h > a.y && b.y < a.y + a.h);
         },
+        circle2rect: function (a, b) {
+            var distX = Math.abs(a.x - b.x - b.w / 2);
+            var distY = Math.abs(a.y - b.y - b.h / 2);
+            if (distX > b.w / 2 + a.r || distY > b.h / 2 + a.r) {
+                return false;
+            }
+            if (distX <= b.w / 2 || distY <= b.h / 2) {
+                return true;
+            }
+            var dx = distX - b.w / 2;
+            var dy = distY - b.h / 2;
+            return dx * dx + dy * dy <= a.r * a.r;
+        },
         rect2circle: function (a, b) {
-            throw new module.exports.DormantError();
+            return module.exports.collide.circle2rect(b, a);
         },
         circle2circle: function (a, b) {
             return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2) < a.r + b.r;

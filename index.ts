@@ -885,8 +885,24 @@ module.exports = {
       );
     },
 
+    circle2rect: function (a: circle, b: rect): boolean {
+      var distX = Math.abs(a.x - b.x - b.w / 2);
+      var distY = Math.abs(a.y - b.y - b.h / 2);
+
+      if (distX > b.w / 2 + a.r || distY > b.h / 2 + a.r) {
+        return false;
+      }
+      if (distX <= b.w / 2 || distY <= b.h / 2) {
+        return true;
+      }
+
+      var dx = distX - b.w / 2;
+      var dy = distY - b.h / 2;
+      return dx * dx + dy * dy <= a.r * a.r;
+    },
+
     rect2circle: function (a: rect, b: circle): boolean {
-      throw new module.exports.DormantError();
+      return module.exports.collide.circle2rect(b, a);
     },
 
     circle2circle: function (a: circle, b: circle): boolean {
