@@ -1,7 +1,7 @@
 {
   "name": "fortissimo",
   "productName": "Fortissimo",
-  "version": "0.2.12",
+  "version": "0.2.13",
   "description": "Collection of helpful functions for JavaScript",
   "main": "index.js",
   "icon": "./image/icon/white.png",

@@ -77,6 +77,12 @@ module.exports = {
     }
   },
 
+  deprecateWarning: function (oldName: string, newName: string): void {
+    console.warn(
+      `Fortissimo - The function \`${oldName}\` is deprecated! Use \`${newName}\` instead!`,
+    );
+  },
+
   // Check environment
   env: {
     DOM: function () {
@@ -282,8 +288,13 @@ module.exports = {
     return Math.ceil(number * decimals) / decimals;
   },
 
-  border: function (number: number, min: number, max: number): number {
+  clamp: function (number: number, min: number, max: number): number {
     return Math.max(min, Math.min(max, number));
+  },
+
+  border: function (number: number, min: number, max: number): number {
+    module.exports.deprecateWarning("border", "clamp");
+    return module.exports.clamp(number, min, max);
   },
 
   wrap: function (number: number, min: number, max: number): number {

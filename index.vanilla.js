@@ -19,6 +19,9 @@ const F = {
             this.name = "Fortissimo - DormantError";
         }
     },
+    deprecateWarning: function (oldName, newName) {
+        console.warn(`Fortissimo - The function \`${oldName}\` is deprecated! Use \`${newName}\` instead!`);
+    },
     // Check environment
     env: {
         DOM: function () {
@@ -173,8 +176,12 @@ const F = {
         decimals = 10 ** Math.floor(decimals);
         return Math.ceil(number * decimals) / decimals;
     },
-    border: function (number, min, max) {
+    clamp: function (number, min, max) {
         return Math.max(min, Math.min(max, number));
+    },
+    border: function (number, min, max) {
+        F.deprecateWarning("border", "clamp");
+        return F.clamp(number, min, max);
     },
     wrap: function (number, min, max) {
         return F.mod(number - min, max - min) + min;
