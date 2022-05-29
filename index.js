@@ -765,6 +765,8 @@ module.exports = {
         if (!module.exports.env.DOM()) {
             throw new module.exports.EnvError("DOM");
         }
+        module.exports.keys_ = {};
+        module.exports.mouse_ = {};
         window.onkeydown = function (event) {
             module.exports.keys_[event.key] = true;
             module.exports.keys_[event.code] = true;

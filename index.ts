@@ -972,7 +972,7 @@ module.exports = {
 
   /* Event Listener */
   keys_: null,
-  get keys():any {
+  get keys(): any {
     if (!module.exports.env.DOM()) {
       throw new module.exports.EnvError("DOM");
     }
@@ -982,7 +982,7 @@ module.exports = {
     return module.exports.keys_;
   },
   mouse_: null,
-  get mouse():any {
+  get mouse(): any {
     if (!module.exports.env.DOM()) {
       throw new module.exports.EnvError("DOM");
     }
@@ -1032,6 +1032,8 @@ module.exports = {
     if (!module.exports.env.DOM()) {
       throw new module.exports.EnvError("DOM");
     }
+    module.exports.keys_ = {};
+    module.exports.mouse_ = {};
 
     window.onkeydown = function (event) {
       module.exports.keys_[event.key] = true;
