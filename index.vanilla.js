@@ -19,6 +19,12 @@ const F = {
             this.name = "Fortissimo - DormantError";
         }
     },
+    ListenerError: class extends Error {
+        constructor() {
+            super("Listeners have not been created yet. Use `F.createListeners()`");
+            this.name = "Fortissimo - ListenerError";
+        }
+    },
     deprecateWarning: function (oldName, newName) {
         console.warn(`Fortissimo - The function \`${oldName}\` is deprecated! Use \`${newName}\` instead!`);
     },
@@ -151,7 +157,7 @@ const F = {
             return min;
         }
         if (min > max) {
-            throw F.InputError("Minimum greater than maximum");
+            throw new F.InputError("Minimum greater than maximum");
         }
         return Math.random() * (max - min) + min;
     },
@@ -706,49 +712,73 @@ const F = {
         throw new F.DormantError();
     },
     /* Event Listener */
-    keys: {},
-    mouse: {},
+    keys_: null,
+    get keys() {
+        if (!F.env.DOM()) {
+            throw new F.EnvError("DOM");
+        }
+        if (!F.keys_) {
+            throw new F.ListenerError();
+        }
+        return F.keys_;
+    },
+    mouse_: null,
+    get mouse() {
+        if (!F.env.DOM()) {
+            throw new F.EnvError("DOM");
+        }
+        if (!F.mouse_) {
+            throw new F.ListenerError();
+        }
+        return F.mouse_;
+    },
     setMouse: function (event) {
-        F.mouse.x =
-            event.clientX - (F.mouse.offsetLeft || 0);
-        F.mouse.y =
-            event.clientY - (F.mouse.offsetTop || 0);
+        F.mouse_.x =
+            event.clientX - (F.mouse_.offsetLeft || 0);
+        F.mouse_.y =
+            event.clientY - (F.mouse_.offsetTop || 0);
     },
     setMouseOffset: function (offset) {
         if (!F.env.DOM()) {
-            throw F.EnvError("DOM");
+            throw new F.EnvError("DOM");
         }
-        F.mouse.offsetLeft = offset.left;
-        F.mouse.offsetTop = offset.top;
+        if (!F.mouse_) {
+            throw new F.ListenerError();
+        }
+        F.mouse_.offsetLeft = offset.left;
+        F.mouse_.offsetTop = offset.top;
     },
     mouseOver: function (element, ignoreOffset = false) {
         if (!F.env.DOM()) {
-            throw F.EnvError("DOM");
+            throw new F.EnvError("DOM");
+        }
+        if (!F.mouse_) {
+            throw new F.ListenerError();
         }
         var rect = element.getBoundingClientRect();
-        return (F.mouse.x > (ignoreOffset ? 0 : rect.left) &&
-            F.mouse.y > (ignoreOffset ? 0 : rect.top) &&
-            F.mouse.x < rect.width + rect.left &&
-            F.mouse.y < rect.height + rect.top);
+        return (F.mouse_.x > (ignoreOffset ? 0 : rect.left) &&
+            F.mouse_.y > (ignoreOffset ? 0 : rect.top) &&
+            F.mouse_.x < rect.width + rect.left &&
+            F.mouse_.y < rect.height + rect.top);
     },
     createListeners: function () {
         if (!F.env.DOM()) {
-            throw F.EnvError("DOM");
+            throw new F.EnvError("DOM");
         }
         window.onkeydown = function (event) {
-            F.keys[event.key] = true;
-            F.keys[event.code] = true;
-            F.keys[event.keyCode] = true;
+            F.keys_[event.key] = true;
+            F.keys_[event.code] = true;
+            F.keys_[event.keyCode] = true;
             // Case-insensitive
             if ("abcdefghijklmnopqrstuvwxyz".includes(event.key.toLowerCase())) {
-                F.keys[event.key.toLowerCase() + "_"] = true;
+                F.keys_[event.key.toLowerCase() + "_"] = true;
             }
         };
         window.onkeyup = function (event) {
-            delete F.keys[event.key];
-            delete F.keys[event.code];
-            delete F.keys[event.keyCode];
-            delete F.keys[event.key.toLowerCase() + "_"];
+            delete F.keys_[event.key];
+            delete F.keys_[event.code];
+            delete F.keys_[event.keyCode];
+            delete F.keys_[event.key.toLowerCase() + "_"];
         };
         var mouseEvents = [
             "onclick",
@@ -763,22 +793,22 @@ const F = {
         }
         F.mouseButtons = ["left", "middle", "right", "four", "five"];
         window.onmousedown = function (event) {
-            F.mouse[F.mouseButtons[event.button]] = true;
+            F.mouse_[F.mouseButtons[event.button]] = true;
         };
         window.onmouseup = function (event) {
-            F.mouse[F.mouseButtons[event.button]] = false;
+            F.mouse_[F.mouseButtons[event.button]] = false;
         };
         addEventListener("touchstart", function (event) {
             F.setMouse(event.touches[0]);
-            F.mouse.touchDown = true;
-            F.mouse.isFirstTouch = true;
+            F.mouse_.touchDown = true;
+            F.mouse_.isFirstTouch = true;
         });
         addEventListener("touchmove", function (event) {
             F.setMouse(event.touches[0]);
-            F.mouse.touchDown = true;
+            F.mouse_.touchDown = true;
         });
         addEventListener("touchend", function (event) {
-            F.mouse.touchDown = false;
+            F.mouse_.touchDown = false;
         });
     },
     parseControls: function (object) {

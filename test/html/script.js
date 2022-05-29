@@ -1,1 +1,1 @@
-console.log(F.center("bruh", 20, "."));
+console.log(F.keys);

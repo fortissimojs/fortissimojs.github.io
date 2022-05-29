@@ -19,6 +19,12 @@ module.exports = {
             this.name = "Fortissimo - DormantError";
         }
     },
+    ListenerError: class extends Error {
+        constructor() {
+            super("Listeners have not been created yet. Use `F.createListeners()`");
+            this.name = "Fortissimo - ListenerError";
+        }
+    },
     deprecateWarning: function (oldName, newName) {
         console.warn(`Fortissimo - The function \`${oldName}\` is deprecated! Use \`${newName}\` instead!`);
     },
@@ -151,7 +157,7 @@ module.exports = {
             return min;
         }
         if (min > max) {
-            throw module.exports.InputError("Minimum greater than maximum");
+            throw new module.exports.InputError("Minimum greater than maximum");
         }
         return Math.random() * (max - min) + min;
     },
@@ -706,49 +712,73 @@ module.exports = {
         throw new module.exports.DormantError();
     },
     /* Event Listener */
-    keys: {},
-    mouse: {},
+    keys_: null,
+    get keys() {
+        if (!module.exports.env.DOM()) {
+            throw new module.exports.EnvError("DOM");
+        }
+        if (!module.exports.keys_) {
+            throw new module.exports.ListenerError();
+        }
+        return module.exports.keys_;
+    },
+    mouse_: null,
+    get mouse() {
+        if (!module.exports.env.DOM()) {
+            throw new module.exports.EnvError("DOM");
+        }
+        if (!module.exports.mouse_) {
+            throw new module.exports.ListenerError();
+        }
+        return module.exports.mouse_;
+    },
     setMouse: function (event) {
-        module.exports.mouse.x =
-            event.clientX - (module.exports.mouse.offsetLeft || 0);
-        module.exports.mouse.y =
-            event.clientY - (module.exports.mouse.offsetTop || 0);
+        module.exports.mouse_.x =
+            event.clientX - (module.exports.mouse_.offsetLeft || 0);
+        module.exports.mouse_.y =
+            event.clientY - (module.exports.mouse_.offsetTop || 0);
     },
     setMouseOffset: function (offset) {
         if (!module.exports.env.DOM()) {
-            throw module.exports.EnvError("DOM");
+            throw new module.exports.EnvError("DOM");
         }
-        module.exports.mouse.offsetLeft = offset.left;
-        module.exports.mouse.offsetTop = offset.top;
+        if (!module.exports.mouse_) {
+            throw new module.exports.ListenerError();
+        }
+        module.exports.mouse_.offsetLeft = offset.left;
+        module.exports.mouse_.offsetTop = offset.top;
     },
     mouseOver: function (element, ignoreOffset = false) {
         if (!module.exports.env.DOM()) {
-            throw module.exports.EnvError("DOM");
+            throw new module.exports.EnvError("DOM");
+        }
+        if (!module.exports.mouse_) {
+            throw new module.exports.ListenerError();
         }
         var rect = element.getBoundingClientRect();
-        return (module.exports.mouse.x > (ignoreOffset ? 0 : rect.left) &&
-            module.exports.mouse.y > (ignoreOffset ? 0 : rect.top) &&
-            module.exports.mouse.x < rect.width + rect.left &&
-            module.exports.mouse.y < rect.height + rect.top);
+        return (module.exports.mouse_.x > (ignoreOffset ? 0 : rect.left) &&
+            module.exports.mouse_.y > (ignoreOffset ? 0 : rect.top) &&
+            module.exports.mouse_.x < rect.width + rect.left &&
+            module.exports.mouse_.y < rect.height + rect.top);
     },
     createListeners: function () {
         if (!module.exports.env.DOM()) {
-            throw module.exports.EnvError("DOM");
+            throw new module.exports.EnvError("DOM");
         }
         window.onkeydown = function (event) {
-            module.exports.keys[event.key] = true;
-            module.exports.keys[event.code] = true;
-            module.exports.keys[event.keyCode] = true;
+            module.exports.keys_[event.key] = true;
+            module.exports.keys_[event.code] = true;
+            module.exports.keys_[event.keyCode] = true;
             // Case-insensitive
             if ("abcdefghijklmnopqrstuvwxyz".includes(event.key.toLowerCase())) {
-                module.exports.keys[event.key.toLowerCase() + "_"] = true;
+                module.exports.keys_[event.key.toLowerCase() + "_"] = true;
             }
         };
         window.onkeyup = function (event) {
-            delete module.exports.keys[event.key];
-            delete module.exports.keys[event.code];
-            delete module.exports.keys[event.keyCode];
-            delete module.exports.keys[event.key.toLowerCase() + "_"];
+            delete module.exports.keys_[event.key];
+            delete module.exports.keys_[event.code];
+            delete module.exports.keys_[event.keyCode];
+            delete module.exports.keys_[event.key.toLowerCase() + "_"];
         };
         var mouseEvents = [
             "onclick",
@@ -763,22 +793,22 @@ module.exports = {
         }
         module.exports.mouseButtons = ["left", "middle", "right", "four", "five"];
         window.onmousedown = function (event) {
-            module.exports.mouse[module.exports.mouseButtons[event.button]] = true;
+            module.exports.mouse_[module.exports.mouseButtons[event.button]] = true;
         };
         window.onmouseup = function (event) {
-            module.exports.mouse[module.exports.mouseButtons[event.button]] = false;
+            module.exports.mouse_[module.exports.mouseButtons[event.button]] = false;
         };
         addEventListener("touchstart", function (event) {
             module.exports.setMouse(event.touches[0]);
-            module.exports.mouse.touchDown = true;
-            module.exports.mouse.isFirstTouch = true;
+            module.exports.mouse_.touchDown = true;
+            module.exports.mouse_.isFirstTouch = true;
         });
         addEventListener("touchmove", function (event) {
             module.exports.setMouse(event.touches[0]);
-            module.exports.mouse.touchDown = true;
+            module.exports.mouse_.touchDown = true;
         });
         addEventListener("touchend", function (event) {
-            module.exports.mouse.touchDown = false;
+            module.exports.mouse_.touchDown = false;
         });
     },
     parseControls: function (object) {
