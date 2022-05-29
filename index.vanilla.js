@@ -766,7 +766,7 @@ const F = {
             throw new F.EnvError("DOM");
         }
         F.keys_ = {};
-        F.mouse_ = {};
+        F.mouse_ = { r: 1, w: 1, h: 1 };
         window.onkeydown = function (event) {
             F.keys_[event.key] = true;
             F.keys_[event.code] = true;

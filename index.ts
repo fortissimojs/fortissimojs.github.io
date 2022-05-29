@@ -1033,7 +1033,7 @@ module.exports = {
       throw new module.exports.EnvError("DOM");
     }
     module.exports.keys_ = {};
-    module.exports.mouse_ = {};
+    module.exports.mouse_ = { r: 1, w: 1, h: 1 };
 
     window.onkeydown = function (event) {
       module.exports.keys_[event.key] = true;
