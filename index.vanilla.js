@@ -25,7 +25,12 @@ const F = {
             this.name = "Fortissimo - ListenerError";
         }
     },
+    deprecateWarned: {},
     deprecateWarning: function (oldName, newName) {
+        if (F.deprecateWarned[oldName]) {
+            return;
+        }
+        F.deprecateWarned[oldName] = true;
         console.warn(`Fortissimo - The function \`${oldName}\` is deprecated! Use \`${newName}\` instead!`);
     },
     // Check environment

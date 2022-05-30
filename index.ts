@@ -84,7 +84,12 @@ module.exports = {
     }
   },
 
+  deprecateWarned: {},
   deprecateWarning: function (oldName: string, newName: string): void {
+    if(module.exports.deprecateWarned[oldName]) {
+      return;
+    }
+    module.exports.deprecateWarned[oldName] = true;
     console.warn(
       `Fortissimo - The function \`${oldName}\` is deprecated! Use \`${newName}\` instead!`,
     );
